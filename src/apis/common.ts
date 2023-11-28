@@ -11,7 +11,7 @@ export const getAllPartyToGovernment = (dispatch: any) => {
     )
 }
 
-export const getAllPartyMemberToParty = (dispatch: any) => {
+export const getAllPartyMembersToParty = (dispatch: any) => {
     fetch('http://127.0.0.1:3000/common/getAllPartyMemberToParty').then(
         res => res.json()
     ).then(

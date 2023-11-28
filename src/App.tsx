@@ -4,10 +4,11 @@ import { decrement, increment, incrementByAmount } from "./redux/counterSlice";
 import { RootState } from "./redux/store";
 import axios from 'axios';
 import { getAllGovernments } from "./apis/governmentApi";
-import { Governments } from "./components/governments";
-import { getAllParties } from "./apis/partyApi";
-import { getAllPartyToGovernment, getPersonToGovernment, getPersonToParty } from "./apis/common";
 import { getAllPartyMembers } from "./apis/partyMembersApi";
+import { getAllParties } from "./apis/PartyApi";
+import { getAllPartyMembersToParty, getAllPartyToGovernment } from "./apis/common";
+import { Dispatch, AnyAction } from "@reduxjs/toolkit";
+import { Governments } from "./components/Governments";
 
 export default function App() {
   // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
@@ -28,8 +29,7 @@ export default function App() {
     getAllParties(dispatch)
     getAllPartyMembers(dispatch)
     getAllPartyToGovernment(dispatch) 
-    getPersonToParty(dispatch) 
-    getPersonToGovernment(dispatch)
+    getAllPartyMembersToParty(dispatch) 
   }, [])
 
   return (
