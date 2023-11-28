@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
+import dataReducer from "./dataSlice";
 
 const store = configureStore({
   reducer: {
-    counter1: counterReducer // state => state.counter1
+    // counter1: counterReducer, // state => state.counter1
+    data1: dataReducer
   }
 });
 

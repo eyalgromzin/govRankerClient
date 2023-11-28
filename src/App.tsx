@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment, incrementByAmount } from "./redux/counterSlice";
 import { RootState } from "./redux/store";
 import axios from 'axios';
+import { getAllGovernments } from "./apis/governmentApi";
+import { Governments } from "./components/governments";
+import { getAllParties } from "./apis/partyApi";
+import { getAllPartyToGovernment, getPersonToGovernment, getPersonToParty } from "./apis/common";
+import { getAllPartyMembers } from "./apis/partyMembersApi";
 
 export default function App() {
-  const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
+  // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
   const dispatch = useDispatch();
   
   const getResultFromServer = async () => {
@@ -16,21 +21,25 @@ export default function App() {
       asd += 1
       console.log(res)
     })
-
-    
   }
+
+  useEffect(() => {
+    getAllGovernments(dispatch)
+    getAllParties(dispatch)
+    getAllPartyMembers(dispatch)
+    getAllPartyToGovernment(dispatch) 
+    getPersonToParty(dispatch) 
+    getPersonToGovernment(dispatch)
+  }, [])
 
   return (
     <div className="App">
       <button onClick={() => getResultFromServer()}>
-        call server
+        
       </button>
 
-      <br />
-      <br />
-      <br />
+      <Governments />
 
-      <h1>{count}</h1>
       <button
         onClick={() => {
           dispatch(increment());
@@ -59,3 +68,4 @@ export default function App() {
     </div>
   );
 }
+

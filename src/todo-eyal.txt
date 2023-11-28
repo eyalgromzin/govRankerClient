@@ -1,0 +1,11 @@
+datetime will be stored as '20050505' always as UTC + 0
+
+- create 3 drop down lists ( gov, party, person ) that populate the rest on selection of 1/2 of them  
+
+- create gov page with isAdmin property
+
+- admin page - add a button to connect article to another entity. to enable 1 article to multiple entities. 
+                - like connect an article to multiple persons, multiple parties and governments
+
+- UI:   need to create a button near the article to connect multiple entities to an article. 
+        it will open a popup that will show all connected entities and a delete / add buttons 
