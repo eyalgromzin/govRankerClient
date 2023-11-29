@@ -7,7 +7,7 @@ import { getAllGovernments } from "./apis/governmentApi";
 import { getAllPartyMembers } from "./apis/partyMembersApi";
 import { getAllPartyMembersToParty, getAllPartyToGovernment } from "./apis/common";
 import { Dispatch, AnyAction } from "@reduxjs/toolkit";
-import { Governments } from "./components/Governments";
+import { Governments } from "./components/governments";
 import { AdminMain } from "./components/adminMain";
 import { getAllParties } from "./apis/partyApi";
 

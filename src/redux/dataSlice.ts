@@ -8,6 +8,10 @@ export interface DataState {
   articles: Article[];
   partyAndGovernment: PartyAndGovernment[];
   partyMemberAndParty: PartyMemberAndParty[];
+  selectedGovernment: Government | undefined;
+  selectedParty: Party | undefined;
+  selectedPartyMember: PartyMember | undefined;
+
 }
 
 const initialState: DataState = {
@@ -16,7 +20,10 @@ const initialState: DataState = {
   partyMembers: [],
   articles: [],
   partyAndGovernment: [],
-  partyMemberAndParty: []
+  partyMemberAndParty: [],
+  selectedGovernment: undefined,
+  selectedParty: undefined,
+  selectedPartyMember: undefined,
 };
 
 export const dataSlice = createSlice({
@@ -41,13 +48,32 @@ export const dataSlice = createSlice({
     setPartyMemberAndParty: (state: DataState, action: PayloadAction<PartyMemberAndParty[]>) => {
       state.partyMemberAndParty = action.payload;
     },
+    setSelectedGovernment: (state: DataState, action: PayloadAction<Government>) => {
+      state.selectedGovernment = action.payload;
+    },
+    setSelectedParty: (state: DataState, action: PayloadAction<Party>) => {
+      state.selectedParty = action.payload;
+    },
+    setSelectedPartyMember: (state: DataState, action: PayloadAction<PartyMember>) => {
+      state.selectedPartyMember = action.payload;
+    },
+    createGovernment: (state: DataState, action: PayloadAction<Government>) => {
+      state.governments.push(action.payload);
+    },
+    createParty: (state: DataState, action: PayloadAction<Government>) => {
+      state.parties.push(action.payload);
+    },
+    createPartyMember: (state: DataState, action: PayloadAction<Government>) => {
+      state.partyMembers.push(action.payload);
+    },
   }
 });
 
 // Action creators are generated for each case reducer function
 export const { 
   setGovernments, setParties, setPartyMembers, 
-  setArticles, setPartyToGovernment, setPartyMemberAndParty 
+  setArticles, setPartyToGovernment, setPartyMemberAndParty,
+  createGovernment, createParty, createPartyMember
 } = dataSlice.actions;
 
 
