@@ -6,7 +6,7 @@ export interface DataState {
   parties: Party[];
   partyMembers: PartyMember[];
   articles: Article[];
-  PartyToGovernment: PartyAndGovernment[];
+  partyAndGovernment: PartyAndGovernment[];
   partyMemberAndParty: PartyMemberAndParty[];
 }
 
@@ -15,7 +15,7 @@ const initialState: DataState = {
   parties: [],
   partyMembers: [],
   articles: [],
-  PartyToGovernment: [],
+  partyAndGovernment: [],
   partyMemberAndParty: []
 };
 
@@ -35,8 +35,8 @@ export const dataSlice = createSlice({
     setArticles: (state: DataState, action: PayloadAction<Article[]>) => {
       state.articles = action.payload;
     },
-    setPartyToGovernment: (state: DataState, action: PayloadAction<PartyAndGovernment[]>) => {
-      state.PartyToGovernment = action.payload;
+    setPartyToGovernment: (state: DataState, action: PayloadAction<{partyUUID: string, governmentUUID:string}[]>) => {
+      state.partyAndGovernment = action.payload;
     },
     setPartyMemberAndParty: (state: DataState, action: PayloadAction<PartyMemberAndParty[]>) => {
       state.partyMemberAndParty = action.payload;

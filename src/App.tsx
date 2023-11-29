@@ -9,21 +9,12 @@ import { getAllParties } from "./apis/PartyApi";
 import { getAllPartyMembersToParty, getAllPartyToGovernment } from "./apis/common";
 import { Dispatch, AnyAction } from "@reduxjs/toolkit";
 import { Governments } from "./components/Governments";
+import { AdminMain } from "./components/adminMain";
 
 export default function App() {
   // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
   const dispatch = useDispatch();
   
-  const getResultFromServer = async () => {
-    console.log('in getResultFromServer()')
-    const res = axios.get('http://localhost:3000/test2').then(res => {
-      console.log('in res')
-      let asd = 4
-      asd += 1
-      console.log(res)
-    })
-  }
-
   useEffect(() => {
     getAllGovernments(dispatch)
     getAllParties(dispatch)
@@ -34,37 +25,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <button onClick={() => getResultFromServer()}>
-        
-      </button>
-
-      <Governments />
-
-      <button
-        onClick={() => {
-          dispatch(increment());
-        }}
-      >
-        ++++
-      </button>
-      <br />
-      <br />
-      <button
-        onClick={() => {
-          dispatch(decrement());
-        }}
-      >
-        -----
-      </button>
-      <br />
-      <br />
-      <button
-        onClick={() => {
-          dispatch(incrementByAmount(10));
-        }}
-      >
-        +10
-      </button>
+      <AdminMain />      
     </div>
   );
 }

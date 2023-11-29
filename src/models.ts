@@ -41,7 +41,6 @@ export interface Article {
 }
 
 export interface PartyAndGovernment {
-    id: number,
     partyUUID: string,
     governmentUUID: string,
 }
