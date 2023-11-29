@@ -5,11 +5,11 @@ import { RootState } from "./redux/store";
 import axios from 'axios';
 import { getAllGovernments } from "./apis/governmentApi";
 import { getAllPartyMembers } from "./apis/partyMembersApi";
-import { getAllParties } from "./apis/PartyApi";
 import { getAllPartyMembersToParty, getAllPartyToGovernment } from "./apis/common";
 import { Dispatch, AnyAction } from "@reduxjs/toolkit";
 import { Governments } from "./components/Governments";
 import { AdminMain } from "./components/adminMain";
+import { getAllParties } from "./apis/partyApi";
 
 export default function App() {
   // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts

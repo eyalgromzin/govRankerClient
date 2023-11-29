@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, useState } from "react";
+import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from 'react-select';
@@ -12,7 +12,7 @@ interface Option {
     label: string;
 }
 
-export const AdminMain: FunctionComponent<GovernmentsProps> = ({ }) => 
+export const AdminMain: React.FC<GovernmentsProps> = ({ }) => 
 {
     const governments = useSelector(
         (state: RootState) => state.data1.governments
@@ -30,9 +30,7 @@ export const AdminMain: FunctionComponent<GovernmentsProps> = ({ }) =>
         (state: RootState) => state.data1.partyMemberAndParty
     ); 
 
-    allParties.map(asd => {
-
-    })
+    
 
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([])
     const [partyOptions, setPartyOptions] = useState<Option[]>([])
@@ -41,13 +39,13 @@ export const AdminMain: FunctionComponent<GovernmentsProps> = ({ }) =>
     const [selectedPartyOption, setSelectedPartyOption] = useState<Option | undefined>();
     const [selectedPartyMember, setSelectedPartyMember] = useState<Option | undefined>();
 
-
-    const initialGovOptions:Option[] = []
-    governments.forEach(itemI => {
-        initialGovOptions.push({value: itemI.uuid, label: itemI.name })
-    })
-
-    setGovernmentOptions(initialGovOptions)
+    useEffect(() => {
+        const initialGovOptions:Option[] = []
+        governments.forEach(itemI => {
+            initialGovOptions.push({value: itemI.uuid, label: itemI.name })
+        })
+        setGovernmentOptions(initialGovOptions)
+    }, [governments])
 
     const onGovernmentChange = (selectedOption: any) => {
         const selectedGovernment = governments.filter(govI => govI.uuid == selectedOption.value)
@@ -73,9 +71,16 @@ export const AdminMain: FunctionComponent<GovernmentsProps> = ({ }) =>
         setPartyMemberOptions(newPartyOptions)
     }
 
+    const customStyles = {
+        control: () => ({
+          width: 500, // Set the width of the control
+        }),
+      };
+
     return (
         <Fragment>
             <Select 
+                styles={customStyles}
                 placeholder={'government'} 
                 options={governmentOptions} 
                 onChange={onGovernmentChange}

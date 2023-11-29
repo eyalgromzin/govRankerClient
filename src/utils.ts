@@ -1,10 +1,8 @@
 import { Party, PartyAndGovernment, PartyMember, PartyMemberAndParty } from "./models";
 
 
-export const getGovernmentParties = (govUUID: string, PartyAndGovernments: PartyAndGovernment[],
-        allParties: Party[]):Party[] => {
+export const getGovernmentParties = (govUUID: string, PartyAndGovernments: PartyAndGovernment[], allParties: Party[]):Party[] => {
     const partiesUUIDs: string[] = []
-    const parties: Party[] = []
 
     PartyAndGovernments.forEach(PartyAndGovernmentI => {
         if(PartyAndGovernmentI.governmentUUID == govUUID){
@@ -12,11 +10,11 @@ export const getGovernmentParties = (govUUID: string, PartyAndGovernments: Party
         }
     })
 
-    partiesUUIDs.map(partyUUID => {
-        return parties.filter(partyI => partyI.uuid == partyUUID)
+    const resParties: Party[] = partiesUUIDs.map(partyUUID => {
+        return allParties.filter(partyI => partyI.uuid == partyUUID)[0]
     })
 
-    return parties
+    return resParties
 }
 
 export const getPartyMembers = (partyUUID: string, partyMembersAndParty: PartyMemberAndParty[],
