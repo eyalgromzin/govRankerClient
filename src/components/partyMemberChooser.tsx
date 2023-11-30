@@ -41,9 +41,23 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
         Option | undefined
     >();
 
+    const isDeleteGovernmentButtonEnabled =
+        partyAndGovernment.filter(
+            (partyAndGovernmentI) =>
+                partyAndGovernmentI.governmentUUID ==
+                selectedGovernmentOption?.value
+        ).length == 0;
+    const isDeletePartyButtonEnabled =
+        partyMemberAndParty.filter(
+            (partyMemberAndPartyI) =>
+                partyMemberAndPartyI.partyUUID ==
+                selectedPartyOption?.value
+        ).length == 0;
+    const isDeletePartyMemberButtonEnabled = true
+
     useEffect(() => {
         const initialGovOptions: Option[] = [];
-        governments.forEach((itemI) => {
+        governments && governments.forEach((itemI) => {
             initialGovOptions.push({ value: itemI.uuid, label: itemI.name });
         });
         setGovernmentOptions(initialGovOptions);
@@ -107,10 +121,6 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
         console.log("clicked add gov  ");
     }
 
-    const deleteGovernment = () => {
-        console.log("deleting government...");
-    };
-
     function onGovernmentDeleteSuccess() {
         setSelectedGovernmentOption(null);
     }
@@ -138,9 +148,11 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
                     parentUUID={undefined}
                 />
                 <DeleteButton
+                    isEnabled={isDeleteGovernmentButtonEnabled}
                     entityUUID={selectedGovernmentOption?.value}
                     entityType={EntityType.government}
                     onSuccess={() => onGovernmentDeleteSuccess()}
+                    
                 />
             </div>
 
@@ -157,6 +169,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
                     parentUUID={selectedGovernmentOption?.value}
                 />
                 <DeleteButton
+                    isEnabled={isDeletePartyButtonEnabled}
                     entityUUID={selectedPartyOption?.value}
                     entityType={EntityType.party}
                     onSuccess={() => onPartyDeleteSuccess()}
@@ -176,6 +189,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
                     parentUUID={selectedPartyOption?.value}
                 />
                 <DeleteButton
+                    isEnabled={isDeletePartyMemberButtonEnabled}
                     entityUUID={selectedPartyMemberOption?.value}
                     entityType={EntityType.partyMember}
                     onSuccess={() => onPartyMemberDeleteSuccess()}

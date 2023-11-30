@@ -1,12 +1,5 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- create add / delete buttons near the drop downs 
-    - gov delete
-    - party add
-    - party delete
-    - partyMember add 
-    - partyMember delete
-
 - create article add section that will be shown only when party member is selected and that will add the article to the party member 
 
 - articles will be attached to party members only . and then a view will be created to attach it to 

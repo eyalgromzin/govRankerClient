@@ -10,16 +10,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { EntityType } from '../models';
 import { deleteGovernment } from '../apis/governmentApi';
 import { useDispatch } from 'react-redux';
+import { deleteParty } from '../apis/partyApi';
+import { deletePartyMember } from '../apis/partyMembersApi';
 
 
 type ChooserProps = {
     entityUUID: string | undefined,
     entityType: EntityType,
-    onSuccess: Function
+    onSuccess: Function,
+    isEnabled: boolean,
 };
 
 // Define the DeleteButton component
-const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess}) => {
+const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess, isEnabled}) => {
   // State to manage the dialog open/close
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -27,7 +30,7 @@ const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess
   // Function to handle opening the dialog
   const handleOpenDialog = () => {
     if (!entityUUID){
-        alert('plz select government')
+        alert('plz select entity to delete')
         return
     }
 
@@ -41,6 +44,10 @@ const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess
 
   // Function to handle deletion (you can customize this function)
   const handleDelete = async () => {
+    if (!isEnabled){
+        console.log('not enables')
+        return
+    }
     // Add your delete logic here    
     console.log(`Deleting ${entityType}...`);
 
@@ -48,11 +55,12 @@ const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess
     if(entityType == EntityType.government && entityUUID){
         addResult = await deleteGovernment(dispatch, entityUUID)
         onSuccess()
-    }else if(entityType == EntityType.party){
+    }else if(entityType == EntityType.party && entityUUID){
         addResult = await deleteParty(dispatch, entityUUID)
         onSuccess()
-    }else if(entityType == EntityType.partyMember){
-        // addResult = await deletePartyMember(dispatch, data)
+    }else if(entityType == EntityType.partyMember && entityUUID){
+        addResult = await deletePartyMember(dispatch, entityUUID)
+        onSuccess()
     }
 
     if (addResult?.error){
@@ -67,16 +75,15 @@ const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess
     <>
       {/* Delete button with trash icon */}
       <Button
-        style={{"height": '36px'}}
+        style={{"height": '36px', opacity: isEnabled? 1 : 0.4}}
         variant="contained"
         color="secondary"
         startIcon={<DeleteIcon />}
-        onClick={handleOpenDialog}
+        onClick={() => {isEnabled && handleOpenDialog()}}
       >
         Delete
       </Button>
 
-      {/* Confirmation dialog */}
       <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
@@ -85,14 +92,12 @@ const DeleteButton: React.FC<ChooserProps> = ({entityUUID, entityType, onSuccess
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* Cancel button to close the dialog */}
           <Button onClick={handleCloseDialog} color="primary">
             Cancel
           </Button>
-          {/* Delete button to confirm deletion */}
-          <Button onClick={handleDelete} color="secondary">
-            Delete
-          </Button>
+            <Button onClick={() => {isEnabled && handleDelete()}} color="secondary">
+                Delete
+            </Button>
         </DialogActions>
       </Dialog>
     </>

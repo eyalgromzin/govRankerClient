@@ -1,5 +1,5 @@
 import { APIResult } from "../models";
-import { addParty, setParties } from "../redux/dataSlice";
+import { addParty, removeParty, setParties } from "../redux/dataSlice";
 
 export const getAllParties = (dispatch: any) => {
     fetch("http://127.0.0.1:3000/party/getAllParties")
@@ -50,7 +50,7 @@ export const createParty = async (
 
 export const deleteParty = async (
     dispatch: Function,
-    governmentUUID: string
+    partyUUID: string
 ): Promise<APIResult> => {
     const customHeaders = {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const deleteParty = async (
         const res = await fetch(fullUrl, {
             method: "POST",
             headers: customHeaders,
-            body: JSON.stringify({ governmentUUID }),
+            body: JSON.stringify({ partyUUID }),
         });
         if (!res.ok) {
             console.log(await res.json());
@@ -69,7 +69,7 @@ export const deleteParty = async (
 
         const resData = await res.json();
 
-        dispatch(removeGovernment(resData.res));
+        dispatch(removeParty(resData.res));
 
         return resData.res;
     } catch (error) {

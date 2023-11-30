@@ -1,5 +1,5 @@
 import { APIResult, PartyMember } from "../models";
-import { addPartyMember, setPartyMembers } from "../redux/dataSlice";
+import { addPartyMember, setPartyMembers, removeGovernment, removePartyMember } from "../redux/dataSlice";
 
 export const getAllPartyMembers = (dispatch: any) => {
     fetch("http://127.0.0.1:3000/partyMember/getAllPartyMembers")
@@ -58,3 +58,33 @@ export const createPartyMember = async (
         };
     }
 };
+
+
+export const deletePartyMember = async (dispatch: Function, partyMemberUUID: string):Promise<APIResult> => {
+    const customHeaders = {
+        "Content-Type": "application/json",
+    }
+    
+    const fullUrl = `http://127.0.0.1:3000/government/deletePartyMember`
+    try{
+        const res = await fetch(fullUrl, {
+            method: "POST",
+            headers: customHeaders,
+            body: JSON.stringify({partyMemberUUID}),
+        })
+        if (!res.ok){
+            console.log(await res.json())
+        }
+    
+        const resData = await res.json();
+
+        dispatch(removePartyMember(resData.res))
+
+        return resData.res
+    }catch(error){
+        return {
+            data: undefined,
+            error: error + ''
+        }
+    }
+}
