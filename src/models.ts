@@ -50,3 +50,14 @@ export interface PartyMemberAndParty {
     partyMemberUUID: string,
     partyUUID: string,
 }
+
+export enum EntityType {
+    government = 1,
+    party,
+    partyMember,
+}
+
+export interface APIResult {
+    data: any | undefined, 
+    error: string | undefined
+}

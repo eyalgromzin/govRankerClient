@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
-import { Government, Party, PartyMember } from "../models";
+import { EntityType, Government, Party, PartyMember } from "../models";
 import AddButton from "./addButton";
+import DeleteButton from "./deleteButton";
 
 type ChooserProps = {};
 
@@ -31,13 +32,12 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([]);
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
     const [partyMemberOptions, setPartyMemberOptions] = useState<Option[]>([]);
-    const [selectedGovernmentOption, setSelectedGovernmentOption] = useState<
-        Option | undefined
-    >();
+    const [selectedGovernmentOption, setSelectedGovernmentOption] =
+        useState<Option | null>();
     const [selectedPartyOption, setSelectedPartyOption] = useState<
         Option | undefined
     >();
-    const [selectedPartyMember, setSelectedPartyMemberOption] = useState<
+    const [selectedPartyMemberOption, setSelectedPartyMemberOption] = useState<
         Option | undefined
     >();
 
@@ -68,9 +68,9 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     };
 
     const onPartyChange = (selectedOption: any) => {
-        const selectedParty = allParties.filter(
-            (partyI) => partyI.uuid == selectedOption.value
-        );
+        // const selectedParty = allParties.filter(
+        //     (partyI) => partyI.uuid == selectedOption.value
+        // );
         setSelectedPartyOption(selectedOption);
         const partyMembers = getPartyMembers(
             selectedOption.value,
@@ -100,10 +100,27 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
 
     const dropDownAndButtonsStyle: React.CSSProperties = {
         display: "flex",
+        marginBottom: "10px",
     };
 
     function openAddGovernmentDialog(): void {
-        console.log('clicked add gov  ')
+        console.log("clicked add gov  ");
+    }
+
+    const deleteGovernment = () => {
+        console.log("deleting government...");
+    };
+
+    function onGovernmentDeleteSuccess() {
+        setSelectedGovernmentOption(null);
+    }
+
+    function onPartyDeleteSuccess() {
+        setSelectedGovernmentOption(null);
+    }
+
+    function onPartyMemberDeleteSuccess() {
+        setSelectedGovernmentOption(null);
     }
 
     return (
@@ -114,23 +131,56 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
                     placeholder={"government"}
                     options={governmentOptions}
                     onChange={onGovernmentChange}
+                    value={selectedGovernmentOption}
                 />
-                <AddButton onClick={() => openAddGovernmentDialog()} />
+                <AddButton
+                    entityType={EntityType.government}
+                    parentUUID={undefined}
+                />
+                <DeleteButton
+                    entityUUID={selectedGovernmentOption?.value}
+                    entityType={EntityType.government}
+                    onSuccess={() => onGovernmentDeleteSuccess()}
+                />
             </div>
 
-            <Select
-                styles={customStyles}
-                placeholder={"party"}
-                options={partyOptions}
-                onChange={onPartyChange}
-            />
+            <div style={dropDownAndButtonsStyle}>
+                <Select
+                    styles={customStyles}
+                    placeholder={"party"}
+                    options={partyOptions}
+                    onChange={onPartyChange}
+                    value={selectedPartyOption}
+                />
+                <AddButton
+                    entityType={EntityType.party}
+                    parentUUID={selectedGovernmentOption?.value}
+                />
+                <DeleteButton
+                    entityUUID={selectedPartyOption?.value}
+                    entityType={EntityType.party}
+                    onSuccess={() => onPartyDeleteSuccess()}
+                />
+            </div>
 
-            <Select
-                styles={customStyles}
-                placeholder={"party member"}
-                options={partyMemberOptions}
-                onChange={onPartyMemberChange}
-            />
+            <div style={dropDownAndButtonsStyle}>
+                <Select
+                    styles={customStyles}
+                    placeholder={"party member"}
+                    options={partyMemberOptions}
+                    onChange={onPartyMemberChange}
+                    value={selectedPartyMemberOption}
+                />
+                <AddButton
+                    entityType={EntityType.partyMember}
+                    parentUUID={selectedPartyOption?.value}
+                />
+                <DeleteButton
+                    entityUUID={selectedPartyMemberOption?.value}
+                    entityType={EntityType.partyMember}
+                    onSuccess={() => onPartyMemberDeleteSuccess()}
+                />
+            </div>
         </Fragment>
     );
 };

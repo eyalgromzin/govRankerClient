@@ -21,4 +21,18 @@ export const getAllPartyMembersToParty = (dispatch: Function) => {
     )
 }
 
+export const addEntity = async (path: string, data: any) => {
+    const requestOptions: RequestInit = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers as needed
+        },
+        body: JSON.stringify(data),
+      };
+
+    const res = await (await fetch(`http://127.0.0.1:3000/${path}`, requestOptions)).text()
+
+    return res
+}
 

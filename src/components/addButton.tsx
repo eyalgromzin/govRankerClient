@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { addEntity } from '../apis/common';
 import { useDispatch } from 'react-redux';
+import { EntityType } from '../models';
+import { addEntity } from '../apis/common';
+import { createGovernment } from '../apis/governmentApi';
+import { createParty } from '../apis/partyApi';
+import { createPartyMember as createPartyMember } from '../apis/partyMembersApi';
 
 type ChooserProps = {
-    serverMethodName: string
+    entityType: EntityType,
+    parentUUID: string | undefined,
 };
 
-const YourComponent: React.FC<ChooserProps> = ({serverMethodName}) => {
+const YourComponent: React.FC<ChooserProps> = ({entityType, parentUUID}) => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -28,35 +33,55 @@ const YourComponent: React.FC<ChooserProps> = ({serverMethodName}) => {
   };
 
   const handleAddClick = async () => {
+    if (!name || !imageUrl || !description){
+        alert('missing fields')
+        return
+    }
+
+    if ((entityType == EntityType.party || entityType == EntityType.partyMember ) && !parentUUID){
+        alert('attach parent uuid ')
+        return
+    }
+
     console.log('name:', name);
     console.log('imageUrl:', imageUrl);
     console.log('description:', description);
 
     const data = { name, imageUrl, description }
 
-    const addResult = await addEntity(dispatch, 'government/createGovernment', data)
+    let addResult = undefined
+    if(entityType == EntityType.government){
+        addResult = await createGovernment(dispatch, name, imageUrl, description)
+    }else if(entityType == EntityType.party ){
+        addResult = await createParty(dispatch, name, imageUrl, description, parentUUID)
+    }else if(entityType == EntityType.partyMember){
+        addResult = await createPartyMember(dispatch, data)
+    }
 
+    if (addResult.err){
+        console.error(`failed to create ${entityType}`)
+        return 
+    }
 
-    
     handleClose();
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open Dialog
+      <Button variant="outlined" onClick={handleClickOpen} style={{'marginRight': 10}}>
+        create 
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <TextField
-            label="Input 1"
+            label="name"
             variant="outlined"
             fullWidth
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <TextField
-            label="Input 2"
+            label="image Url"
             variant="outlined"
             fullWidth
             value={imageUrl}
@@ -65,7 +90,7 @@ const YourComponent: React.FC<ChooserProps> = ({serverMethodName}) => {
           />
           <TextareaAutosize
             aria-label="Textarea"
-            placeholder="Textarea"
+            placeholder="description"
             minRows={3}
             style={{ width: '100%', marginTop: '16px' }}
             value={description}
@@ -74,10 +99,10 @@ const YourComponent: React.FC<ChooserProps> = ({serverMethodName}) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleAddClick}
+            onClick={() => handleAddClick()}
             style={{ marginTop: '16px' }}
           >
-            Add to Log
+            add to db
           </Button>
         </DialogContent>
       </Dialog>

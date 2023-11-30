@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import {setGovernments} from '../redux/dataSlice'
+import {addGovernment, setGovernments, removeGovernment} from '../redux/dataSlice'
+import { APIResult } from '../models';
 
 export const getAllGovernments = (dispatch: any) => {
     fetch('http://127.0.0.1:3000/government/getAllGovernments').then(
@@ -11,25 +12,64 @@ export const getAllGovernments = (dispatch: any) => {
     )
 }
 
-export const addGovernment = async (dispatch: Function, actionName: string, data: any) => {
+export const createGovernment = async (dispatch: Function, name: string, imageUrl: string, description: string):Promise<APIResult> => {
     const customHeaders = {
         "Content-Type": "application/json",
     }
     
-    const fullUrl = `http://127.0.0.1:3000/${actionName}`
-    const res = await fetch(fullUrl, {
-        method: "POST",
-        headers: customHeaders,
-        body: JSON.stringify(data),
-    })
-    if (!res.ok){
-        return
-    }
+    const data = {name, imageUrl, description}
 
-    const resData = await res.text();
-    dispatch(createGovernment())
+    const fullUrl = `http://127.0.0.1:3000/government/createGovernment`
+    try{
+        const res = await fetch(fullUrl, {
+            method: "POST",
+            headers: customHeaders,
+            body: JSON.stringify(data),
+        })
+        if (!res.ok){
+            console.log(await res.json())
+        }
+    
+        const resData = await res.json();
+        dispatch(addGovernment(resData.res))
+
+        return resData.res
+    }catch(error){
+        return {
+            data: undefined,
+            error: error + ''
+        }
+    }
 }
 
+export const deleteGovernment = async (dispatch: Function, governmentUUID: string):Promise<APIResult> => {
+    const customHeaders = {
+        "Content-Type": "application/json",
+    }
+    
+    const fullUrl = `http://127.0.0.1:3000/government/deleteGovernment`
+    try{
+        const res = await fetch(fullUrl, {
+            method: "POST",
+            headers: customHeaders,
+            body: JSON.stringify({governmentUUID}),
+        })
+        if (!res.ok){
+            console.log(await res.json())
+        }
+    
+        const resData = await res.json();
+
+        dispatch(removeGovernment(resData.res))
+
+        return resData.res
+    }catch(error){
+        return {
+            data: undefined,
+            error: error + ''
+        }
+    }
+}
 
 
 

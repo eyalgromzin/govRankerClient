@@ -57,13 +57,18 @@ export const dataSlice = createSlice({
     setSelectedPartyMember: (state: DataState, action: PayloadAction<PartyMember>) => {
       state.selectedPartyMember = action.payload;
     },
-    createGovernment: (state: DataState, action: PayloadAction<Government>) => {
+    addGovernment: (state: DataState, action: PayloadAction<Government>) => {
       state.governments.push(action.payload);
     },
-    createParty: (state: DataState, action: PayloadAction<Government>) => {
+    removeGovernment: (state: DataState, action: PayloadAction<any>) => {
+      state.governments = state.governments.filter(governmentI => {
+        return governmentI.uuid != action.payload.governmentUUID
+      });
+    },
+    addParty: (state: DataState, action: PayloadAction<Government>) => {
       state.parties.push(action.payload);
     },
-    createPartyMember: (state: DataState, action: PayloadAction<Government>) => {
+    addPartyMember: (state: DataState, action: PayloadAction<Government>) => {
       state.partyMembers.push(action.payload);
     },
   }
@@ -73,7 +78,7 @@ export const dataSlice = createSlice({
 export const { 
   setGovernments, setParties, setPartyMembers, 
   setArticles, setPartyToGovernment, setPartyMemberAndParty,
-  createGovernment, createParty, createPartyMember
+  addGovernment, addParty, addPartyMember, removeGovernment
 } = dataSlice.actions;
 
 

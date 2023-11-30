@@ -11,6 +11,16 @@ export const getAllArticles = (dispatch: any) => {
     )
 }
 
+export const createArticle = (dispatch: any) => {
+    fetch('http://127.0.0.1:3000/article/create').then(
+        res => res.json()
+    ).then(
+        res => {
+            dispatch(setGovernments(res.data))
+        }
+    )
+}
+
 
 
 
