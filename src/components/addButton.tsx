@@ -52,13 +52,13 @@ const YourComponent: React.FC<ChooserProps> = ({entityType, parentUUID}) => {
     let addResult = undefined
     if(entityType == EntityType.government){
         addResult = await createGovernment(dispatch, name, imageUrl, description)
-    }else if(entityType == EntityType.party ){
+    }else if(entityType == EntityType.party && parentUUID){
         addResult = await createParty(dispatch, name, imageUrl, description, parentUUID)
-    }else if(entityType == EntityType.partyMember){
-        addResult = await createPartyMember(dispatch, data)
+    }else if(entityType == EntityType.partyMember && parentUUID){
+        addResult = await createPartyMember(dispatch, name, imageUrl, description, parentUUID)
     }
 
-    if (addResult.err){
+    if (addResult && addResult.err){
         console.error(`failed to create ${entityType}`)
         return 
     }

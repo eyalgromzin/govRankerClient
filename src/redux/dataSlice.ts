@@ -65,10 +65,10 @@ export const dataSlice = createSlice({
         return governmentI.uuid != action.payload.governmentUUID
       });
     },
-    addParty: (state: DataState, action: PayloadAction<Government>) => {
+    addParty: (state: DataState, action: PayloadAction<Party>) => {
       state.parties.push(action.payload);
     },
-    addPartyMember: (state: DataState, action: PayloadAction<Government>) => {
+    addPartyMember: (state: DataState, action: PayloadAction<PartyMember>) => {
       state.partyMembers.push(action.payload);
     },
   }
