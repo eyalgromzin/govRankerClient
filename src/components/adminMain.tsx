@@ -5,14 +5,18 @@ import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
 import { Government, Party, PartyMember } from "../models";
 import { PartyMemberChooser } from "./partyMemberChooser";
+import ArticleCreation from "./ArticleCreation";
 
 type GovernmentsProps = {};
 
-interface Option {
+interface Option { 
     value: string;
     label: string;
 }
 
 export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
-    return <PartyMemberChooser />
+    return <div>
+        <PartyMemberChooser />
+        <ArticleCreation />
+    </div>
 };

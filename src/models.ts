@@ -38,6 +38,7 @@ export interface Article {
     description: string,
     imageUrl: string, 
     rating: number,
+    creationDate: string,
 }
 
 export interface PartyAndGovernment {
