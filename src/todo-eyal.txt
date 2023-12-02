@@ -1,18 +1,18 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- create a timeline 
-
 - create article delete button - under the thumbnail 
 
 - create article edit button - under the thumbnail
 
-- on article click - go to article link
-
-------------- today ---------
-
 - create router + page structure. to be able to do back. and to be able to send and share links 
 
-- create gov page with isAdmin property
+------------------ today ----------------------
+
+- enable select gov - show all the articles of all the parties and party members of this government 
+
+- enable select party - show all the articles of all the party members of this government 
+
+- show article thumbnail with clickable gov + party   at the top - to enable easier navigation .
 
 - admin page - add a button to connect article to another entity. to enable 1 article to multiple entities. 
                 - like connect an article to multiple persons, multiple parties and governments

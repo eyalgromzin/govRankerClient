@@ -22,7 +22,6 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
     creationDate,
 }) => {
     const divStyles: React.CSSProperties = {
-        backgroundColor: "lightsalmon",
         display: "flex",
         marginTop: "20px",
     };
@@ -41,7 +40,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
                         alt={title}
                     />
                 </div>
-                <div style={{ cursor: "pointer", margin: "0 auto" }}>
+                <div style={{ cursor: "pointer", margin: "0 15px" }}>
                     <div className="thumbnail-details">
                         <h2>{title}</h2>
                         <p>{description}</p>

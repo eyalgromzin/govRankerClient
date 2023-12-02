@@ -24,7 +24,7 @@ const ArticlesList: FunctionComponent<articlesProps> = ({}) => {
         <Fragment>
             <div>
                 {Object.keys(articlesDictionary).map((dateI: string) => {
-                    return <div>
+                    return <div key={dateI}>
                         <div style={{textAlign: 'start', fontWeight: 'bold', fontSize: '22px', marginTop: '20px'}}>{dateI}</div>
                         {articles.map((articleI: Article) => (
                             <div key={articleI.uuid}>
