@@ -47,20 +47,29 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([]);
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
     const [partyMemberOptions, setPartyMemberOptions] = useState<Option[]>([]);
-
-    const selectedPartyMemberOption: Option = {
+    
+    let selectedPartyMemberOption: Option | null = {
         value: selectedPartyMember? selectedPartyMember.uuid : '',
         label: selectedPartyMember? selectedPartyMember.name : ''
     }
+    if (!selectedPartyMember){
+        selectedPartyMemberOption = null
+    }
 
-    const selectedPartyOption: Option = {
+    let selectedPartyOption: Option | null = {
         value: selectedParty? selectedParty.uuid : '',
         label: selectedParty? selectedParty.name : ''
     }
+    if (!selectedParty){
+        selectedPartyOption = null
+    }
 
-    const selectedGovernmentOption: Option = {
+    let selectedGovernmentOption: Option | null = {
         value: selectedGovernment? selectedGovernment.uuid : '',
         label: selectedGovernment? selectedGovernment.name : ''
+    }
+    if (!selectedGovernment){
+        selectedGovernmentOption = null
     }
 
     const isDeleteGovernmentButtonEnabled =

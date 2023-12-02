@@ -26,7 +26,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App" style={{direction: "rtl"}}>
       <AdminMain />      
     </div>
   );

@@ -8,6 +8,8 @@ datetime will be stored as '20050505' always as UTC + 0
 
 - create article edit button - under the thumbnail
 
+- on article click - go to article link
+
 ------------- today ---------
 
 - create router + page structure. to be able to do back. and to be able to send and share links 
