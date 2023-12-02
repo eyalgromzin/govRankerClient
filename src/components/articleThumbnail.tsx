@@ -28,28 +28,30 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
     };
 
     return (
-        <div key={uuid} style={divStyles} className="thumbnail">
-            <div>
-                <img
-                    src={imageUrl}
-                    style={{
-                        height: "200px",
-                        margin: "0 auto",
-                        width: "300px",
-                    }}
-                    alt={title}
-                />
-            </div>
-            <a href={url} style={{cursor: 'pointer', margin: "0 auto" }} >
-                <div className="thumbnail-details" >
-                    <h2>{title}</h2>
-                    <p>{description}</p>
-                    <p>Date: {date}</p>
-                    <p>Rating: {rating}</p>
-                    <p>Creation Date: {creationDate}</p>
+        <a href={url} style={{ cursor: "pointer", margin: "0 auto" }}>
+            <div key={uuid} style={divStyles} className="thumbnail">
+                <div>
+                    <img
+                        src={imageUrl}
+                        style={{
+                            height: "200px",
+                            margin: "0 auto",
+                            width: "300px",
+                        }}
+                        alt={title}
+                    />
                 </div>
-            </a>
-        </div>
+                <div style={{ cursor: "pointer", margin: "0 auto" }}>
+                    <div className="thumbnail-details">
+                        <h2>{title}</h2>
+                        <p>{description}</p>
+                        <p>Date: {date}</p>
+                        <p>Rating: {rating}</p>
+                        <p>Creation Date: {creationDate}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
     );
 };
 
