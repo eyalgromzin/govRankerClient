@@ -1,12 +1,16 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- create article add section that will be shown only when party member is selected and that will add the article to the party member 
-
-- articles will be attached to party members only . and then a view will be created to attach it to 
+- on add article , add a 2 rows to entity to article.  
 
 - create a timeline 
 
-- create router + page structure. to be able to do back. its nice - needed to be able to send and share links 
+- create article delete button - under the thumbnail 
+
+- create article edit button - under the thumbnail
+
+------------- today ---------
+
+- create router + page structure. to be able to do back. and to be able to send and share links 
 
 - create gov page with isAdmin property
 

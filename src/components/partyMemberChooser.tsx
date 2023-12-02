@@ -1,11 +1,12 @@
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
 import { EntityType, Government, Party, PartyMember } from "../models";
 import AddButton from "./addButton";
 import DeleteButton from "./deleteButton";
+import { setSelectedGovernment, setSelectedParty, setSelectedPartyMember } from "../redux/dataSlice";
 
 type ChooserProps = {};
 
@@ -15,6 +16,8 @@ interface Option {
 }
 
 export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
+    const dispatch = useDispatch()
+
     const governments = useSelector(
         (state: RootState) => state.data1.governments
     );
@@ -29,17 +32,36 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
         (state: RootState) => state.data1.partyMemberAndParty
     );
 
+    const selectedPartyMember  = useSelector(
+        (state: RootState) => state.data1.selectedPartyMember
+    );
+
+    const selectedParty = useSelector(
+        (state: RootState) => state.data1.selectedParty
+    );
+
+    const selectedGovernment = useSelector(
+        (state: RootState) => state.data1.selectedGovernment
+    );
+
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([]);
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
     const [partyMemberOptions, setPartyMemberOptions] = useState<Option[]>([]);
-    const [selectedGovernmentOption, setSelectedGovernmentOption] =
-        useState<Option | null>();
-    const [selectedPartyOption, setSelectedPartyOption] = useState<
-        Option | undefined
-    >();
-    const [selectedPartyMemberOption, setSelectedPartyMemberOption] = useState<
-        Option | undefined
-    >();
+
+    const selectedPartyMemberOption: Option = {
+        value: selectedPartyMember? selectedPartyMember.uuid : '',
+        label: selectedPartyMember? selectedPartyMember.name : ''
+    }
+
+    const selectedPartyOption: Option = {
+        value: selectedParty? selectedParty.uuid : '',
+        label: selectedParty? selectedParty.name : ''
+    }
+
+    const selectedGovernmentOption: Option = {
+        value: selectedGovernment? selectedGovernment.uuid : '',
+        label: selectedGovernment? selectedGovernment.name : ''
+    }
 
     const isDeleteGovernmentButtonEnabled =
         partyAndGovernment.filter(
@@ -50,24 +72,27 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     const isDeletePartyButtonEnabled =
         partyMemberAndParty.filter(
             (partyMemberAndPartyI) =>
-                partyMemberAndPartyI.partyUUID ==
-                selectedPartyOption?.value
+                partyMemberAndPartyI.partyUUID == selectedPartyOption?.value
         ).length == 0;
-    const isDeletePartyMemberButtonEnabled = true
+    const isDeletePartyMemberButtonEnabled = true;
 
     useEffect(() => {
         const initialGovOptions: Option[] = [];
-        governments && governments.forEach((itemI) => {
-            initialGovOptions.push({ value: itemI.uuid, label: itemI.name });
-        });
+        governments &&
+            governments.forEach((itemI) => {
+                initialGovOptions.push({
+                    value: itemI.uuid,
+                    label: itemI.name,
+                });
+            });
         setGovernmentOptions(initialGovOptions);
     }, [governments]);
 
     const onGovernmentChange = (selectedOption: any) => {
         const selectedGovernment = governments.filter(
             (govI) => govI.uuid == selectedOption.value
-        );
-        setSelectedGovernmentOption(selectedOption);
+        )[0];
+        dispatch(setSelectedGovernment(selectedGovernment));
         const govParties = getGovernmentParties(
             selectedOption.value,
             partyAndGovernment,
@@ -82,10 +107,10 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     };
 
     const onPartyChange = (selectedOption: any) => {
-        // const selectedParty = allParties.filter(
-        //     (partyI) => partyI.uuid == selectedOption.value
-        // );
-        setSelectedPartyOption(selectedOption);
+        const selectedParty = allParties.filter(
+            (partyI) => partyI.uuid == selectedOption.value
+        )[0];
+        dispatch(setSelectedParty(selectedParty))
         const partyMembers = getPartyMembers(
             selectedOption.value,
             partyMemberAndParty,
@@ -102,8 +127,8 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     const onPartyMemberChange = (selectedOption: any) => {
         const selectedPartyMember = allPartyMembers.filter(
             (partyMemberI) => partyMemberI.uuid == selectedOption.value
-        );
-        setSelectedPartyMemberOption(selectedOption);
+        )[0];
+        dispatch(setSelectedPartyMember(selectedPartyMember));
     };
 
     const customStyles = {
@@ -152,7 +177,6 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
                     entityUUID={selectedGovernmentOption?.value}
                     entityType={EntityType.government}
                     onSuccess={() => onGovernmentDeleteSuccess()}
-                    
                 />
             </div>
 

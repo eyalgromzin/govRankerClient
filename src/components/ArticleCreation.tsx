@@ -27,7 +27,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({notify}) => {
     console.log('Rating:', rating);
     console.log('Creation Date:', creationDate);
 
-    await createArticle(dispatch, url, date, description, imageUrl, rating)
+    await createArticle(dispatch, url, date, description, imageUrl, rating, governmentUUID, partyMemberUUID)
 
     notify('created article')
   };

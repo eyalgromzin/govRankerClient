@@ -92,7 +92,8 @@ export const {
   setGovernments, setParties, setPartyMembers, 
   setArticles, setPartyToGovernment, setPartyMemberAndParty,
   addGovernment, addParty, addPartyMember, removeGovernment,
-  removeParty, removePartyMember, addArticle
+  removeParty, removePartyMember, addArticle,
+  setSelectedGovernment, setSelectedParty, setSelectedPartyMember,
 } = dataSlice.actions;
 
 
