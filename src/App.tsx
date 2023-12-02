@@ -10,6 +10,7 @@ import { Dispatch, AnyAction } from "@reduxjs/toolkit";
 import { Governments } from "./components/governments";
 import { AdminMain } from "./components/adminMain";
 import { getAllParties } from "./apis/partyApi";
+import { getAllArticles } from "./apis/articleAPi";
 
 export default function App() {
   // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
@@ -21,6 +22,7 @@ export default function App() {
     getAllPartyMembers(dispatch)
     getAllPartyToGovernment(dispatch) 
     getAllPartyMembersToParty(dispatch) 
+    getAllArticles(dispatch) 
   }, [])
 
   return (

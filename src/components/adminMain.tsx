@@ -6,17 +6,40 @@ import { getGovernmentParties, getPartyMembers } from "../utils";
 import { Government, Party, PartyMember } from "../models";
 import { PartyMemberChooser } from "./partyMemberChooser";
 import ArticleCreation from "./ArticleCreation";
+// import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
+import ArticlesList from "./articlesList";
 
 type GovernmentsProps = {};
 
-interface Option { 
+interface Option {
     value: string;
     label: string;
 }
 
 export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
-    return <div>
-        <PartyMemberChooser />
-        <ArticleCreation />
-    </div>
+    const notify = (str: string) => {
+        toast("created", {
+            duration: 1000,
+            position: "top-center",
+        });
+    };
+
+    return (
+        <div>
+            <PartyMemberChooser />
+            <ArticleCreation notify={notify} />
+            <ArticlesList />
+            <Toaster
+                toastOptions={{
+                    className: "",
+                    style: {
+                        padding: "16px",
+                        color: "white",
+                        backgroundColor: "green",
+                    },
+                }}
+            />
+        </div>
+    );
 };

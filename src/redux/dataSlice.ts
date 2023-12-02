@@ -63,6 +63,9 @@ export const dataSlice = createSlice({
     addParty: (state: DataState, action: PayloadAction<Party>) => {
       state.parties.push(action.payload);
     },
+    addArticle: (state: DataState, action: PayloadAction<Article>) => {
+      state.articles.push(action.payload);
+    },
     addPartyMember: (state: DataState, action: PayloadAction<PartyMember>) => {
       state.partyMembers.push(action.payload);
     },
@@ -89,7 +92,7 @@ export const {
   setGovernments, setParties, setPartyMembers, 
   setArticles, setPartyToGovernment, setPartyMemberAndParty,
   addGovernment, addParty, addPartyMember, removeGovernment,
-  removeParty, removePartyMember
+  removeParty, removePartyMember, addArticle
 } = dataSlice.actions;
 
 

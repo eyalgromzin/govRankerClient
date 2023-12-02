@@ -33,6 +33,7 @@ export interface PartyMemberToParty {
 
 export interface Article {
     uuid: string,
+    title: string,
     url: string,
     date: string, 
     description: string,

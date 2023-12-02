@@ -3,10 +3,10 @@ import { createArticle } from '../apis/articleAPi';
 import { useDispatch } from 'react-redux';
 
 interface MyComponentProps {
-  // Define your component props here
+  notify: Function
 }
 
-const MyComponent: React.FC<MyComponentProps> = () => {
+const CreateArticle: React.FC<MyComponentProps> = ({notify}) => {
   // State for each field
   const [url, setUrl] = useState('');
   const [date, setDate] = useState('');
@@ -18,7 +18,7 @@ const MyComponent: React.FC<MyComponentProps> = () => {
   const dispatch = useDispatch();
   
   // Function to handle the "create" button click
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     // Log all the field values
     console.log('URL:', url);
     console.log('Date:', date);
@@ -27,11 +27,13 @@ const MyComponent: React.FC<MyComponentProps> = () => {
     console.log('Rating:', rating);
     console.log('Creation Date:', creationDate);
 
-    createArticle(dispatch, url, date, description, imageUrl, rating)
+    await createArticle(dispatch, url, date, description, imageUrl, rating)
+
+    notify('created article')
   };
 
   return (
-    <div>
+    <div style={{padding: '10px', backgroundColor: 'lightcoral'}}>
       <label>
         URL:
         <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
@@ -64,9 +66,9 @@ const MyComponent: React.FC<MyComponentProps> = () => {
       </label>
       <br />
 
-      <button onClick={handleCreateClick}>Create</button>
+      <button onClick={handleCreateClick} style={{padding: '5px', backgroundColor: 'lightgray'}}>Create</button>
     </div>
   );
 };
 
-export default MyComponent;
+export default CreateArticle;
