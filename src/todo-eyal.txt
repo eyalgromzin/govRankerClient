@@ -1,6 +1,6 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- on add article , add a 2 rows to entity to article.  
+- on add article , add a 2 rows to "entity to article".  
 
 - create a timeline 
 

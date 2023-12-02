@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Article, Government, Party, PartyAndGovernment, PartyMember, PartyMemberAndParty } from "../models";
+import { Article, EntityAndArticle, Government, Party, PartyAndGovernment, PartyMember, PartyMemberAndParty } from "../models";
 
 export interface DataState {
   governments: Government[];
   parties: Party[];
   partyMembers: PartyMember[];
   articles: Article[];
-  partyAndGovernment: PartyAndGovernment[];
+  entityAndArticles: EntityAndArticle[]
   partyMemberAndParty: PartyMemberAndParty[];
-  selectedGovernment: Government | undefined;
-  selectedParty: Party | undefined;
+  partyAndGovernment: PartyAndGovernment[];
   selectedPartyMember: PartyMember | undefined;
-
+  selectedParty: Party | undefined;
+  selectedGovernment: Government | undefined;
 }
 
 const initialState: DataState = {
@@ -19,6 +19,7 @@ const initialState: DataState = {
   parties: [],
   partyMembers: [],
   articles: [],
+  entityAndArticles: [],
   partyAndGovernment: [],
   partyMemberAndParty: [],
   selectedGovernment: undefined,
@@ -83,6 +84,9 @@ export const dataSlice = createSlice({
       state.partyMembers = state.partyMembers.filter(partyMemberI => {
         return partyMemberI.uuid != action.payload.partyMemberUUID
       });
+    },
+    addEntityToArticle: (state: DataState, action: PayloadAction<EntityAndArticle>) => {
+      state.entityAndArticles.push(action.payload);
     },
   }
 });

@@ -53,6 +53,12 @@ export interface PartyMemberAndParty {
     partyUUID: string,
 }
 
+export interface EntityAndArticle {
+    id: number,
+    entityUUID: string,
+    articleUUID: string,
+}
+
 export enum EntityType {
     government = 1,
     party,
