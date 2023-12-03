@@ -8,7 +8,6 @@ datetime will be stored as '20050505' always as UTC + 0
 - create router + . to be able to do back. and to be able to send and share links
         - route will look like http://domain.com/ ???? / ... 
 
-
 ------------------ today ----------------------
 
 - enable select gov - show all the articles of all the parties and party members of this government 

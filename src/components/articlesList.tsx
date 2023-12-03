@@ -26,17 +26,10 @@ const ArticlesList: FunctionComponent<articlesProps> = ({}) => {
                 {Object.keys(articlesDictionary).map((dateI: string) => {
                     return <div key={dateI}>
                         <div style={{textAlign: 'start', fontWeight: 'bold', fontSize: '22px', marginTop: '20px'}}>{dateI}</div>
-                        {articles.map((articleI: Article) => (
+                        {articlesDictionary[dateI].map((articleI: Article) => (
                             <div key={articleI.uuid}>
                                 <ArticleThumbnail
-                                    uuid={articleI.uuid}
-                                    title={articleI.title}
-                                    url={articleI.url}
-                                    date={articleI.date}
-                                    description={articleI.description}
-                                    imageUrl={articleI.imageUrl}
-                                    rating={0}
-                                    creationDate={articleI.creationDate}
+                                    article={articleI}
                                 />
                             </div>
                         ))}

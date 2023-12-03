@@ -5,7 +5,7 @@ import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
 import { Government, Party, PartyMember } from "../models";
 import { PartyMemberChooser } from "./partyMemberChooser";
-import ArticleCreation from "./ArticleCreation";
+import ArticleCreation from "./createEditArticle";
 // import { ToastContainer, toast } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";

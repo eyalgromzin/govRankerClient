@@ -36,6 +36,53 @@ export const createArticle = async (
         }
     }
 };
+
+export const updateArticle = async (
+    articleUUID: string, 
+    dispatch: any,
+    url: string,
+    date: string,
+    description: string,
+    imageUrl: string,
+    rating: number,
+    title: string,
+    creationDate: string,
+) => {
+    const data = {url, date, description, imageUrl, rating}
+
+    try{
+        const updatedArticle = await updateArticleInDb(data, dispatch);
+
+        const article: Article = {uuid: articleUUID, url, imageUrl, date, description, rating, title, creationDate }
+
+        console.log('updated article in db ', articleUUID, url, imageUrl, date, description, rating, title, creationDate)
+    }catch(error){
+        return {
+            data: undefined,
+            error: error + ''
+        }
+    }
+};
+
+async function updateArticleInDb(article: Article, dispatch: any) : Promise<Article>{
+    const customHeaders = {
+        "Content-Type": "application/json",
+    }
+    const res = await fetch(`http://127.0.0.1:3000/article/updateArticle`, {
+        method: "POST",
+        headers: customHeaders,
+        body: JSON.stringify(article),
+    });
+    if (!res.ok) {
+        console.log(await res.json());
+    }
+
+    const resData = await res.json();
+    dispatch(addArticle(resData.res));
+
+    return resData.res;
+}
+
 async function addArticleToDb(data: { url: string; date: string; description: string; imageUrl: string; rating: number; }, dispatch: any) : Promise<Article>{
     const customHeaders = {
         "Content-Type": "application/json",
@@ -54,6 +101,7 @@ async function addArticleToDb(data: { url: string; date: string; description: st
 
     return resData.res;
 }
+
 
 async function createEntityToArticleInDB(entityUUID: string, articleUUID: string, entityTypeId: number, dispatch: any) {
     const customHeaders = {

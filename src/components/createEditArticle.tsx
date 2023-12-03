@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { createArticle } from "../apis/articleAPi";
+import { createArticle, updateArticle } from "../apis/articleAPi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { Article } from "../models";
 
 interface MyComponentProps {
     notify: Function;
+    article: Article;
 }
 
-const CreateArticle: React.FC<MyComponentProps> = ({ notify }) => {
+const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     // State for each field
-    const [url, setUrl] = useState("");
-    const [date, setDate] = useState("");
-    const [description, setDescription] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-    const [rating, setRating] = useState<number>(0);
-    const [creationDate, setCreationDate] = useState("");
+    const [url, setUrl] = useState(article?.url || '');
+    const [date, setDate] = useState(article?.date || '');
+    const [description, setDescription] = useState(article?.description || '');
+    const [imageUrl, setImageUrl] = useState(article?.imageUrl || '');
+    const [rating, setRating] = useState<number>(article?.rating || 0);
+    const [creationDate, setCreationDate] = useState(article?.creationDate || '');
+    const [title, setTitle] = useState(article?.title || '');
 
     const selectedPartyMember = useSelector(
         (state: RootState) => state.data1.selectedPartyMember
@@ -32,28 +35,36 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify }) => {
 
     // Function to handle the "create" button click
     const handleCreateClick = async () => {
-        // Log all the field values
-        console.log("URL:", url);
-        console.log("Date:", date);
-        console.log("Description:", description);
-        console.log("Image URL:", imageUrl);
-        console.log("Rating:", rating);
-        console.log("Creation Date:", creationDate);
-
         if (selectedPartyMember && selectedParty && selectedGovernment) {
-            await createArticle(
-                dispatch,
-                url,
-                date,
-                description,
-                imageUrl,
-                rating,
-                selectedPartyMember?.uuid,
-                selectedParty?.uuid,
-                selectedGovernment?.uuid
-            );
-
-            notify("created article");
+            if(article){
+                await updateArticle(
+                    article.uuid,
+                    dispatch,
+                    url,
+                    date,
+                    description,
+                    imageUrl,
+                    rating,
+                    title,
+                    article.creationDate
+                );
+    
+                notify("updated article");
+            }else{
+                await createArticle(
+                    dispatch,
+                    url,
+                    date,
+                    description,
+                    imageUrl,
+                    rating,
+                    selectedPartyMember?.uuid,
+                    selectedParty?.uuid,
+                    selectedGovernment?.uuid
+                );
+    
+                notify("created article");
+            }
         }else{
           alert('plz select party member')
         }
@@ -99,6 +110,15 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify }) => {
             </label>
 
             <label>
+                title:
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+            </label>
+
+            <label>
                 Rating:
                 <input
                     type="number"
@@ -116,12 +136,13 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify }) => {
                 />
             </label>
             <br />
+            
 
             <button
                 onClick={handleCreateClick}
                 style={{ padding: "5px", backgroundColor: "lightgray" }}
             >
-                Create
+                {article ? 'save' : 'create'}
             </button>
         </div>
     );
