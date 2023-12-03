@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { addArticle, setArticles, setGovernments } from "../redux/dataSlice";
-import { Article, EntityType } from "../models";
+import { addArticle, removeArticle, setArticles, setGovernments } from "../redux/dataSlice";
+import { APIResult, Article, EntityType } from "../models";
 
 export const getAllArticles = (dispatch: any) => {
     fetch("http://127.0.0.1:3000/article/getAllArticles")
@@ -76,3 +76,31 @@ async function createEntityToArticleInDB(entityUUID: string, articleUUID: string
     return resData.res;
 }
 
+export const deleteArticle = async (dispatch: Function, articleUUID: string):Promise<APIResult> => {
+    const customHeaders = {
+        "Content-Type": "application/json",
+    }
+    
+    const fullUrl = `http://127.0.0.1:3000/article/deleteArticle`
+    try{
+        const res = await fetch(fullUrl, {
+            method: "POST",
+            headers: customHeaders,
+            body: JSON.stringify({articleUUID}),
+        })
+        if (!res.ok){
+            console.log(await res.json())
+        }
+    
+        const resData = await res.json();
+
+        dispatch(removeArticle(articleUUID))
+
+        return resData.res
+    }catch(error){
+        return {
+            data: undefined,
+            error: error + ''
+        }
+    }
+}

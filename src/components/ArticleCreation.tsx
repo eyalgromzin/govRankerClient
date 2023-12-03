@@ -55,7 +55,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify }) => {
 
             notify("created article");
         }else{
-          console.error('selectedPartyMember && selectedParty && selectedGovernment is false')
+          alert('plz select party member')
         }
     };
 

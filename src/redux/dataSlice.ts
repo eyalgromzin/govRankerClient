@@ -85,6 +85,13 @@ export const dataSlice = createSlice({
         return partyMemberI.uuid != action.payload.partyMemberUUID
       });
     },
+    removeArticle: (state: DataState, action: PayloadAction<any>) => {
+      state.articles = state.articles.filter(articleI => {
+        return articleI.uuid != action.payload
+      });
+      let s = 4
+      s += 1
+    },
     addEntityToArticle: (state: DataState, action: PayloadAction<EntityAndArticle>) => {
       state.entityAndArticles.push(action.payload);
     },
@@ -98,6 +105,7 @@ export const {
   addGovernment, addParty, addPartyMember, removeGovernment,
   removeParty, removePartyMember, addArticle,
   setSelectedGovernment, setSelectedParty, setSelectedPartyMember,
+  removeArticle,
 } = dataSlice.actions;
 
 
