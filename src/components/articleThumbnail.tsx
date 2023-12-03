@@ -77,7 +77,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
                 title={"delete"}
                 message={"delete article?"}
                 onConfirm={function (): void {
-                    onDeleteArticle(uuid)
+                    onDeleteArticle(article.uuid)
                 }}
                 onCancel={function (): void {
                     setIsConfirmDialogOpen(false)
