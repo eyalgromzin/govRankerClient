@@ -22,7 +22,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         marginTop: "20px",
     };
 
-    function onDeleteArticle(uuid: string): void {
+    function handleDeleteArticle(uuid: string): void {
         deleteArticle(dispatch, uuid);
         setIsConfirmDialogOpen(false)
     }
@@ -77,7 +77,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
                 title={"delete"}
                 message={"delete article?"}
                 onConfirm={function (): void {
-                    onDeleteArticle(article.uuid)
+                    handleDeleteArticle(article.uuid)
                 }}
                 onCancel={function (): void {
                     setIsConfirmDialogOpen(false)
