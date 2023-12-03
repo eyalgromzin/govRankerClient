@@ -1,14 +1,12 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- create article edit button - under the thumbnail
-
-- create home page - with latest articles + gov component separated to parties. 
-        - once a party member is selected , it goes to the admin page without admin rights 
+- make db connection use relative path 
 
 - create router + . to be able to do back. and to be able to send and share links
         - route will look like http://domain.com/ ???? / ... 
 
------------------- today ----------------------
+- create home page - with latest articles + gov component separated to parties. 
+        - once a party member is selected , it goes to the admin page without admin rights 
 
 - enable select gov - show all the articles of all the parties and party members of this government 
 
