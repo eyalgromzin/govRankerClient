@@ -16,9 +16,6 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     const [description, setDescription] = useState(article?.description || "");
     const [imageUrl, setImageUrl] = useState(article?.imageUrl || "");
     const [rating, setRating] = useState<number>(article?.rating || 0);
-    const [creationDate, setCreationDate] = useState<string>(
-        `${ new Date().getFullYear()}${ new Date().getMonth()}${ new Date().getDay}}`
-    );
     const [title, setTitle] = useState(article?.title || "");
 
     const selectedPartyMember = useSelector(
