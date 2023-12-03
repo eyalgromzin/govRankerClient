@@ -52,7 +52,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
         </div>
     </a>
 
-    const editItem = <CreateEditArticle article={article} notify={() => alert('created')} />
+    const editItem = <CreateEditArticle article={article} notify={() => alert('updated')} />
 
     return (
         <div>

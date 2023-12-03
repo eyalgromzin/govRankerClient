@@ -6,18 +6,20 @@ import { Article } from "../models";
 
 interface MyComponentProps {
     notify: Function;
-    article: Article;
+    article: Article | undefined;
 }
 
 const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     // State for each field
-    const [url, setUrl] = useState(article?.url || '');
-    const [date, setDate] = useState(article?.date || '');
-    const [description, setDescription] = useState(article?.description || '');
-    const [imageUrl, setImageUrl] = useState(article?.imageUrl || '');
+    const [url, setUrl] = useState(article?.url || "");
+    const [date, setDate] = useState(article?.date || "");
+    const [description, setDescription] = useState(article?.description || "");
+    const [imageUrl, setImageUrl] = useState(article?.imageUrl || "");
     const [rating, setRating] = useState<number>(article?.rating || 0);
-    const [creationDate, setCreationDate] = useState(article?.creationDate || '');
-    const [title, setTitle] = useState(article?.title || '');
+    const [creationDate, setCreationDate] = useState(
+        article?.creationDate || ""
+    );
+    const [title, setTitle] = useState(article?.title || "");
 
     const selectedPartyMember = useSelector(
         (state: RootState) => state.data1.selectedPartyMember
@@ -35,22 +37,21 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
 
     // Function to handle the "create" button click
     const handleCreateClick = async () => {
-        if (selectedPartyMember && selectedParty && selectedGovernment) {
-            if(article){
-                await updateArticle(
-                    article.uuid,
-                    dispatch,
-                    url,
-                    date,
-                    description,
-                    imageUrl,
-                    rating,
-                    title,
-                    article.creationDate
-                );
-    
-                notify("updated article");
-            }else{
+        if (article) {
+            await updateArticle(
+                article.uuid,
+                dispatch,
+                url,
+                date,
+                description,
+                imageUrl,
+                rating,
+                title,
+            );
+
+            notify("updated article");
+        } else {
+            if (selectedPartyMember && selectedParty && selectedGovernment) {
                 await createArticle(
                     dispatch,
                     url,
@@ -62,11 +63,11 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                     selectedParty?.uuid,
                     selectedGovernment?.uuid
                 );
-    
+
                 notify("created article");
+            } else {
+                alert("plz select party member");
             }
-        }else{
-          alert('plz select party member')
         }
     };
 
@@ -136,13 +137,12 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                 />
             </label>
             <br />
-            
 
             <button
                 onClick={handleCreateClick}
                 style={{ padding: "5px", backgroundColor: "lightgray" }}
             >
-                {article ? 'save' : 'create'}
+                {article ? "save" : "create"}
             </button>
         </div>
     );

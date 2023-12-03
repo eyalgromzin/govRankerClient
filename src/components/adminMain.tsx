@@ -28,7 +28,7 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
     return (
         <div style={{direction: 'ltr'}}>
             <PartyMemberChooser />
-            <ArticleCreation notify={notify} />
+            <ArticleCreation notify={notify} article={undefined} />
             <ArticlesList />
             <Toaster
                 toastOptions={{

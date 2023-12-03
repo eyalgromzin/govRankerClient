@@ -1,5 +1,10 @@
 import { useDispatch } from "react-redux";
-import { addArticle, removeArticle, setArticles, setGovernments } from "../redux/dataSlice";
+import {
+    addArticle,
+    removeArticle,
+    setArticles,
+    setGovernments,
+} from "../redux/dataSlice";
 import { APIResult, Article, EntityType } from "../models";
 
 export const getAllArticles = (dispatch: any) => {
@@ -17,28 +22,37 @@ export const createArticle = async (
     description: string,
     imageUrl: string,
     rating: number,
+    creationDate: string,
+    title: string,
     partyMemberUUID: string,
-    partyUUID: string,
-    governmentUUID: string,
 ) => {
-    const data = {url, date, description, imageUrl, rating}
+    const data = { url, date, description, imageUrl, rating };
 
-    try{
+    try {
         const addedArticle = await addArticleToDb(data, dispatch);
 
-        await createEntityToArticleInDB(partyMemberUUID, addedArticle.uuid, EntityType.partyMember, dispatch);
+        await createEntityToArticleInDB(
+            partyMemberUUID,
+            addedArticle.uuid,
+            EntityType.partyMember,
+            dispatch
+        );
 
-        console.log('added entity to article ', partyMemberUUID, addedArticle.uuid)
-    }catch(error){
+        console.log(
+            "added entity to article ",
+            partyMemberUUID,
+            addedArticle.uuid
+        );
+    } catch (error) {
         return {
             data: undefined,
-            error: error + ''
-        }
+            error: error + "",
+        };
     }
 };
 
 export const updateArticle = async (
-    articleUUID: string, 
+    articleUUID: string,
     dispatch: any,
     url: string,
     date: string,
@@ -46,32 +60,62 @@ export const updateArticle = async (
     imageUrl: string,
     rating: number,
     title: string,
-    creationDate: string,
 ) => {
-    const data = {url, date, description, imageUrl, rating}
+    const data = { url, date, description, imageUrl, rating };
 
-    try{
-        const updatedArticle = await updateArticleInDb(data, dispatch);
+    try {
+        const updatedArticle = await updateArticleInDb(articleUUID,
+            title,
+            url,
+            date,
+            description,
+            imageUrl,
+            rating,
+            dispatch);
 
-        const article: Article = {uuid: articleUUID, url, imageUrl, date, description, rating, title, creationDate }
-
-        console.log('updated article in db ', articleUUID, url, imageUrl, date, description, rating, title, creationDate)
-    }catch(error){
+        console.log(
+            "updated article in db: ",
+            articleUUID,
+            url,
+            imageUrl,
+            date,
+            description,
+            rating,
+            title,
+        );
+    } catch (error) {
         return {
             data: undefined,
-            error: error + ''
-        }
+            error: error + "",
+        };
     }
 };
 
-async function updateArticleInDb(article: Article, dispatch: any) : Promise<Article>{
+async function updateArticleInDb(
+    uuid: string,
+    title: string,
+    url: string,
+    date: string,
+    description: string,
+    imageUrl: string,
+    rating: number,
+    dispatch: any
+): Promise<Article> {
     const customHeaders = {
         "Content-Type": "application/json",
-    }
+    };
     const res = await fetch(`http://127.0.0.1:3000/article/updateArticle`, {
         method: "POST",
         headers: customHeaders,
-        body: JSON.stringify(article),
+        body: JSON.stringify({
+            uuid,
+            title,
+            url,
+            date,
+            description,
+            imageUrl,
+            rating,
+        }),
     });
     if (!res.ok) {
         console.log(await res.json());
@@ -83,10 +127,19 @@ async function updateArticleInDb(article: Article, dispatch: any) : Promise<Arti
     return resData.res;
 }
 
-async function addArticleToDb(data: { url: string; date: string; description: string; imageUrl: string; rating: number; }, dispatch: any) : Promise<Article>{
+async function addArticleToDb(
+    data: {
+        url: string;
+        date: string;
+        description: string;
+        imageUrl: string;
+        rating: number;
+    },
+    dispatch: any
+): Promise<Article> {
     const customHeaders = {
         "Content-Type": "application/json",
-    }
+    };
     const res = await fetch(`http://127.0.0.1:3000/article/createArticle`, {
         method: "POST",
         headers: customHeaders,
@@ -102,18 +155,25 @@ async function addArticleToDb(data: { url: string; date: string; description: st
     return resData.res;
 }
 
-
-async function createEntityToArticleInDB(entityUUID: string, articleUUID: string, entityTypeId: number, dispatch: any) {
+async function createEntityToArticleInDB(
+    entityUUID: string,
+    articleUUID: string,
+    entityTypeId: number,
+    dispatch: any
+) {
     const customHeaders = {
         "Content-Type": "application/json",
-    }
+    };
 
-    const data = {entityUUID, articleUUID, entityTypeId}
-    const res = await fetch(`http://127.0.0.1:3000/article/createEntityArticle`, {
-        method: "POST",
-        headers: customHeaders,
-        body: JSON.stringify(data),
-    });
+    const data = { entityUUID, articleUUID, entityTypeId };
+    const res = await fetch(
+        `http://127.0.0.1:3000/article/createEntityArticle`,
+        {
+            method: "POST",
+            headers: customHeaders,
+            body: JSON.stringify(data),
+        }
+    );
     if (!res.ok) {
         console.log(await res.json());
     }
@@ -124,31 +184,34 @@ async function createEntityToArticleInDB(entityUUID: string, articleUUID: string
     return resData.res;
 }
 
-export const deleteArticle = async (dispatch: Function, articleUUID: string):Promise<APIResult> => {
+export const deleteArticle = async (
+    dispatch: Function,
+    articleUUID: string
+): Promise<APIResult> => {
     const customHeaders = {
         "Content-Type": "application/json",
-    }
-    
-    const fullUrl = `http://127.0.0.1:3000/article/deleteArticle`
-    try{
+    };
+
+    const fullUrl = `http://127.0.0.1:3000/article/deleteArticle`;
+    try {
         const res = await fetch(fullUrl, {
             method: "POST",
             headers: customHeaders,
-            body: JSON.stringify({articleUUID}),
-        })
-        if (!res.ok){
-            console.log(await res.json())
+            body: JSON.stringify({ articleUUID }),
+        });
+        if (!res.ok) {
+            console.log(await res.json());
         }
-    
+
         const resData = await res.json();
 
-        dispatch(removeArticle(articleUUID))
+        dispatch(removeArticle(articleUUID));
 
-        return resData.res
-    }catch(error){
+        return resData.res;
+    } catch (error) {
         return {
             data: undefined,
-            error: error + ''
-        }
+            error: error + "",
+        };
     }
-}
+};
