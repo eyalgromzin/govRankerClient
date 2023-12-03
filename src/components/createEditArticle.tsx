@@ -16,8 +16,8 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     const [description, setDescription] = useState(article?.description || "");
     const [imageUrl, setImageUrl] = useState(article?.imageUrl || "");
     const [rating, setRating] = useState<number>(article?.rating || 0);
-    const [creationDate, setCreationDate] = useState(
-        article?.creationDate || ""
+    const [creationDate, setCreationDate] = useState<string>(
+        `${ new Date().getFullYear()}${ new Date().getMonth()}${ new Date().getDay}}`
     );
     const [title, setTitle] = useState(article?.title || "");
 
@@ -128,14 +128,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                 />
             </label>
 
-            <label>
-                Creation Date:
-                <input
-                    type="text"
-                    value={creationDate}
-                    onChange={(e) => setCreationDate(e.target.value)}
-                />
-            </label>
+         
             <br />
 
             <button
