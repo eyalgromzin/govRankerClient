@@ -1,5 +1,4 @@
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
@@ -29,7 +28,7 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
         <div style={{direction: 'ltr'}}>
             <PartyMemberChooser />
             <ArticleCreation notify={notify} article={undefined} />
-            <ArticlesList />
+            <ArticlesList isEditable={false} />
             <Toaster
                 toastOptions={{
                     className: "",

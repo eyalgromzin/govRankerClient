@@ -1,6 +1,5 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-
 - create recently added articles to articles to main page
 
 - create home page - with latest articles + gov component separated to parties. 

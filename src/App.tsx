@@ -10,7 +10,7 @@ import { Dispatch, AnyAction } from "@reduxjs/toolkit";
 import { Governments } from "./components/governments";
 import { AdminMain } from "./components/adminMain";
 import { getAllParties } from "./apis/partyApi";
-import { getAllArticles } from "./apis/articleAPi";
+import { getAllArticles, getRecentlyAddedArticles } from "./apis/articleAPi";
 import { Routes, Route } from "react-router-dom";
 import { Main } from "./components/main";
 
@@ -25,6 +25,7 @@ export default function App() {
     getAllPartyToGovernment(dispatch) 
     getAllPartyMembersToParty(dispatch) 
     getAllArticles(dispatch) 
+    getRecentlyAddedArticles(dispatch)
   }, [])
 
   return (

@@ -9,14 +9,18 @@ import ArticleCreation from "./createEditArticle";
 // import { ToastContainer, toast } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
+import RecentlyAdded from "./recentlyAdded";
 
 type GovernmentsProps = {};
 
 export const Main: React.FC<GovernmentsProps> = ({}) => {
+    const RecentlyAddedArticles = useSelector((state: RootState) => state.data1.recentlyAddedArticles); // see store.ts
+
     return (
         <div>
+            <RecentlyAdded articles={RecentlyAddedArticles} />
             <PartyMemberChooser />
-            <ArticlesList />
+            <ArticlesList isEditable={false} />
         </div>
     );
 };

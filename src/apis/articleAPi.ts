@@ -15,6 +15,14 @@ export const getAllArticles = (dispatch: any) => {
         });
 };
 
+export const getRecentlyAddedArticles = (dispatch: any) => {
+    fetch("http://127.0.0.1:3000/article/getRecentlyAdded")
+        .then((res) => res.json())
+        .then((res) => {
+            dispatch(setArticles(res.data));
+        });
+};
+
 export const createArticle = async (
     dispatch: any,
     url: string,
