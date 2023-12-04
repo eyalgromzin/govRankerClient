@@ -28,7 +28,7 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
         <div>
             <PartyMemberChooser isShowEditButtons={true} />
             <ArticleCreation notify={notify} article={undefined} />
-            <ArticlesList isEditable={false} />
+            <ArticlesList isEditable={true} />
             <Toaster
                 toastOptions={{
                     className: "",

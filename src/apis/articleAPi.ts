@@ -32,11 +32,10 @@ export const createArticle = async (
     description: string,
     imageUrl: string,
     rating: number,
-    creationDate: string,
     title: string,
     partyMemberUUID: string,
 ) => {
-    const data = { url, date, description, imageUrl, rating };
+    const data = { title, url, date, description, imageUrl, rating };
 
     try {
         const addedArticle = await addArticleToDb(data, dispatch);
@@ -144,6 +143,7 @@ async function addArticleToDb(
         description: string;
         imageUrl: string;
         rating: number;
+        title: string;
     },
     dispatch: any
 ): Promise<Article> {

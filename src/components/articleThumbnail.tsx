@@ -34,19 +34,18 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ article, isEditable }) => {
                     <img
                         src={article?.imageUrl}
                         style={{
-                            height: "200px",
                             margin: "0 auto",
-                            width: "300px",
+                            width: "600px",
                         }}
                     />
                 </div>
-                <div style={{ cursor: "pointer", margin: "0 15px" }}>
+                <div style={{ cursor: "pointer", margin: "0 15px", textAlign: 'right' }}>
                     <div className="thumbnail-details">
-                        <h2>{article?.title}</h2>
+                        <h1 style={{fontSize: '20px', fontWeight: 'bold'}}>{article?.title}</h1>
                         <p>{article?.description}</p>
-                        <p>Date: {article?.date}</p>
-                        <p>Rating: {article?.rating}</p>
-                        <p>Creation Date: {article?.creationDate}</p>
+                        {/* <p>Date: {article?.date}</p> */}
+                        {/* <p>Rating: {article?.rating}</p> */}
+                        {/* <p>Creation Date: {article?.creationDate}</p> */}
                     </div>
                 </div>
             </div>

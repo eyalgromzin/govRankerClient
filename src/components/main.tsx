@@ -24,10 +24,10 @@ export const Main: React.FC<GovernmentsProps> = ({}) => {
 
     return (
         <div>
-            {RecentlyAddedArticles && RecentlyAddedArticles.length > 0 && (
+            {!selectedPartyMember && RecentlyAddedArticles && RecentlyAddedArticles.length > 0 && (
                 <RecentlyAdded articles={RecentlyAddedArticles} />
             )}
-            <div style={{}}>
+            <div style={{marginTop: '70px'}}>
                 <PartyMemberChooser isShowEditButtons={false} />
             </div>
             {selectedPartyMember && (
@@ -39,6 +39,7 @@ export const Main: React.FC<GovernmentsProps> = ({}) => {
                     />
                 </div>
             )}
+            <div style={{height: '50px'}} />
             <ArticlesList isEditable={false} />
         </div>
     );

@@ -29,7 +29,7 @@ const ArticlesList: FC<ArticlesProps> = ({ isEditable }) => {
     return (
         <Fragment>
             <div>
-                <div style={{ fontSize: "25px" }}>היסטוריית עשיה:</div>
+                <div style={{ fontSize: "40px",textDecoration: 'bold', textAlign: 'start' }}>היסטוריית עשיה:</div>
                 {Object.keys(articlesDictionary).map((dateI: string) => {
                     return (
                         <div key={dateI}>

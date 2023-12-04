@@ -56,9 +56,8 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                     description,
                     imageUrl,
                     rating,
+                    title,
                     selectedPartyMember?.uuid,
-                    selectedParty?.uuid,
-                    selectedGovernment?.uuid
                 );
 
                 notify("created article");
