@@ -10,7 +10,7 @@ import ArticleCreation from "./createEditArticle";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
 import RecentlyAdded from "./recentlyAdded";
-import Summary from "./partyMemberSummary";
+import Summary from "./imageAndTextSummary";
 
 type GovernmentsProps = {};
 
