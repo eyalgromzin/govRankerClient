@@ -1,7 +1,7 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- create router + . to be able to do back. and to be able to send and share links
-        - route will look like http://domain.com/ ???? / ... 
+
+- create recently added articles to articles to main page
 
 - create home page - with latest articles + gov component separated to parties. 
         - once a party member is selected , it goes to the admin page without admin rights 
@@ -10,7 +10,8 @@ datetime will be stored as '20050505' always as UTC + 0
 
 - enable select party - show all the articles of all the party members of this government 
 
-- show article thumbnail with clickable gov + party   at the top - to enable easier navigation .
+- show article thumbnail with clickable gov + party at the top - to enable easier navigation .
+
 
 - admin page - add a button to connect article to another entity. to enable 1 article to multiple entities. 
                 - like connect an article to multiple persons, multiple parties and governments
