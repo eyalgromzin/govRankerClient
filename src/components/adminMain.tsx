@@ -25,8 +25,8 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
     };
 
     return (
-        <div style={{direction: 'ltr'}}>
-            <PartyMemberChooser />
+        <div>
+            <PartyMemberChooser isShowEditButtons={true} />
             <ArticleCreation notify={notify} article={undefined} />
             <ArticlesList isEditable={false} />
             <Toaster

@@ -184,7 +184,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
     return (
         <Fragment>
             <div style={{display: 'flex'}}>
-                <div style={dropDownAndButtonsStyle}>
+                <div className="government"  style={dropDownAndButtonsStyle}>
                     <Select
                         styles={customStyles}
                         placeholder={"ממשלה"}
@@ -208,7 +208,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
                     )}
                 </div>
 
-                <div style={dropDownAndButtonsStyle}>
+                <div className="party" style={dropDownAndButtonsStyle}>
                     <Select
                         styles={customStyles}
                         placeholder={"מפלגה"}
