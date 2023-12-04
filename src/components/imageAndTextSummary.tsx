@@ -19,7 +19,7 @@ const Summary: React.FC<ImageTextProps> = ({ imageUrl, description, name }) => {
                 />
             </div>
             <div >
-                <p>{name}</p>
+                <p style={{fontSize: '40px'}}>{name}</p>
                 <div>{description}</div>
             </div>
         </div>
