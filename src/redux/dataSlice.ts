@@ -110,7 +110,7 @@ export const {
   addGovernment, addParty, addPartyMember, removeGovernment,
   removeParty, removePartyMember, addArticle,
   setSelectedGovernment, setSelectedParty, setSelectedPartyMember,
-  removeArticle,
+  removeArticle, setRecentlyAddedArticles
 } = dataSlice.actions;
 
 
