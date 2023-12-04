@@ -25,6 +25,7 @@ const ArticlesList: FunctionComponent<articlesProps> = ({isEditable}) => {
     return (
         <Fragment>
             <div>
+                <div style={{fontSize: '25px'}}>היסטוריית עשיה:</div> 
                 {Object.keys(articlesDictionary).map((dateI: string) => {
                     return <div key={dateI}>
                         <div style={{textAlign: 'start', fontWeight: 'bold', fontSize: '22px', marginTop: '20px'}}>{dateI}</div>

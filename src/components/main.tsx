@@ -10,16 +10,21 @@ import ArticleCreation from "./createEditArticle";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
 import RecentlyAdded from "./recentlyAdded";
+import Summary from "./partyMemberSummary";
 
 type GovernmentsProps = {};
 
 export const Main: React.FC<GovernmentsProps> = ({}) => {
     const RecentlyAddedArticles = useSelector((state: RootState) => state.data1.recentlyAddedArticles); // see store.ts
+    const selectedPartyMember = useSelector((state: RootState) => state.data1.selectedPartyMember); // see store.ts
 
     return (
         <div>
             <RecentlyAdded articles={RecentlyAddedArticles} />
             <PartyMemberChooser />
+            {
+                selectedPartyMember && <Summary name={selectedPartyMember?.name} imageUrl={selectedPartyMember?.imageUrl} description={selectedPartyMember?.description} />
+            }
             <ArticlesList isEditable={false} />
         </div>
     );
