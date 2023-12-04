@@ -15,16 +15,30 @@ import Summary from "./imageAndTextSummary";
 type GovernmentsProps = {};
 
 export const Main: React.FC<GovernmentsProps> = ({}) => {
-    const RecentlyAddedArticles = useSelector((state: RootState) => state.data1.recentlyAddedArticles); // see store.ts
-    const selectedPartyMember = useSelector((state: RootState) => state.data1.selectedPartyMember); // see store.ts
+    const RecentlyAddedArticles = useSelector(
+        (state: RootState) => state.data1.recentlyAddedArticles
+    ); // see store.ts
+    const selectedPartyMember = useSelector(
+        (state: RootState) => state.data1.selectedPartyMember
+    ); // see store.ts
 
     return (
         <div>
-            <RecentlyAdded articles={RecentlyAddedArticles} />
-            <PartyMemberChooser />
-            {
-                selectedPartyMember && <Summary name={selectedPartyMember?.name} imageUrl={selectedPartyMember?.imageUrl} description={selectedPartyMember?.description} />
-            }
+            {RecentlyAddedArticles && RecentlyAddedArticles.length > 0 && (
+                <RecentlyAdded articles={RecentlyAddedArticles} />
+            )}
+            <div style={{}}>
+                <PartyMemberChooser isShowEditButtons={false} />
+            </div>
+            {selectedPartyMember && (
+                <div>
+                    <Summary
+                        name={selectedPartyMember?.name}
+                        imageUrl={selectedPartyMember?.imageUrl}
+                        description={selectedPartyMember?.description}
+                    />
+                </div>
+            )}
             <ArticlesList isEditable={false} />
         </div>
     );

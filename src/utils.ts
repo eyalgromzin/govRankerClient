@@ -20,6 +20,10 @@ export const getGovernmentParties = (govUUID: string, PartyAndGovernments: Party
 export const getPartyMembers = (partyUUID: string, partyMembersAndParty: PartyMemberAndParty[],
     allPartyMembers: PartyMember[]):PartyMember[] => {
     
+    if (!allPartyMembers){
+        return []
+    }
+
     const partyMemberUUIDs: string[] = []
     partyMembersAndParty.forEach(partyMemberAndPartyI => {
         if(partyMemberAndPartyI.partyUUID == partyUUID){

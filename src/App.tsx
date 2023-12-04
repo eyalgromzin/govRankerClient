@@ -29,7 +29,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="App" style={{direction: "rtl"}}>
+    <div className="App" style={{direction: "rtl", margin: '0 20px'}}>
       <Routes >
         <Route path="/" element={ <Main /> } />
         <Route path="/admin" element={ <AdminMain /> } />

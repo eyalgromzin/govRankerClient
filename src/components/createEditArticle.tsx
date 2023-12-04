@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { createArticle, updateArticle } from "../apis/articleAPi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -43,7 +43,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                 description,
                 imageUrl,
                 rating,
-                title,
+                title
             );
 
             notify("updated article");
@@ -68,69 +68,106 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
         }
     };
 
+    const urlContainerStyle: CSSProperties = {
+        // margin: "0 40px",
+        display: "flex",
+    };
+    const regularFieldContainerStyle: CSSProperties = {
+        // margin: "0 40px",
+        marginTop: "10px",
+    };
+    const textAreaContainerStyle: CSSProperties = {
+        marginTop: "10px",
+    };
+    const fieldTitleStyles: CSSProperties = {
+        width: "100px",
+    };
+
     return (
         <div style={{ padding: "10px", backgroundColor: "lightcoral" }}>
-            <label>
-                URL:
-                <input
-                    type="text"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                />
-            </label>
-
-            <label>
-                Date:
-                <input
-                    type="text"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                />
-            </label>
-
-            <label>
-                Description:
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </label>
-            <br />
-
-            <label>
-                Image URL:
-                <input
-                    type="text"
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                />
-            </label>
-
-            <label>
-                title:
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-            </label>
-
-            <label>
-                Rating:
-                <input
-                    type="number"
-                    value={rating}
-                    onChange={(e) => setRating(Number(e.target.value))}
-                />
-            </label>
-
-         
-            <br />
-
+            <div className="fieldsContainer">
+                <div
+                    className="urlsContainer"
+                    style={{ display: "flex", marginBottom: "10px" }}
+                >
+                    <div
+                        style={{
+                            display: "flex",
+                            flex: 1,
+                            marginRight: "10px",
+                        }}
+                    >
+                        <span style={fieldTitleStyles}>URL:</span>
+                        <input
+                            type="text"
+                            value={url}
+                            style={{ flex: 1 }}
+                            onChange={(e) => setUrl(e.target.value)}
+                        />
+                    </div>
+                    <div style={{ display: "flex", flex: 1 }}>
+                        <span style={fieldTitleStyles}>IMAGE URL:</span>
+                        <input
+                            type="text"
+                            value={imageUrl}
+                            style={{ flex: 1 }}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div
+                    className="titleContainer"
+                    style={regularFieldContainerStyle}
+                >
+                    <div style={{ display: "flex" }}>
+                        <span style={fieldTitleStyles}>title:</span>
+                        <input
+                            type="text"
+                            style={{ flex: 1 }}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div style={textAreaContainerStyle}>
+                    <div style={{ display: "flex" }}>
+                        <span style={fieldTitleStyles}>Description:</span>
+                        <textarea
+                            value={description}
+                            style={{ flex: 1, height: "50px" }}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div style={{ display: "flex", marginTop: '10px' }}>
+                    <div style={{ display: "flex", flex: 1 }}>
+                        <span style={fieldTitleStyles}>Date:</span>
+                        <input
+                            type="text"
+                            style={{flex: 1}}
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </div>
+                    <div style={{ display: "flex", flex: 1 }}>
+                        <span style={fieldTitleStyles}>Rating:</span>
+                        <input
+                            type="number"
+                            value={rating}
+                            style={{flex: 1}}
+                            onChange={(e) => setRating(Number(e.target.value))}
+                        />
+                    </div>
+                </div>
+            </div>
             <button
                 onClick={handleCreateClick}
-                style={{ padding: "5px", backgroundColor: "lightgray" }}
+                style={{
+                    marginTop: '20px',
+                    padding: '10px 30px',
+                    backgroundColor: 'lightgoldenrodyellow',
+                    borderRadius: '5px',
+                }}
             >
                 {article ? "save" : "create"}
             </button>

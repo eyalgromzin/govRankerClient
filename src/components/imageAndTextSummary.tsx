@@ -13,9 +13,8 @@ const Summary: React.FC<ImageTextProps> = ({ imageUrl, description, name }) => {
                 <img
                     src={imageUrl}
                     style={{
-                        maxWidth: "100%",
                         height: "300px",
-                        width: "300px",
+                        maxWidth: '300px'
                     }}
                 />
             </div>
