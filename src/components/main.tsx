@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
 import RecentlyAdded from "./recentlyAdded";
 import Summary from "./imageAndTextSummary";
+import knesetImage from '../images/kneset.png'; // with import
 
 type GovernmentsProps = {};
 
@@ -27,6 +28,7 @@ export const Main: React.FC<GovernmentsProps> = ({}) => {
             {!selectedPartyMember && RecentlyAddedArticles && RecentlyAddedArticles.length > 0 && (
                 <RecentlyAdded articles={RecentlyAddedArticles} />
             )}
+            {/* <img src={knesetImage} style={{height: '400px', margin: '0 auto'}}/> */}
             <div style={{marginTop: '70px'}}>
                 <PartyMemberChooser isShowEditButtons={false} />
             </div>
