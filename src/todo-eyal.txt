@@ -1,7 +1,5 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- make db connection use relative path 
-
 - create router + . to be able to do back. and to be able to send and share links
         - route will look like http://domain.com/ ???? / ... 
 

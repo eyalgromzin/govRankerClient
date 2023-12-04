@@ -4,9 +4,11 @@ import { RootState } from "../redux/store";
 import ArticleThumbnail from "./articleThumbnail";
 import { Article } from "../models";
 
-type articlesProps = {};
+type articlesProps = {
+    isEditable: boolean
+};
 
-const ArticlesList: FunctionComponent<articlesProps> = ({}) => {
+const ArticlesList: FunctionComponent<articlesProps> = ({isEditable}) => {
     const articles = useSelector((state: RootState) => state.data1.articles); // see store.ts
 
     // put articles in date butckets and sort the buckets
@@ -30,6 +32,7 @@ const ArticlesList: FunctionComponent<articlesProps> = ({}) => {
                             <div key={articleI.uuid}>
                                 <ArticleThumbnail
                                     article={articleI}
+                                    isEditable={isEditable}
                                 />
                             </div>
                         ))}
