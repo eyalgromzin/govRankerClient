@@ -156,15 +156,15 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({}) => {
     }
 
     function onGovernmentDeleteSuccess() {
-        setSelectedGovernmentOption(null);
+        setSelectedGovernment(null);
     }
 
     function onPartyDeleteSuccess() {
-        setSelectedGovernmentOption(null);
+        setSelectedGovernment(null);
     }
 
     function onPartyMemberDeleteSuccess() {
-        setSelectedGovernmentOption(null);
+        setSelectedGovernment(null);
     }
 
     return (

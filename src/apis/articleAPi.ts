@@ -4,6 +4,7 @@ import {
     removeArticle,
     setArticles,
     setGovernments,
+    setRecentlyAddedArticles,
 } from "../redux/dataSlice";
 import { APIResult, Article, EntityType } from "../models";
 
@@ -15,11 +16,12 @@ export const getAllArticles = (dispatch: any) => {
         });
 };
 
-export const getRecentlyAddedArticles = (dispatch: any) => {
-    fetch("http://127.0.0.1:3000/article/getRecentlyAdded")
+export const getRecentlyAddedArticles = (dispatch: any, numOfArticles: number) => {
+    const url = `http://127.0.0.1:3000/article/getRecentlyAdded?numOfArticles=${numOfArticles}`
+    fetch(url)
         .then((res) => res.json())
         .then((res) => {
-            dispatch(setArticles(res.data));
+            dispatch(setRecentlyAddedArticles(res.data));
         });
 };
 

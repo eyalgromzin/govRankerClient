@@ -25,7 +25,7 @@ export default function App() {
     getAllPartyToGovernment(dispatch) 
     getAllPartyMembersToParty(dispatch) 
     getAllArticles(dispatch) 
-    getRecentlyAddedArticles(dispatch)
+    getRecentlyAddedArticles(dispatch, 10)
   }, [])
 
   return (
