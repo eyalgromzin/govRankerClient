@@ -17,7 +17,7 @@ import { Main } from "./components/main";
 export default function App() {
   // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
   const dispatch = useDispatch();
-  
+  //asd
   useEffect(() => {
     getAllGovernments(dispatch)
     getAllParties(dispatch)
