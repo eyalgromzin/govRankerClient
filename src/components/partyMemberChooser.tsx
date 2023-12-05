@@ -204,6 +204,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
                             placeholder="ממשלה"
                             onChange={onGovernmentChange}
                         >
+                            <MenuItem key='clear' value={undefined}>&nbsp;</MenuItem>
                             {governmentOptions.map((optionI: Option) => (
                                 <MenuItem
                                     key={optionI.value}
@@ -248,6 +249,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
                             label="מפלגה"
                             onChange={onPartyChange}
                         >
+                            <MenuItem key='clear' value={undefined}>&nbsp;</MenuItem>
                             {partyOptions.map((optionI: Option) => (
                                 <MenuItem
                                     key={optionI.value}
@@ -292,6 +294,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
                             label="חבר כנסת"
                             onChange={onPartyMemberChange}
                         >
+                            <MenuItem key='clear' value={undefined}>&nbsp;</MenuItem>
                             {partyMemberOptions.map((optionI: Option) => (
                                 <MenuItem
                                     key={optionI.value}
