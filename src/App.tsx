@@ -15,7 +15,7 @@ import { AdminMain } from "./components/adminMain";
 import { getAllParties } from "./apis/partyApi";
 import { getAllArticles, getRecentlyAddedArticles } from "./apis/articleAPi";
 import { Routes, Route } from "react-router-dom";
-import { Main } from "./components/main";
+import { Home } from "./components/main";
 
 export default function App() {
     // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
@@ -37,7 +37,7 @@ export default function App() {
             style={{ direction: "rtl", width: "1000px", margin: "0 auto" }}
         >
             <Routes>
-                <Route path="/" element={<Main />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/admin" element={<AdminMain />} />
             </Routes>
         </div>

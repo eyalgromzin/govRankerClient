@@ -1,7 +1,6 @@
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
 import { EntityType, Government, Party, PartyMember } from "../models";
 import AddButton from "./addButton";
@@ -11,14 +10,21 @@ import {
     setSelectedParty,
     setSelectedPartyMember,
 } from "../redux/dataSlice";
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from "@mui/material";
 
 type ChooserProps = {
     isShowEditButtons: boolean;
 };
 
 interface Option {
-    value: string;
-    label: string;
+    value: string | undefined;
+    label: string | undefined;
 }
 
 export const PartyMemberChooser: React.FC<ChooserProps> = ({
@@ -56,12 +62,12 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
     const [partyMemberOptions, setPartyMemberOptions] = useState<Option[]>([]);
 
-    let selectedPartyMemberOption: Option | null = {
+    let selectedPartyMemberOption: Option | undefined = {
         value: selectedPartyMember ? selectedPartyMember.uuid : "",
         label: selectedPartyMember ? selectedPartyMember.name : "",
     };
     if (!selectedPartyMember) {
-        selectedPartyMemberOption = null;
+        selectedPartyMemberOption = undefined;
     }
 
     let selectedPartyOption: Option | null = {
@@ -105,13 +111,14 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         setGovernmentOptions(initialGovOptions);
     }, [governments]);
 
-    const onGovernmentChange = (selectedOption: any) => {
+    const onGovernmentChange = (event: SelectChangeEvent) => {
+        const selectedValue = event.target.value;
         const selectedGovernment = governments.filter(
-            (govI) => govI.uuid == selectedOption.value
+            (govI) => govI.uuid == selectedValue
         )[0];
         dispatch(setSelectedGovernment(selectedGovernment));
         const govParties = getGovernmentParties(
-            selectedOption.value,
+            selectedValue,
             partyAndGovernment,
             allParties
         );
@@ -128,13 +135,14 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         setPartyOptions(newPartyOptions);
     };
 
-    const onPartyChange = (selectedOption: any) => {
+    const onPartyChange = (event: SelectChangeEvent) => {
+        const selectedValue = event.target.value;
         const selectedParty = allParties.filter(
-            (partyI) => partyI.uuid == selectedOption.value
+            (partyI) => partyI.uuid == selectedValue
         )[0];
         dispatch(setSelectedParty(selectedParty));
         const partyMembers = getPartyMembers(
-            selectedOption.value,
+            selectedValue,
             partyMemberAndParty,
             allPartyMembers
         );
@@ -151,9 +159,10 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         setPartyMemberOptions(newPartyOptions);
     };
 
-    const onPartyMemberChange = (selectedOption: any) => {
+    const onPartyMemberChange = (event: SelectChangeEvent) => {
+        const selectedValue = event.target.value;
         const selectedPartyMember = allPartyMembers.filter(
-            (partyMemberI) => partyMemberI.uuid == selectedOption.value
+            (partyMemberI) => partyMemberI.uuid == selectedValue
         )[0];
         dispatch(setSelectedPartyMember(selectedPartyMember));
     };
@@ -169,6 +178,11 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         marginBottom: "10px",
     };
 
+    const dropdownStyle: React.CSSProperties = {
+        minWidth: 300,
+        marginLeft: 20
+    }
+
     function onGovernmentDeleteSuccess() {
         setSelectedGovernment(null);
     }
@@ -183,15 +197,29 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
 
     return (
         <Fragment>
-            <div style={{display: 'flex'}}>
-                <div className="government"  style={dropDownAndButtonsStyle}>
-                    <Select
-                        styles={customStyles}
-                        placeholder={"ממשלה"}
-                        options={governmentOptions}
-                        onChange={onGovernmentChange}
-                        value={selectedGovernmentOption}
-                    />
+            <div style={{ display: "flex" }}>
+                <div className="government" style={dropDownAndButtonsStyle}>
+                    <FormControl style={dropdownStyle}>
+                        <InputLabel>ממשלה</InputLabel>
+                        <Select
+                            variant="standard"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={selectedGovernmentOption?.value}
+                            label="ממשלה"
+                            placeholder="ממשלה"
+                            onChange={onGovernmentChange}
+                        >
+                            {governmentOptions.map((optionI: Option) => (
+                                <MenuItem
+                                    key={optionI.value}
+                                    value={optionI.value}
+                                >
+                                    {optionI.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.government}
@@ -209,13 +237,33 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
                 </div>
 
                 <div className="party" style={dropDownAndButtonsStyle}>
-                    <Select
+                    {/* <Select
                         styles={customStyles}
                         placeholder={"מפלגה"}
                         options={partyOptions}
                         onChange={onPartyChange}
                         value={selectedPartyOption}
-                    />
+                    /> */}
+                    <FormControl style={dropdownStyle}>
+                        <InputLabel>מפלגה</InputLabel>
+                        <Select
+                            variant="standard"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={selectedPartyOption?.value}
+                            label="מפלגה"
+                            onChange={onPartyChange}
+                        >
+                            {partyOptions.map((optionI: Option) => (
+                                <MenuItem
+                                    key={optionI.value}
+                                    value={optionI.value}
+                                >
+                                    {optionI.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.party}
@@ -233,13 +281,33 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
                 </div>
 
                 <div style={dropDownAndButtonsStyle}>
-                    <Select
+                    {/* <Select
                         styles={customStyles}
                         placeholder={"חבר כנסת"}
                         options={partyMemberOptions}
                         onChange={onPartyMemberChange}
                         value={selectedPartyMemberOption}
-                    />
+                    /> */}
+                    <FormControl style={dropdownStyle}>
+                        <InputLabel>חבר כנסת</InputLabel>
+                        <Select
+                            variant="standard"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={selectedPartyMemberOption?.value}
+                            label="חבר כנסת"
+                            onChange={onPartyMemberChange}
+                        >
+                            {partyMemberOptions.map((optionI: Option) => (
+                                <MenuItem
+                                    key={optionI.value}
+                                    value={optionI.value}
+                                >
+                                    {optionI.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.partyMember}

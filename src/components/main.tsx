@@ -13,9 +13,9 @@ import RecentlyAdded from "./recentlyAdded";
 import Summary from "./imageAndTextSummary";
 import knesetImage from '../images/kneset.png'; // with import
 
-type GovernmentsProps = {};
+type HomeProps = {};
 
-export const Main: React.FC<GovernmentsProps> = ({}) => {
+export const Home: React.FC<HomeProps> = ({}) => {
     const RecentlyAddedArticles = useSelector(
         (state: RootState) => state.data1.recentlyAddedArticles
     ); // see store.ts

@@ -12,8 +12,8 @@ const RecentlyAdded: FunctionComponent<articlesProps> = ({ articles }) => {
     // put articles in date butckets and sort the buckets
 
     return (
-        <div >
-            RecentlyAdded:
+        <div style={{textAlign: 'right'}}>
+            <div style={{fontSize: '25px'}}>הוסף לאחרונה:</div>
             <div style={{textAlign: 'start'}}>
                 {articles.map((articleI: Article) => (
                     <div key={articleI.uuid}>{articleI.title}</div>
