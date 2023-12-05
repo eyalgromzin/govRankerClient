@@ -8,7 +8,7 @@ import { getAllPartyMembers } from "./apis/partyMembersApi";
 import { getAllPartyMembersToParty, getAllPartyToGovernment } from "./apis/common";
 import { AdminMain } from "./components/adminMain";
 import { getAllParties } from "./apis/partyApi";
-import { getAllArticles } from "./apis/articleAPi";
+import { getAllArticles, getRecentlyAddedArticles } from "./apis/articleAPi";
 import { Routes, Route } from "react-router-dom";
 import { Main } from "./components/main";
 import Parliament from "./components/Parliament";
@@ -24,6 +24,7 @@ export default function App() {
     getAllPartyToGovernment(dispatch) 
     getAllPartyMembersToParty(dispatch) 
     getAllArticles(dispatch) 
+    getRecentlyAddedArticles(dispatch, 10)
   }, [])
 
   return (
