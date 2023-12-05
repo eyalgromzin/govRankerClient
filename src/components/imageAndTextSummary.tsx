@@ -8,7 +8,7 @@ interface ImageTextProps {
 
 const Summary: React.FC<ImageTextProps> = ({ imageUrl, description, name }) => {
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", marginTop: '40px' }}>
             <div style={{marginLeft: '20px'}}>
                 <img
                     src={imageUrl}

@@ -1,17 +1,18 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- create home page - with latest articles + gov component separated to parties. 
-        - once a party member is selected , it goes to the admin page without admin rights 
+- admin page - add a button to connect article to another party member. to enable 1 article to multiple party members. 
 
-- enable select gov - show all the articles of all the parties and party members of this government 
+- enable select gov - show all the articles of all the parties and party members of this government - wait for yuli
 
 - enable select party - show all the articles of all the party members of this government 
+        - get all party members -> 
+        - get all articles of party members -> 
+        - show them 
 
-- show article thumbnail with clickable gov + party at the top - to enable easier navigation .
+- add blank option to select  
 
+- show article thumbnail with clickable gov + party at the top - to enable easier navigation - will cancel the 
 
-- admin page - add a button to connect article to another entity. to enable 1 article to multiple entities. 
-                - like connect an article to multiple persons, multiple parties and governments
-
-- UI:   need to create a button near the article to connect multiple entities to an article. 
+- UI:   need to create a button near the article to connect multiple entities to an article ???
         it will open a popup that will show all connected entities and a delete / add buttons 
+

@@ -167,19 +167,13 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         dispatch(setSelectedPartyMember(selectedPartyMember));
     };
 
-    const customStyles = {
-        control: () => ({
-            width: 300, // Set the width of the control
-        }),
-    };
-
     const dropDownAndButtonsStyle: React.CSSProperties = {
         display: "flex",
         marginBottom: "10px",
     };
 
     const dropdownStyle: React.CSSProperties = {
-        minWidth: 300,
+        minWidth: 317,
         marginLeft: 20
     }
 
