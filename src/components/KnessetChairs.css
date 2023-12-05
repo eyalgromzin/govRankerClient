@@ -1,0 +1,22 @@
+/* KnessetChairs.css */
+
+.knesset {
+    display: grid;
+    grid-template-columns: repeat(12, 50px); /* רוחב של כל כיסא */
+    grid-template-rows: repeat(10, 50px); /* גובה של כל כיסא */
+    gap: 5px; /* רווח בין הכיסאות */
+    padding: 20px;
+    justify-content: center;
+}
+
+.chair {
+    background-color: transparent; /* צבע הכיסא */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-image: url("../assets/images/b.jpg");
+    width: 100%; /* רוחב מקבל רוחב ה-DIV */
+    height: 100%; /* גובה מקבל גובה ה-DIV */
+    background-size: cover; /* עובר על כל הגובה והרוחב של ה-DIV */
+    background-position: center;
+}
+
