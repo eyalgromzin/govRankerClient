@@ -29,7 +29,7 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
         <div style={{direction: 'ltr'}}>
             <PartyMemberChooser />
             <ArticleCreation notify={notify} article={undefined} />
-            <ArticlesList />
+            <ArticlesList  isEditable/>
             <Toaster
                 toastOptions={{
                     className: "",
