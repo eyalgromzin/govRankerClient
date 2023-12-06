@@ -1,7 +1,6 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-
-- create recently added articles to articles to main page
+- create description section - after a click on person - it will show descrption section 
 
 - create home page - with latest articles + gov component separated to parties. 
         - once a party member is selected , it goes to the admin page without admin rights 

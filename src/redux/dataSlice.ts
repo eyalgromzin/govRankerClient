@@ -11,7 +11,8 @@ export interface DataState {
   partyAndGovernment: PartyAndGovernment[];
   selectedPartyMember: PartyMember | undefined;
   selectedParty: Party | undefined;
-  selectedGovernment: Government | undefined;
+  selectedGovernment: Government | undefined | null;
+  recentlyAddedArticles: Article[];
 }
 
 const initialState: DataState = {
@@ -25,6 +26,7 @@ const initialState: DataState = {
   selectedGovernment: undefined,
   selectedParty: undefined,
   selectedPartyMember: undefined,
+  recentlyAddedArticles: [],
 };
 
 export const dataSlice = createSlice({
@@ -49,7 +51,7 @@ export const dataSlice = createSlice({
     setPartyMemberAndParty: (state: DataState, action: PayloadAction<PartyMemberAndParty[]>) => {
       state.partyMemberAndParty = action.payload;
     },
-    setSelectedGovernment: (state: DataState, action: PayloadAction<Government>) => {
+    setSelectedGovernment: (state: DataState, action: PayloadAction<Government | null>) => {
       state.selectedGovernment = action.payload;
     },
     setSelectedParty: (state: DataState, action: PayloadAction<Party>) => {
@@ -95,6 +97,9 @@ export const dataSlice = createSlice({
     addEntityToArticle: (state: DataState, action: PayloadAction<EntityAndArticle>) => {
       state.entityAndArticles.push(action.payload);
     },
+    setRecentlyAddedArticles: (state: DataState, action: PayloadAction<Article[]>) => {
+      state.recentlyAddedArticles = (action.payload);
+    },
   }
 });
 
@@ -105,7 +110,7 @@ export const {
   addGovernment, addParty, addPartyMember, removeGovernment,
   removeParty, removePartyMember, addArticle,
   setSelectedGovernment, setSelectedParty, setSelectedPartyMember,
-  removeArticle,
+  removeArticle, setRecentlyAddedArticles
 } = dataSlice.actions;
 
 
