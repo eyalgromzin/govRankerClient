@@ -1,16 +1,31 @@
-import React from 'react';
-import '../components/KnessetChairs.css'
+import React, {useState} from 'react';
+import './KnessetChairs.css';
+import ClickableCircularImage from "./ClickableCircularImage";
 
-const CircularMembersBoxes = () => {
-    return (
-        <div className="circular-boxes">
-            <div className="box">
-                <img src="path_to_image" alt="Image" />
-                <p>Text</p>
-            </div>
-            {/* Repeat this structure for each box */}
-        </div>
-    );
+
+
+interface DisplayMembers {
+    dataArray: MyObject[];
+}
+const KnessetComp:React.FC<DisplayMembers> =({dataArray})=>{
+
+    const handleImageClick=()=> {
+
+    }
+
+
+    return    <div className="knesset-flex">
+        {
+            dataArray.map((box, index) => (
+                <ClickableCircularImage  imageUrl={box.url}  onClick={handleImageClick}
+                                         text={box.name}
+
+
+
+                />
+
+        ))}
+    </div>
 };
 
-export default CircularMembersBoxes;
+export default KnessetComp;

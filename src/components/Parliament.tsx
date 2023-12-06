@@ -1,30 +1,44 @@
 import React from 'react';
-import GridBoxesComponent from "./GovernmentAssembly";
-import KnessetChairs from "./GovernmentAssembly";
-import BoxesLayout from "./GovernmentAssembly";
-import Knesset from "./Knesset";
 import KnessetComp from "./Knesset";
+import '../components/Parlament.css'
+interface MyObject {
+    id: number;
+    name: string;
+    description:string;
+    url:string;
+
+}
 
 // @ts-ignore
 const ParliamentComp = ({ onPartyMemberSelect }) => {
+    const myMembers: MyObject[] = [
+        {id:1, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:2, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:3, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:4, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:5, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:6, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:7, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:8, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' },
+        {id:9, name:'Bibi', description: 'Bla Bla Bla',url:'/src/assets/images/b.jpg' }
+    ];
     // הפעולה הפנימית שמפעילה את הפונקציה המועברת
     const handleMemberSelect = () => {
-        // כאן אתה יכול ליצור אובייקט PARTY_MEMBER או להשתמש במתודה להבאת המידע ממקור חיצוני
-        const partyMember = {
-            id: 1,
-            name: 'Bibi Natanihu',
-            description: 'The current prime minister',
-            url:'../img/bibin.jpg'
-            // נתונים נוספים של החבר במסיבה
-        };
+
 
         // קריאה למתודה המועברת והעברת החבר הנבחר כארגומנט
-        onPartyMemberSelect(partyMember);
+        onPartyMemberSelect(myMembers);
     };
 
     return (
         <div>
-      <KnessetComp data={ParliamentComp}/>
+            <div className="cool-header">
+                <h1 className="cool-text">
+                    <span className="blue-text">ראשי</span>
+                    <span className="gray-text">מפלגות</span>
+                </h1>
+            </div>
+      <KnessetComp dataArray={myMembers}/>
         </div>
     );
 };

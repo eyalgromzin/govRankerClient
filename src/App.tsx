@@ -33,7 +33,6 @@ export default function App() {
         <Route path="/Parliament" element={ <Parliament onPartyMemberSelect={undefined} /> } />
         <Route path="/admin" element={ <AdminMain /> } />
       </Routes>
-      <h1>Yuli</h1>
     </div>
   );
 }
