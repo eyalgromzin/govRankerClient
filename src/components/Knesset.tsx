@@ -1,25 +1,16 @@
 import React from 'react';
-import './KnessetChairs.css';
+import '../components/KnessetChairs.css'
 
-const KnessetComp = (props: { data: any; }) => {
-
-    const receivedData = props.data;
-    const numRows = 10;
-    const numCols = 12;
-
-    const chairs = [];
-    for (let row = 0; row < numRows; row++) {
-        for (let col = 0; col < numCols; col++) {
-            chairs.push(
-                <div className="chair" key={`${row}-${col}`}>
-
-                    {/* תוכן הכיסא */}
-                </div>
-            );
-        }
-    }
-
-    return <div className="knesset">{chairs}</div>;
+const CircularMembersBoxes = () => {
+    return (
+        <div className="circular-boxes">
+            <div className="box">
+                <img src="path_to_image" alt="Image" />
+                <p>Text</p>
+            </div>
+            {/* Repeat this structure for each box */}
+        </div>
+    );
 };
 
-export default KnessetComp;
+export default CircularMembersBoxes;
