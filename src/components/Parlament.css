@@ -11,6 +11,10 @@
     -webkit-background-clip: text; /* צביעת הטקסט על פי הצבע של התמונה ברקע */
     background-clip: text; /* גרסה רגילה של הפרופרטי */
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); /* הוספת צל לטקסט */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 .blue-text {
@@ -18,6 +22,10 @@
     -webkit-background-clip: text; /* צביעת הטקסט על פי הצבע של התמונה ברקע */
     background-clip: text; /* גרסה רגילה של הפרופרטי */
     color: transparent; /* הסתרת הצבע המקורי של הטקסט */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 .gray-text {
@@ -25,4 +33,8 @@
     -webkit-background-clip: text; /* צביעת הטקסט על פי הצבע של התמונה ברקע */
     background-clip: text; /* גרסה רגילה של הפרופרטי */
     color: transparent; /* הסתרת הצבע המקורי של הטקסט */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
