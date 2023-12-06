@@ -9,7 +9,7 @@ type ArticlesProps = {
 };
 
 const ArticlesList: FC<ArticlesProps> = ({ isEditable }) => {
-    const articles = useSelector((state: RootState) => state.data1.articles); // see store.ts
+    const articles = useSelector((state: RootState) => state.data1.currentArticles); // see store.ts
 
     // put articles in date butckets and sort the buckets
     const articlesDictionary: any = {};

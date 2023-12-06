@@ -1,18 +1,12 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- admin page - add a button to connect article to another party member. to enable 1 article to multiple party members. 
-
-- enable select gov - show all the articles of all the parties and party members of this government - wait for yuli
-
-- enable select party - show all the articles of all the party members of this government 
-        - get all party members -> 
-        - get all articles of party members -> 
-        - show them 
-
-- add blank option to select  
+- show party / government summary on selected in main page 
 
 - show article thumbnail with clickable gov + party at the top - to enable easier navigation - will cancel the 
 
-- UI:   need to create a button near the article to connect multiple entities to an article ???
-        it will open a popup that will show all connected entities and a delete / add buttons 
+- create dummy page for select gov / Minister 
 
+- add back button on the articles page - to go back to the select minister page 
+
+- make router to automatically load the go/party/member 
+------------------- today ----------------

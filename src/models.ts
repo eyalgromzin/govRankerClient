@@ -53,6 +53,12 @@ export interface PartyMemberAndParty {
     partyUUID: string,
 }
 
+export interface PartyMemberAndGovernment {
+    id: number,
+    partyMemberUUID: string,
+    governmentUUID: string,
+}
+
 export interface EntityAndArticle {
     id: number,
     entityUUID: string,

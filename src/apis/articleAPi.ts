@@ -3,7 +3,7 @@ import {
     addArticle,
     removeArticle,
     setArticles,
-    setGovernments,
+    setCurrentArticles,
     setRecentlyAddedArticles,
 } from "../redux/dataSlice";
 import { APIResult, Article, EntityType } from "../models";
@@ -16,8 +16,33 @@ export const getAllArticles = (dispatch: any) => {
         });
 };
 
-export const getRecentlyAddedArticles = (dispatch: any, numOfArticles: number) => {
-    const url = `http://127.0.0.1:3000/article/getRecentlyAdded?numOfArticles=${numOfArticles}`
+export const getAndShowGovernmentArticles = (
+    dispatch: Function,
+    governmentUUID: string
+) => {
+    fetch(`http://127.0.0.1:3000/article/getGovernmentArticles?governmentUUID=${governmentUUID}`)
+        .then((res) => res.json())
+        .then((res) => {
+            dispatch(setCurrentArticles(res.data));
+        });
+};
+
+export const getAndShowPartyArticles = (
+    dispatch: Function,
+    partyUUID: string
+) => {
+    fetch(`http://127.0.0.1:3000/article/getPartyArticles?partyUUID=${partyUUID}`)
+        .then((res) => res.json())
+        .then((res) => {
+            dispatch(setCurrentArticles(res.data));
+        });
+};
+
+export const getRecentlyAddedArticles = (
+    dispatch: any,
+    numOfArticles: number
+) => {
+    const url = `http://127.0.0.1:3000/article/getRecentlyAdded?numOfArticles=${numOfArticles}`;
     fetch(url)
         .then((res) => res.json())
         .then((res) => {
@@ -33,7 +58,7 @@ export const createArticle = async (
     imageUrl: string,
     rating: number,
     title: string,
-    partyMemberUUID: string,
+    partyMemberUUID: string
 ) => {
     const data = { title, url, date, description, imageUrl, rating };
 
@@ -68,19 +93,21 @@ export const updateArticle = async (
     description: string,
     imageUrl: string,
     rating: number,
-    title: string,
+    title: string
 ) => {
     const data = { url, date, description, imageUrl, rating };
 
     try {
-        const updatedArticle = await updateArticleInDb(articleUUID,
+        const updatedArticle = await updateArticleInDb(
+            articleUUID,
             title,
             url,
             date,
             description,
             imageUrl,
             rating,
-            dispatch);
+            dispatch
+        );
 
         console.log(
             "updated article in db: ",
@@ -90,7 +117,7 @@ export const updateArticle = async (
             date,
             description,
             rating,
-            title,
+            title
         );
     } catch (error) {
         return {

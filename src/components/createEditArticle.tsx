@@ -57,7 +57,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                     imageUrl,
                     rating,
                     title,
-                    selectedPartyMember?.uuid,
+                    selectedPartyMember?.uuid
                 );
 
                 notify("created article");
@@ -84,6 +84,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
 
     return (
         <div style={{ padding: "10px", backgroundColor: "lightcoral" }}>
+            <div style={{ textAlign: "center", marginBottom: '20px', fontSize: '25px', fontWeight: 'bold' }}>article creation</div>
             <div className="fieldsContainer">
                 <div
                     className="urlsContainer"
@@ -138,12 +139,12 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                         />
                     </div>
                 </div>
-                <div style={{ display: "flex", marginTop: '10px' }}>
+                <div style={{ display: "flex", marginTop: "10px" }}>
                     <div style={{ display: "flex", flex: 1 }}>
                         <span style={fieldTitleStyles}>Date:</span>
                         <input
                             type="text"
-                            style={{flex: 1}}
+                            style={{ flex: 1 }}
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
                         />
@@ -153,7 +154,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                         <input
                             type="number"
                             value={rating}
-                            style={{flex: 1}}
+                            style={{ flex: 1 }}
                             onChange={(e) => setRating(Number(e.target.value))}
                         />
                     </div>
@@ -162,10 +163,10 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
             <button
                 onClick={handleCreateClick}
                 style={{
-                    marginTop: '20px',
-                    padding: '10px 30px',
-                    backgroundColor: 'lightgoldenrodyellow',
-                    borderRadius: '5px',
+                    marginTop: "20px",
+                    padding: "10px 30px",
+                    backgroundColor: "lightgoldenrodyellow",
+                    borderRadius: "5px",
                 }}
             >
                 {article ? "save" : "create"}

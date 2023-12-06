@@ -17,6 +17,7 @@ import {
     Select,
     SelectChangeEvent,
 } from "@mui/material";
+import { getAndShowGovernmentArticles, getAndShowPartyArticles } from "../apis/articleAPi";
 
 type ChooserProps = {
     isShowEditButtons: boolean;
@@ -27,7 +28,7 @@ interface Option {
     label: string | undefined;
 }
 
-export const PartyMemberChooser: React.FC<ChooserProps> = ({
+export const EntityChooser: React.FC<ChooserProps> = ({
     isShowEditButtons,
 }) => {
     const dispatch = useDispatch();
@@ -116,7 +117,10 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         const selectedGovernment = governments.filter(
             (govI) => govI.uuid == selectedValue
         )[0];
+
         dispatch(setSelectedGovernment(selectedGovernment));
+        dispatch(setSelectedParty(undefined));
+        
         const govParties = getGovernmentParties(
             selectedValue,
             partyAndGovernment,
@@ -133,6 +137,9 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         });
 
         setPartyOptions(newPartyOptions);
+        if(selectedGovernment){
+            getAndShowGovernmentArticles(dispatch, selectedGovernment.uuid)
+        }
     };
 
     const onPartyChange = (event: SelectChangeEvent) => {
@@ -141,6 +148,8 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
             (partyI) => partyI.uuid == selectedValue
         )[0];
         dispatch(setSelectedParty(selectedParty));
+        dispatch(setSelectedPartyMember(undefined));
+        
         const partyMembers = getPartyMembers(
             selectedValue,
             partyMemberAndParty,
@@ -157,7 +166,15 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         });
 
         setPartyMemberOptions(newPartyOptions);
+
+        if (selectedParty){
+            getAndShowPartyArticles(dispatch, selectedParty.uuid)
+        }
     };
+
+    const filterAndShowArticles = () => {
+
+    }
 
     const onPartyMemberChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
@@ -165,6 +182,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
             (partyMemberI) => partyMemberI.uuid == selectedValue
         )[0];
         dispatch(setSelectedPartyMember(selectedPartyMember));
+        filterAndShowArticles()
     };
 
     const dropDownAndButtonsStyle: React.CSSProperties = {
@@ -191,7 +209,7 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
 
     return (
         <Fragment>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", flexWrap: 'wrap' }}>
                 <div className="government" style={dropDownAndButtonsStyle}>
                     <FormControl style={dropdownStyle}>
                         <InputLabel>ממשלה</InputLabel>
@@ -324,3 +342,5 @@ export const PartyMemberChooser: React.FC<ChooserProps> = ({
         </Fragment>
     );
 };
+
+

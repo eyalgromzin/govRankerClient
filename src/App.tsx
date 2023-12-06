@@ -6,6 +6,7 @@ import axios from "axios";
 import { getAllGovernments } from "./apis/governmentApi";
 import { getAllPartyMembers } from "./apis/partyMembersApi";
 import {
+    getAllPartyMembersToGovernment,
     getAllPartyMembersToParty,
     getAllPartyToGovernment,
 } from "./apis/common";
@@ -29,6 +30,7 @@ export default function App() {
         getAllPartyMembersToParty(dispatch);
         getAllArticles(dispatch);
         getRecentlyAddedArticles(dispatch, 10);
+        getAllPartyMembersToGovernment(dispatch)
     }, []);
 
     return (
