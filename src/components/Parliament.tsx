@@ -1,6 +1,7 @@
 import React from 'react';
 import KnessetComp from "./Knesset";
 import '../components/Parlament.css'
+import MinistersGridComp from "./MinistersGrid";
 interface MyObject {
     id: number;
     name: string;
@@ -39,7 +40,8 @@ const ParliamentComp = ({ onPartyMemberSelect }) => {
                     <span className="gray-text">מפלגות</span>
                 </h1>
             </div>
-      <KnessetComp dataArray={myMembers}/>
+      <KnessetComp dataArray={myMembers}/><br/>
+            <MinistersGridComp/>
         </div>
     );
 };
