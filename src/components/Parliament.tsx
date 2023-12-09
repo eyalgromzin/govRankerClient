@@ -1,30 +1,45 @@
 import React from 'react';
-import GridBoxesComponent from "./GovernmentAssembly";
-import KnessetChairs from "./GovernmentAssembly";
-import BoxesLayout from "./GovernmentAssembly";
-import Knesset from "./Knesset";
 import KnessetComp from "./Knesset";
+import '../components/Parlament.css'
+interface MyObject {
+    id: number;
+    name: string;
+    description:string;
+    url:string;
+
+}
 
 // @ts-ignore
 const ParliamentComp = ({ onPartyMemberSelect }) => {
+    const myMembers: MyObject[] = [
+        {id:1, name:'ליכוד', description: 'ליכוד',url:'/src/assets/images/b.jpg' },
+        {id:2, name:'יש עתיד', description:'יש עתיד',url:'/src/assets/images/lapid.jpg' },
+        {id:3, name:'הציונות הדתית', description: 'הציונות הדתית',url:'/src/assets/images/sm.jpeg' },
+        {id:4, name:'המחנה הממלחתי', description: 'המחנה הממלחתי',url:'/src/assets/images/ganz.jpeg' },
+        {id:5, name:'ש"ס', description: 'ש"ס',url:'/src/assets/images/shas.jpg' },
+        {id:6, name:'יהדות התורה', description: 'יהדות התורה',url:'/src/assets/images/ya.jpg' },
+        {id:7, name:'ישראל ביתנו', description: 'ישראל ביתנו',url:'/src/assets/images/lib.jpeg' },
+        {id:8, name:'העבודה', description: 'העבודה',url:'/src/assets/images/micha.jpg' },
+        {id:9, name:'מרצ', description: 'מרצ',url:'/src/assets/images/gor.jpg' },
+        {id:10, name:'רע"ם', description: 'רע"ם',url:'/src/assets/images/ram.jpg' }
+    ];
     // הפעולה הפנימית שמפעילה את הפונקציה המועברת
     const handleMemberSelect = () => {
-        // כאן אתה יכול ליצור אובייקט PARTY_MEMBER או להשתמש במתודה להבאת המידע ממקור חיצוני
-        const partyMember = {
-            id: 1,
-            name: 'Bibi Natanihu',
-            description: 'The current prime minister',
-            url:'../img/bibin.jpg'
-            // נתונים נוספים של החבר במסיבה
-        };
+
 
         // קריאה למתודה המועברת והעברת החבר הנבחר כארגומנט
-        onPartyMemberSelect(partyMember);
+        onPartyMemberSelect(myMembers);
     };
 
     return (
         <div>
-      <KnessetComp data={ParliamentComp}/>
+            <div className="cool-header">
+                <h1 className="cool-text">
+                    <span className="blue-text">ראשי </span>
+                    <span className="gray-text">מפלגות</span>
+                </h1>
+            </div>
+      <KnessetComp dataArray={myMembers}/>
         </div>
     );
 };

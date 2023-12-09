@@ -1,25 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './KnessetChairs.css';
+import ClickableCircularImage from "./ClickableCircularImage";
 
-const KnessetComp = (props: { data: any; }) => {
 
-    const receivedData = props.data;
-    const numRows = 10;
-    const numCols = 12;
 
-    const chairs = [];
-    for (let row = 0; row < numRows; row++) {
-        for (let col = 0; col < numCols; col++) {
-            chairs.push(
-                <div className="chair" key={`${row}-${col}`}>
+interface DisplayMembers {
+    dataArray: MyObject[];
+}
+const KnessetComp:React.FC<DisplayMembers> =({dataArray})=>{
 
-                    {/* תוכן הכיסא */}
-                </div>
-            );
-        }
+    const handleImageClick=()=> {
+
     }
 
-    return <div className="knesset">{chairs}</div>;
+
+    return    <div className="knesset-flex">
+        {
+            dataArray.map((box, index) => (
+                <ClickableCircularImage  imageUrl={box.url}  onClick={handleImageClick}
+                                         text={box.name}
+
+
+
+                />
+
+        ))}
+    </div>
 };
 
 export default KnessetComp;
