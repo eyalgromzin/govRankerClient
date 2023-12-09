@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import  '../components/ClickableCircli.css'
+import '../components/ClickableCircli.css'
 // @ts-ignore
-const ClickableCircularImage = ({ imageUrl,onClick, text }) => {
+const ClickableCircularImage = ({ imageUrl,onClick, text1}) => {
 
 
     const handleImageClick=()=>{
@@ -9,8 +9,8 @@ const ClickableCircularImage = ({ imageUrl,onClick, text }) => {
    }
     return (
         <div className="clickable-circular-image" onFocus={handleImageClick}>
-            <img src={imageUrl} />
-            <p>{text}</p>
+            <img src={imageUrl}/>
+            <p>{text1}</p>
         </div>
     );
 };
