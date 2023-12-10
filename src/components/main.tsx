@@ -27,6 +27,10 @@ export const Main: React.FC<HomeProps> = ({}) => {
 
     let selectedEntity:PartyMember| undefined = undefined
 
+    const RecentlyAddedArticles = useSelector(
+        (state: RootState) => state.data1.recentlyAddedArticles
+    );
+
     const allPartyMembers = useSelector(
         (state: RootState) => state.data1.partyMembers
     );
@@ -37,79 +41,27 @@ export const Main: React.FC<HomeProps> = ({}) => {
         return state.data1.governments;
     });
 
-    const selectedPartyMember = useSelector(
-        (state: RootState) => state.data1.selectedPartyMember
-    ); // see store.ts
-    const selectedParty = useSelector(
-        (state: RootState) => state.data1.selectedParty
-    ); // see store.ts
-    const selectedGovernment = useSelector(
-        (state: RootState) => state.data1.selectedGovernment
-    ); // see store.ts
-
-    //  http://127.0.0.1:5173/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/39ca591f-dda7-43f8-8cf0-a87087ba024f/3aa9ac7f-4ee5-429b-8ad2-c5a42e785875
     const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
 
-    if (allGovernments && allParties && allPartyMembers){
-        let asd = 4
-    }
-
-    const RecentlyAddedArticles = useSelector(
-        (state: RootState) => state.data1.recentlyAddedArticles
+    const selectedGovernment = allGovernments.find(
+        (governmentI) => governmentI.uuid == governmentUUID
     );
 
-    if (allPartyMembers.length > 0) {
-        let asd = 4;
-    }
-
-    if (governmentUUID && (!selectedGovernment || selectedGovernment?.uuid != governmentUUID)) {
-        const queryGovernment = allGovernments.find(
-            (governmentI) => governmentI.uuid == governmentUUID
-        );
-        // if (
-        //     !selectedGovernment ||
-        //     (queryGovernment &&
-        //         selectedGovernment &&
-        //         queryGovernment.uuid != selectedGovernment?.uuid)
-        // ) {
-        //     dispatch(setSelectedGovernment(queryGovernment));
-        selectedEntity = queryGovernment;
-        // }
-    }
-    if (partyUUID && (!selectedParty || selectedParty?.uuid != partyUUID)) {
-        const queryParty = allParties.find(
-            (partyI) => partyI.uuid == partyUUID
-        );
-        // if (
-        //     !selectedParty ||
-        //     (queryParty &&
-        //         selectedParty &&
-        //         queryParty.uuid != selectedParty?.uuid)
-        // ) {
-        //     dispatch(setSelectedParty(queryParty));
-        selectedEntity = queryParty;
-        // }
-    }
-    if (partyMemberUUID && (!selectedPartyMember || selectedPartyMember?.uuid != partyMemberUUID)) {
-        const queryPartyMember = allPartyMembers.find(
-            (partyMemberI) => partyMemberI.uuid == partyMemberUUID
-        );
-        // if (
-        //     !selectedPartyMember ||
-        //     (queryPartyMember &&
-        //         selectedPartyMember &&
-        //         queryPartyMember.uuid != selectedPartyMember?.uuid)
-        // ) {
-        //     dispatch(setSelectedPartyMember(queryPartyMember));
-        selectedEntity = queryPartyMember;
-        // }
-    }
-   
+    const selectedParty = allParties.find(
+        (partyI) => partyI.uuid == partyUUID
+    );
     
-
-    // if (selectedEntity) {
-    //     let asd = 4;
-    // }
+    const selectedPartyMember = allPartyMembers.find(
+        (partyMemberI) => partyMemberI.uuid == partyMemberUUID
+    );
+    
+    if (selectedGovernment) selectedEntity = selectedGovernment
+    if (selectedParty) selectedEntity = selectedParty
+    if (selectedPartyMember) selectedEntity = selectedPartyMember
+   
+    if (allGovernments.length > 0 && allParties.length > 0 && allPartyMembers.length > 0){
+        let asd = 4
+    }
 
     return (
         <div>
@@ -122,9 +74,9 @@ export const Main: React.FC<HomeProps> = ({}) => {
             <div style={{ marginTop: "70px" }}>
                 <EntityChooser
                     isShowEditButtons={false}
-                    selectedGovernment={selectedGovernment}
-                    selectedParty={selectedParty}
-                    selectedPartyMember={selectedPartyMember}
+                    // selectedGovernment={selectedGovernment}
+                    // selectedParty={selectedParty}
+                    // selectedPartyMember={selectedPartyMember}
                 />
             </div>
             <div>

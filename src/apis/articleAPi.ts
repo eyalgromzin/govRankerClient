@@ -18,23 +18,40 @@ export const getAllArticles = (dispatch: any) => {
 
 export const getAndShowGovernmentArticles = (
     dispatch: Function,
-    governmentUUID: string
+    governmentUUID: string,
+    onGotArticles: Function
 ) => {
     fetch(`http://127.0.0.1:3000/article/getGovernmentArticles?governmentUUID=${governmentUUID}`)
         .then((res) => res.json())
         .then((res) => {
             dispatch(setCurrentArticles(res.data));
+            onGotArticles(res.data)
         });
 };
 
 export const getAndShowPartyArticles = (
     dispatch: Function,
-    partyUUID: string
+    partyUUID: string,
+    onGotArticles: Function
 ) => {
     fetch(`http://127.0.0.1:3000/article/getPartyArticles?partyUUID=${partyUUID}`)
         .then((res) => res.json())
         .then((res) => {
             dispatch(setCurrentArticles(res.data));
+            onGotArticles(res.data)
+        });
+};
+
+export const getAndShowPartyMemberArticles = (
+    dispatch: Function,
+    partyMemberUUID: string,
+    onGotArticles: Function
+) => {
+    fetch(`http://127.0.0.1:3000/article/getPartyMemberArticles?partyMemberUUID=${partyMemberUUID}`)
+        .then((res) => res.json())
+        .then((res) => {
+            dispatch(setCurrentArticles(res.data));
+            onGotArticles(res.data)
         });
 };
 

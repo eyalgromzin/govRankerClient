@@ -31,13 +31,12 @@ export default function App() {
         getAllPartyMembers(dispatch);
         getAllPartyToGovernment(dispatch);
         getAllPartyMembersToParty(dispatch);
-        getAllArticles(dispatch);
         getRecentlyAddedArticles(dispatch, 10);
         getAllPartyMembersToGovernment(dispatch)
     }, []);
 
     const onButtonClick = () => {
-        navigate("/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/f35bd031-c7ec-49e6-af0f-bfd18265a8bc/3aa9ac7f-4ee5-429b-8ad2-c5a42e785875")
+        navigate("/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/f35bd031-c7ec-49e6-af0f-bfd18265a8bc/f07c9ac4-9831-4d6e-891d-ad2263d33d24")
     }
 
     return (

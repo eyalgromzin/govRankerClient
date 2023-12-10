@@ -1,4 +1,10 @@
-import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import {
+    Fragment,
+    FunctionComponent,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { getGovernmentParties, getPartyMembers } from "../utils";
@@ -22,28 +28,30 @@ import {
     getAndShowPartyArticles,
 } from "../apis/articleAPi";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type ChooserProps = {
     isShowEditButtons: boolean;
-    selectedGovernment: Government | undefined;
-    selectedParty: Party | undefined;
-    selectedPartyMember: PartyMember | undefined;
+    // selectedGovernment: Government | undefined;
+    // selectedParty: Party | undefined;
+    // selectedPartyMember: PartyMember | undefined;
 };
 
 interface Option {
-    value: string | undefined;
-    label: string | undefined;
+    value: string;
+    label: string;
 }
 
 export const EntityChooser: React.FC<ChooserProps> = ({
     isShowEditButtons,
-    selectedGovernment,
-    selectedParty,
-    selectedPartyMember,
 }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const governments = useSelector(
+    // const isGettingArticles = useRef(false);
+    // const isGotArticles = useRef<boolean>(false);
+
+    const allGovernments = useSelector(
         (state: RootState) => state.data1.governments
     );
     const allParties = useSelector((state: RootState) => state.data1.parties);
@@ -55,6 +63,18 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     );
     const partyMemberAndParty = useSelector(
         (state: RootState) => state.data1.partyMemberAndParty
+    );
+
+    const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
+
+    const selectedGovernment = allGovernments.find(
+        (governmentI) => governmentI.uuid == governmentUUID
+    );
+
+    const selectedParty = allParties.find((partyI) => partyI.uuid == partyUUID);
+
+    const selectedPartyMember = allPartyMembers.find(
+        (partyMemberI) => partyMemberI.uuid == partyMemberUUID
     );
 
     useEffect(() => {
@@ -99,97 +119,48 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         }
     }, [selectedParty]);
 
-    //  http://127.0.0.1:5173/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/f35bd031-c7ec-49e6-af0f-bfd18265a8bc/3aa9ac7f-4ee5-429b-8ad2-c5a42e785875
-    // const { newGovernmentUUID, newPartyUUID, newPartyMemberUUID } = useParams(); //url params
-
-    // if(selectedGovernment?.uuid != newGovernmentUUID){
-    //     const newGovernment = governments.filter(
-    //         (govI) => govI.uuid == newGovernmentUUID
-    //     )[0];
-
-    //     // dispatch(setSelectedGovernment(newGovernment));
-    // }
-
-    // if(selectedParty?.uuid != newPartyUUID){
-    //     const newParty = allParties.filter(
-    //         (partyI) => partyI.uuid == newPartyUUID
-    //     )[0];
-
-    //     dispatch(setSelectedParty(newParty));
-    // }
-
-    // if(selectedPartyMember?.uuid != newPartyMemberUUID){
-    //     const newPartyMember = allPartyMembers.filter(
-    //         (partyMemberI) => partyMemberI.uuid == newPartyMemberUUID
-    //     )[0];
-
-    //     dispatch(setSelectedPartyMember(newPartyMember));
-    // }
-
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([]);
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
     const [partyMemberOptions, setPartyMemberOptions] = useState<Option[]>([]);
 
-    let selectedPartyMemberOption: Option | undefined = {
-        value: selectedPartyMember ? selectedPartyMember.uuid : "",
-        label: selectedPartyMember ? selectedPartyMember.name : "",
-    };
-    if (!selectedPartyMember) {
-        selectedPartyMemberOption = undefined;
-    }
-
-    let selectedPartyOption: Option | null = {
-        value: selectedParty ? selectedParty.uuid : "",
-        label: selectedParty ? selectedParty.name : "",
-    };
-    if (!selectedParty) {
-        selectedPartyOption = null;
-    }
-
-    let selectedGovernmentOption: Option | null = {
-        value: selectedGovernment ? selectedGovernment.uuid : "",
-        label: selectedGovernment ? selectedGovernment.name : "",
-    };
-    if (!selectedGovernment) {
-        selectedGovernmentOption = null;
-    }
-
     const isDeleteGovernmentButtonEnabled =
         partyAndGovernment.filter(
             (partyAndGovernmentI) =>
-                partyAndGovernmentI.governmentUUID ==
-                selectedGovernmentOption?.value
+                partyAndGovernmentI.governmentUUID == selectedGovernment?.uuid
         ).length == 0;
     const isDeletePartyButtonEnabled =
         partyMemberAndParty.filter(
             (partyMemberAndPartyI) =>
-                partyMemberAndPartyI.partyUUID == selectedPartyOption?.value
+                partyMemberAndPartyI.partyUUID == selectedParty?.uuid
         ).length == 0;
     const isDeletePartyMemberButtonEnabled = true;
 
     useEffect(() => {
         const initialGovOptions: Option[] = [];
-        governments &&
-            governments.forEach((itemI) => {
+        allGovernments &&
+            allGovernments.forEach((itemI) => {
                 initialGovOptions.push({
                     value: itemI.uuid,
                     label: itemI.name,
                 });
             });
         setGovernmentOptions(initialGovOptions);
-    }, [governments]);
+    }, [allGovernments]);
 
     const onGovernmentChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
-        const selectedGovernment = governments.filter(
+        const selectedGovernment = allGovernments.filter(
             (govI) => govI.uuid == selectedValue
         )[0];
 
-        dispatch(setSelectedGovernment(selectedGovernment));
-        dispatch(setSelectedParty(undefined));
+        navigate(`/entity/${selectedGovernment.uuid}`);
 
         if (selectedGovernment) {
-            getAndShowGovernmentArticles(dispatch, selectedGovernment.uuid);
+            getAndShowGovernmentArticles(
+                dispatch,
+                selectedGovernment.uuid,
+                () => {}
+            );
         }
     };
 
@@ -198,23 +169,23 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         const selectedParty = allParties.filter(
             (partyI) => partyI.uuid == selectedValue
         )[0];
-        dispatch(setSelectedParty(selectedParty));
-        dispatch(setSelectedPartyMember(undefined));
+
+        navigate(`/entity/${selectedGovernment?.uuid}/${selectedParty.uuid}`);
 
         if (selectedParty) {
-            getAndShowPartyArticles(dispatch, selectedParty.uuid);
+            getAndShowPartyArticles(dispatch, selectedParty.uuid, () => {});
         }
     };
-
-    const filterAndShowArticles = () => {};
 
     const onPartyMemberChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
         const selectedPartyMember = allPartyMembers.filter(
             (partyMemberI) => partyMemberI.uuid == selectedValue
         )[0];
-        dispatch(setSelectedPartyMember(selectedPartyMember));
-        filterAndShowArticles();
+
+        navigate(
+            `/entity/${selectedGovernment?.uuid}/${selectedParty?.uuid}/${selectedPartyMember?.uuid}`
+        );
     };
 
     const dropDownAndButtonsStyle: React.CSSProperties = {
@@ -228,16 +199,38 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     };
 
     function onGovernmentDeleteSuccess() {
-        setSelectedGovernment(null);
+        // setSelectedGovernment(null);
     }
 
     function onPartyDeleteSuccess() {
-        setSelectedGovernment(null);
+        // setSelectedGovernment(null);
     }
 
     function onPartyMemberDeleteSuccess() {
-        setSelectedGovernment(undefined);
+        // setSelectedGovernment(undefined);
     }
+
+    // if (!isGotArticles && !isGettingArticles) {
+    //     if (selectedPartyMember) {
+    //         isGettingArticles.current = true;
+    //         getAndShowPartyArticles(dispatch, selectedPartyMember.uuid, () => {
+    //             isGettingArticles.current = false;
+    //             isGotArticles.current = true;
+    //         });
+    //     } else if (selectedParty) {
+    //         isGettingArticles.current = true;
+    //         getAndShowPartyArticles(dispatch, selectedParty.uuid, () => {
+    //             isGettingArticles.current = false;
+    //             isGotArticles.current = true;
+    //         });
+    //     } else if (selectedGovernment) {
+    //         isGettingArticles.current = true;
+    //         getAndShowPartyArticles(dispatch, selectedGovernment.uuid, () => {
+    //             isGettingArticles.current = false;
+    //             isGotArticles.current = true;
+    //         });
+    //     }
+    // }
 
     return (
         <Fragment>
@@ -249,12 +242,16 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedGovernmentOption?.value}
+                            value={
+                                selectedGovernment
+                                    ? selectedGovernment?.uuid
+                                    : ""
+                            }
                             label="ממשלה"
                             placeholder="ממשלה"
                             onChange={onGovernmentChange}
                         >
-                            <MenuItem key="clear" value={undefined}>
+                            <MenuItem key="clear" value={""}>
                                 &nbsp;
                             </MenuItem>
                             {governmentOptions.map((optionI: Option) => (
@@ -276,7 +273,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                     {isShowEditButtons && (
                         <DeleteButton
                             isEnabled={isDeleteGovernmentButtonEnabled}
-                            entityUUID={selectedGovernmentOption?.value}
+                            entityUUID={selectedGovernment?.uuid}
                             entityType={EntityType.government}
                             onSuccess={() => onGovernmentDeleteSuccess()}
                         />
@@ -284,24 +281,17 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                 </div>
 
                 <div className="party" style={dropDownAndButtonsStyle}>
-                    {/* <Select
-                        styles={customStyles}
-                        placeholder={"מפלגה"}
-                        options={partyOptions}
-                        onChange={onPartyChange}
-                        value={selectedPartyOption}
-                    /> */}
                     <FormControl style={dropdownStyle}>
                         <InputLabel>מפלגה</InputLabel>
                         <Select
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedPartyOption?.value}
+                            value={selectedParty ? selectedParty?.uuid : ""}
                             label="מפלגה"
                             onChange={onPartyChange}
                         >
-                            <MenuItem key="clear" value={undefined}>
+                            <MenuItem key="clear" value={""}>
                                 &nbsp;
                             </MenuItem>
                             {partyOptions.map((optionI: Option) => (
@@ -317,13 +307,13 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.party}
-                            parentUUID={selectedGovernmentOption?.value}
+                            parentUUID={selectedGovernment?.uuid}
                         />
                     )}
                     {isShowEditButtons && (
                         <DeleteButton
                             isEnabled={isDeletePartyButtonEnabled}
-                            entityUUID={selectedPartyOption?.value}
+                            entityUUID={selectedParty?.uuid}
                             entityType={EntityType.party}
                             onSuccess={() => onPartyDeleteSuccess()}
                         />
@@ -331,24 +321,17 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                 </div>
 
                 <div style={dropDownAndButtonsStyle}>
-                    {/* <Select
-                        styles={customStyles}
-                        placeholder={"חבר כנסת"}
-                        options={partyMemberOptions}
-                        onChange={onPartyMemberChange}
-                        value={selectedPartyMemberOption}
-                    /> */}
                     <FormControl style={dropdownStyle}>
                         <InputLabel>חבר כנסת</InputLabel>
                         <Select
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedPartyMemberOption?.value}
+                            value={selectedPartyMember? selectedPartyMember?.uuid : ''}
                             label="חבר כנסת"
                             onChange={onPartyMemberChange}
                         >
-                            <MenuItem key="clear" value={undefined}>
+                            <MenuItem key="clear" value={""}>
                                 &nbsp;
                             </MenuItem>
                             {partyMemberOptions.map((optionI: Option) => (
@@ -364,13 +347,13 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.partyMember}
-                            parentUUID={selectedPartyOption?.value}
+                            parentUUID={selectedParty?.uuid}
                         />
                     )}
                     {isShowEditButtons && (
                         <DeleteButton
                             isEnabled={isDeletePartyMemberButtonEnabled}
-                            entityUUID={selectedPartyMemberOption?.value}
+                            entityUUID={selectedPartyMember?.uuid}
                             entityType={EntityType.partyMember}
                             onSuccess={() => onPartyMemberDeleteSuccess()}
                         />
