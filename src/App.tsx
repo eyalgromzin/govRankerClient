@@ -12,18 +12,24 @@ import {
 } from "./apis/common";
 import { Dispatch, AnyAction } from "@reduxjs/toolkit";
 import { Governments } from "./components/governments";
+
 import { AdminMain } from "./components/adminMain";
 import { getAllParties } from "./apis/partyApi";
 import { getAllArticles, getRecentlyAddedArticles } from "./apis/articleAPi";
 import { Routes, Route } from "react-router-dom";
 import { Main } from "./components/main";
+
 import { useNavigate } from "react-router-dom";
 import Dummy from "./components/dummy";
+
+import Parliament from "./components/Parliament";
+
 
 export default function App() {
     // const { count } = useSelector((state: RootState) => state.counter1); // see store.ts
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
 
     useEffect(() => {
         getAllGovernments(dispatch);
@@ -53,6 +59,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Dummy />} />
                 <Route path="/admin" element={<AdminMain />} />
+                <Route path="/Parliament" element={ <Parliament onPartyMemberSelect={undefined} /> } />
                 <Route path="/entity/:governmentUUID" element={<Main />} />
                 <Route path="/entity/:governmentUUID/:partyUUID" element={<Main />} />
                 <Route path="/entity/:governmentUUID/:partyUUID/:partyMemberUUID" element={<Main />} />
