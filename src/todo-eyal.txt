@@ -1,12 +1,9 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- show party / government summary on selected in main page 
+- make router to automatically load the gov/party/member 
+- create dummy page for select gov / Minister 
+- add back button on the articles page - to go back to the select minister page 
 
 - show article thumbnail with clickable gov + party at the top - to enable easier navigation - will cancel the 
 
-- create dummy page for select gov / Minister 
-
-- add back button on the articles page - to go back to the select minister page 
-
-- make router to automatically load the go/party/member 
 ------------------- today ----------------

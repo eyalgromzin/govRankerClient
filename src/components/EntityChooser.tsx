@@ -17,10 +17,17 @@ import {
     Select,
     SelectChangeEvent,
 } from "@mui/material";
-import { getAndShowGovernmentArticles, getAndShowPartyArticles } from "../apis/articleAPi";
+import {
+    getAndShowGovernmentArticles,
+    getAndShowPartyArticles,
+} from "../apis/articleAPi";
+import { useParams } from "react-router-dom";
 
 type ChooserProps = {
     isShowEditButtons: boolean;
+    selectedGovernment: Government | undefined;
+    selectedParty: Party | undefined;
+    selectedPartyMember: PartyMember | undefined;
 };
 
 interface Option {
@@ -30,6 +37,9 @@ interface Option {
 
 export const EntityChooser: React.FC<ChooserProps> = ({
     isShowEditButtons,
+    selectedGovernment,
+    selectedParty,
+    selectedPartyMember,
 }) => {
     const dispatch = useDispatch();
 
@@ -47,17 +57,74 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         (state: RootState) => state.data1.partyMemberAndParty
     );
 
-    const selectedPartyMember = useSelector(
-        (state: RootState) => state.data1.selectedPartyMember
-    );
+    useEffect(() => {
+        if (selectedGovernment) {
+            const govParties = getGovernmentParties(
+                selectedGovernment?.uuid,
+                partyAndGovernment,
+                allParties
+            );
+            const newPartyOptions: any = [];
+            govParties.forEach((partyI) => {
+                if (partyI) {
+                    newPartyOptions.push({
+                        value: partyI.uuid,
+                        label: partyI.name,
+                    });
+                }
+            });
 
-    const selectedParty = useSelector(
-        (state: RootState) => state.data1.selectedParty
-    );
+            setPartyOptions(newPartyOptions);
+        }
+    }, [selectedGovernment]);
 
-    const selectedGovernment = useSelector(
-        (state: RootState) => state.data1.selectedGovernment
-    );
+    useEffect(() => {
+        if (selectedParty) {
+            const partyMembers = getPartyMembers(
+                selectedParty?.uuid,
+                partyMemberAndParty,
+                allPartyMembers
+            );
+            const newPartyOptions: any = [];
+            partyMembers.forEach((partyMemberI) => {
+                if (partyMemberI) {
+                    newPartyOptions.push({
+                        value: partyMemberI.uuid,
+                        label: partyMemberI.name,
+                    });
+                }
+            });
+
+            setPartyMemberOptions(newPartyOptions);
+        }
+    }, [selectedParty]);
+
+    //  http://127.0.0.1:5173/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/f35bd031-c7ec-49e6-af0f-bfd18265a8bc/3aa9ac7f-4ee5-429b-8ad2-c5a42e785875
+    // const { newGovernmentUUID, newPartyUUID, newPartyMemberUUID } = useParams(); //url params
+
+    // if(selectedGovernment?.uuid != newGovernmentUUID){
+    //     const newGovernment = governments.filter(
+    //         (govI) => govI.uuid == newGovernmentUUID
+    //     )[0];
+
+    //     // dispatch(setSelectedGovernment(newGovernment));
+    // }
+
+    // if(selectedParty?.uuid != newPartyUUID){
+    //     const newParty = allParties.filter(
+    //         (partyI) => partyI.uuid == newPartyUUID
+    //     )[0];
+
+    //     dispatch(setSelectedParty(newParty));
+    // }
+
+    // if(selectedPartyMember?.uuid != newPartyMemberUUID){
+    //     const newPartyMember = allPartyMembers.filter(
+    //         (partyMemberI) => partyMemberI.uuid == newPartyMemberUUID
+    //     )[0];
+
+    //     dispatch(setSelectedPartyMember(newPartyMember));
+    // }
 
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([]);
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
@@ -120,25 +187,9 @@ export const EntityChooser: React.FC<ChooserProps> = ({
 
         dispatch(setSelectedGovernment(selectedGovernment));
         dispatch(setSelectedParty(undefined));
-        
-        const govParties = getGovernmentParties(
-            selectedValue,
-            partyAndGovernment,
-            allParties
-        );
-        const newPartyOptions: any = [];
-        govParties.forEach((partyI) => {
-            if (partyI) {
-                newPartyOptions.push({
-                    value: partyI.uuid,
-                    label: partyI.name,
-                });
-            }
-        });
 
-        setPartyOptions(newPartyOptions);
-        if(selectedGovernment){
-            getAndShowGovernmentArticles(dispatch, selectedGovernment.uuid)
+        if (selectedGovernment) {
+            getAndShowGovernmentArticles(dispatch, selectedGovernment.uuid);
         }
     };
 
@@ -149,32 +200,13 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         )[0];
         dispatch(setSelectedParty(selectedParty));
         dispatch(setSelectedPartyMember(undefined));
-        
-        const partyMembers = getPartyMembers(
-            selectedValue,
-            partyMemberAndParty,
-            allPartyMembers
-        );
-        const newPartyOptions: any = [];
-        partyMembers.forEach((partyMemberI) => {
-            if (partyMemberI) {
-                newPartyOptions.push({
-                    value: partyMemberI.uuid,
-                    label: partyMemberI.name,
-                });
-            }
-        });
 
-        setPartyMemberOptions(newPartyOptions);
-
-        if (selectedParty){
-            getAndShowPartyArticles(dispatch, selectedParty.uuid)
+        if (selectedParty) {
+            getAndShowPartyArticles(dispatch, selectedParty.uuid);
         }
     };
 
-    const filterAndShowArticles = () => {
-
-    }
+    const filterAndShowArticles = () => {};
 
     const onPartyMemberChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
@@ -182,7 +214,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             (partyMemberI) => partyMemberI.uuid == selectedValue
         )[0];
         dispatch(setSelectedPartyMember(selectedPartyMember));
-        filterAndShowArticles()
+        filterAndShowArticles();
     };
 
     const dropDownAndButtonsStyle: React.CSSProperties = {
@@ -192,8 +224,8 @@ export const EntityChooser: React.FC<ChooserProps> = ({
 
     const dropdownStyle: React.CSSProperties = {
         minWidth: 317,
-        marginLeft: 20
-    }
+        marginLeft: 20,
+    };
 
     function onGovernmentDeleteSuccess() {
         setSelectedGovernment(null);
@@ -204,12 +236,12 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     }
 
     function onPartyMemberDeleteSuccess() {
-        setSelectedGovernment(null);
+        setSelectedGovernment(undefined);
     }
 
     return (
         <Fragment>
-            <div style={{ display: "flex", flexWrap: 'wrap' }}>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
                 <div className="government" style={dropDownAndButtonsStyle}>
                     <FormControl style={dropdownStyle}>
                         <InputLabel>ממשלה</InputLabel>
@@ -222,7 +254,9 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             placeholder="ממשלה"
                             onChange={onGovernmentChange}
                         >
-                            <MenuItem key='clear' value={undefined}>&nbsp;</MenuItem>
+                            <MenuItem key="clear" value={undefined}>
+                                &nbsp;
+                            </MenuItem>
                             {governmentOptions.map((optionI: Option) => (
                                 <MenuItem
                                     key={optionI.value}
@@ -267,7 +301,9 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             label="מפלגה"
                             onChange={onPartyChange}
                         >
-                            <MenuItem key='clear' value={undefined}>&nbsp;</MenuItem>
+                            <MenuItem key="clear" value={undefined}>
+                                &nbsp;
+                            </MenuItem>
                             {partyOptions.map((optionI: Option) => (
                                 <MenuItem
                                     key={optionI.value}
@@ -312,7 +348,9 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             label="חבר כנסת"
                             onChange={onPartyMemberChange}
                         >
-                            <MenuItem key='clear' value={undefined}>&nbsp;</MenuItem>
+                            <MenuItem key="clear" value={undefined}>
+                                &nbsp;
+                            </MenuItem>
                             {partyMemberOptions.map((optionI: Option) => (
                                 <MenuItem
                                     key={optionI.value}
@@ -342,5 +380,3 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         </Fragment>
     );
 };
-
-

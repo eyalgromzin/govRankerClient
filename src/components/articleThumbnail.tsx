@@ -35,7 +35,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ article, isEditable }) => {
                         src={article?.imageUrl}
                         style={{
                             margin: "0 auto",
-                            width: "600px",
+                            maxWidth: "288px",
                         }}
                     />
                 </div>
