@@ -52,7 +52,7 @@ export const deleteParty = async (
     dispatch: Function,
     partyUUID: string
 ): Promise<APIResult> => {
-    const customHeaders = {
+const customHeaders = {
         "Content-Type": "application/json",
     };
 

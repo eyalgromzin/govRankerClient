@@ -3,11 +3,12 @@ import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
 import { Government, Party, PartyMember } from "../models";
-import { PartyMemberChooser } from "./partyMemberChooser";
+import { EntityChooser } from "./EntityChooser";
 import ArticleCreation from "./createEditArticle";
 // import { ToastContainer, toast } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
+import { useSelector } from "react-redux";
 
 type GovernmentsProps = {};
 
@@ -17,6 +18,18 @@ interface Option {
 }
 
 export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
+    const selectedPartyMember = useSelector(
+        (state: RootState) => state.data1.selectedPartyMember
+    );
+
+    const selectedParty = useSelector(
+        (state: RootState) => state.data1.selectedParty
+    );
+
+    const selectedGovernment = useSelector(
+        (state: RootState) => state.data1.selectedGovernment
+    );
+
     const notify = (str: string) => {
         toast("created", {
             duration: 1000,
@@ -25,10 +38,12 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
     };
 
     return (
-        <div style={{direction: 'ltr'}}>
-            <PartyMemberChooser />
-            <ArticleCreation notify={notify} article={undefined} />
-            <ArticlesList isEditable={false} />
+        <div>
+            <EntityChooser isShowEditButtons={true} />
+            {selectedPartyMember && selectedParty && selectedGovernment && (
+                <ArticleCreation notify={notify} article={undefined} />
+            )}
+            <ArticlesList isEditable={true} />
             <Toaster
                 toastOptions={{
                     className: "",
