@@ -2,16 +2,16 @@ import React from 'react';
 import KnessetComp from "./Knesset";
 import '../components/Parlament.css'
 import MinistersGridComp from "./MinistersGrid";
+
 interface MyObject {
     id: number;
     name: string;
     description:string;
     url:string;
-
 }
 
 // @ts-ignore
-const ParliamentComp = ({ onPartyMemberSelect }) => {
+const ParliamentComp = ({ }) => {
     const myMembers: MyObject[] = [
         {id:1, name:'ליכוד', description: 'ליכוד',url:'/src/assets/images/b.jpg' },
         {id:2, name:'יש עתיד', description:'יש עתיד',url:'/src/assets/images/lapid.jpg' },
@@ -24,13 +24,6 @@ const ParliamentComp = ({ onPartyMemberSelect }) => {
         {id:9, name:'מרצ', description: 'מרצ',url:'/src/assets/images/gor.jpg' },
         {id:10, name:'רע"ם', description: 'רע"ם',url:'/src/assets/images/ram.jpg' }
     ];
-    // הפעולה הפנימית שמפעילה את הפונקציה המועברת
-    const handleMemberSelect = () => {
-
-
-        // קריאה למתודה המועברת והעברת החבר הנבחר כארגומנט
-        onPartyMemberSelect(myMembers);
-    };
 
     return (
         <div>

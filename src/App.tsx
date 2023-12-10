@@ -57,7 +57,7 @@ export default function App() {
             {/* bibs:   http://127.0.0.1:5173/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/39ca591f-dda7-43f8-8cf0-a87087ba024f/3aa9ac7f-4ee5-429b-8ad2-c5a42e785875 */}
             {/* liberman: http://127.0.0.1:5173/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/f35bd031-c7ec-49e6-af0f-bfd18265a8bc/f07c9ac4-9831-4d6e-891d-ad2263d33d24 */}
             <Routes>
-                <Route path="/" element={<Dummy />} />
+                <Route path="/" element={<Parliament />} />
                 <Route path="/admin" element={<AdminMain />} />
                 <Route path="/Parliament" element={ <Parliament onPartyMemberSelect={undefined} /> } />
                 <Route path="/entity/:governmentUUID" element={<Main />} />
