@@ -4,6 +4,7 @@ import ClickableCircularImage from "./ClickableCircularImage";
 
 
 
+
 interface DisplayMembers {
     dataArray: MyObject[];
 }
@@ -18,7 +19,7 @@ const KnessetComp:React.FC<DisplayMembers> =({dataArray})=>{
         {
             dataArray.map((box, index) => (
                 <ClickableCircularImage  imageUrl={box.url}  onClick={handleImageClick}
-                                         text={box.name}
+                                         text1={box.name}
 
 
 
