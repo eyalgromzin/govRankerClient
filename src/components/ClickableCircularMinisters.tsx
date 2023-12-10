@@ -11,7 +11,7 @@ const ClickableCircularMinisters = ({ imageUrl,onClick, text1 }) => {
         <div className="clickable-circular-image-m" onFocus={handleImageClick}>
 
             <img src={imageUrl}/>
-            <p>{text1}</p>
+            <p style={{marginTop: '5px'}}>{text1}</p>
 
         </div>
     );

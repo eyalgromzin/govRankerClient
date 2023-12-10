@@ -1,9 +1,6 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- make router to automatically load the gov/party/member 
-- create dummy page for select gov / Minister 
-- add back button on the articles page - to go back to the select minister page 
-
-- show article thumbnail with clickable gov + party at the top - to enable easier navigation - will cancel the 
-
-------------------- today ----------------
+- make parliament get data from db 
+- add to db table of position - 'חבר כנסת', 'שר'...
+- on click , open the appropriate url of the person.
+- fix url for people to show articles also from url 

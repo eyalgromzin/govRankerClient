@@ -59,7 +59,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Parliament />} />
                 <Route path="/admin" element={<AdminMain />} />
-                <Route path="/Parliament" element={ <Parliament onPartyMemberSelect={undefined} /> } />
+                <Route path="/Parliament" element={ <Parliament /> } />
                 <Route path="/entity/:governmentUUID" element={<Main />} />
                 <Route path="/entity/:governmentUUID/:partyUUID" element={<Main />} />
                 <Route path="/entity/:governmentUUID/:partyUUID/:partyMemberUUID" element={<Main />} />
