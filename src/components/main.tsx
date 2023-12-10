@@ -19,13 +19,16 @@ import {
     setSelectedPartyMember,
 } from "../redux/dataSlice";
 import { getAllPartyMembers } from "../apis/partyMembersApi";
+import { Flare } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 type HomeProps = {};
 
 export const Main: React.FC<HomeProps> = ({}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    let selectedEntity:PartyMember| undefined = undefined
+    let selectedEntity: PartyMember | undefined = undefined;
 
     const RecentlyAddedArticles = useSelector(
         (state: RootState) => state.data1.recentlyAddedArticles
@@ -47,24 +50,30 @@ export const Main: React.FC<HomeProps> = ({}) => {
         (governmentI) => governmentI.uuid == governmentUUID
     );
 
-    const selectedParty = allParties.find(
-        (partyI) => partyI.uuid == partyUUID
-    );
-    
+    const selectedParty = allParties.find((partyI) => partyI.uuid == partyUUID);
+
     const selectedPartyMember = allPartyMembers.find(
         (partyMemberI) => partyMemberI.uuid == partyMemberUUID
     );
-    
-    if (selectedGovernment) selectedEntity = selectedGovernment
-    if (selectedParty) selectedEntity = selectedParty
-    if (selectedPartyMember) selectedEntity = selectedPartyMember
-   
-    if (allGovernments.length > 0 && allParties.length > 0 && allPartyMembers.length > 0){
-        let asd = 4
-    }
+
+    if (selectedGovernment) selectedEntity = selectedGovernment;
+    if (selectedParty) selectedEntity = selectedParty;
+    if (selectedPartyMember) selectedEntity = selectedPartyMember;
 
     return (
-        <div>
+        <div style={{ position: "relative" }}>
+            <div style={{ height: "40px", position: "relative" }}>
+                <img
+                    src="https://cdn.icon-icons.com/icons2/1674/PNG/512/arrowiosback_111116.png"
+                    style={{
+                        height: "40px",
+                        left: "25px",
+                        position: "absolute",
+                        cursor: 'pointer',
+                    }}
+                    onClick={() => navigate("/")}
+                />
+            </div>
             {!partyMemberUUID &&
                 RecentlyAddedArticles &&
                 RecentlyAddedArticles.length > 0 && (
