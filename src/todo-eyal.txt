@@ -1,6 +1,7 @@
 datetime will be stored as '20050505' always as UTC + 0
 
+- add to admin page the option to set positions to person 
+- add to admin page the option to set head of party to person 
 - make parliament get data from db 
-- add to db table of position - 'חבר כנסת', 'שר'...
 - on click , open the appropriate url of the person.
 - fix url for people to show articles also from url 
