@@ -210,28 +210,6 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         // setSelectedGovernment(undefined);
     }
 
-    // if (!isGotArticles && !isGettingArticles) {
-    //     if (selectedPartyMember) {
-    //         isGettingArticles.current = true;
-    //         getAndShowPartyArticles(dispatch, selectedPartyMember.uuid, () => {
-    //             isGettingArticles.current = false;
-    //             isGotArticles.current = true;
-    //         });
-    //     } else if (selectedParty) {
-    //         isGettingArticles.current = true;
-    //         getAndShowPartyArticles(dispatch, selectedParty.uuid, () => {
-    //             isGettingArticles.current = false;
-    //             isGotArticles.current = true;
-    //         });
-    //     } else if (selectedGovernment) {
-    //         isGettingArticles.current = true;
-    //         getAndShowPartyArticles(dispatch, selectedGovernment.uuid, () => {
-    //             isGettingArticles.current = false;
-    //             isGotArticles.current = true;
-    //         });
-    //     }
-    // }
-
     return (
         <Fragment>
             <div style={{ display: "flex", flexWrap: "wrap" }}>

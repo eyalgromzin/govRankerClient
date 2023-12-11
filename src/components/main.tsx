@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import { Fragment, FunctionComponent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
@@ -21,14 +21,18 @@ import {
 import { getAllPartyMembers } from "../apis/partyMembersApi";
 import { Flare } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { getAndShowPartyArticles } from "../apis/articleAPi";
 
 type HomeProps = {};
 
 export const Main: React.FC<HomeProps> = ({}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isGettingArticles = useRef(false)
 
     let selectedEntity: PartyMember | undefined = undefined;
+
+    
 
     const RecentlyAddedArticles = useSelector(
         (state: RootState) => state.data1.recentlyAddedArticles
@@ -59,6 +63,12 @@ export const Main: React.FC<HomeProps> = ({}) => {
     if (selectedGovernment) selectedEntity = selectedGovernment;
     if (selectedParty) selectedEntity = selectedParty;
     if (selectedPartyMember) selectedEntity = selectedPartyMember;
+
+    if(selectedParty && !isGettingArticles.current){
+        console.log('getting articles')
+        getAndShowPartyArticles(dispatch, selectedParty.uuid, () => {});    
+        isGettingArticles.current = true
+    }
 
     return (
         <div style={{ position: "relative" }}>
