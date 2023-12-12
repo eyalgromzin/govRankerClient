@@ -1,42 +1,53 @@
-.clickable-circular-image-m {
-    width: 70px; /* Adjust image container size */
-    height: 70px; /* Adjust the container height to accommodate text */
-    text-align: center; /* Center-align text */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    transition: transform 0.2s ease-in-out;
-    border-color: darkblue;/* Add a smooth transition */
-    border-radius: 50%;
-    border-width: 5px;
-    margin-bottom: 15px;
-
+.flippable-button {
+    position: static;
+    width:80px;
+    height: 80px;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    perspective: 1000px;
 }
 
-.clickable-circular-image-m:hover {
-    transform: scale(1.1);
-    /*/* Enlarge the image slightly on hover */
+.flippable-button .front,
+.flippable-button .back {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    transition: transform 0.6s;
+    border-width: 2px;
+    border-color: darkblue;
 }
 
-.clickable-circular-image-m img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-
-    /* Make the image circular */
-}
-.clickable-circular-image-m:active{
-    border-color: red;
+.flippable-button .front {
+    transform: rotateY(0deg);
 }
 
-.clickable-circular-image-m p {
-    text-align: center;
-    font-family:"Britannic Bold";
-    -webkit-text-stroke: 1px darkblue!important;
+.flippable-button .back {
+    transform: rotateY(180deg);
+    background-color: cornflowerblue;
+}
+.flippable-button .back span{
     color: #ffffff;
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
-    font-size: 13px;
+    font-family: "Copperplate Gothic Bold";
+    font-size: 12px;
 }
 
+.flippable-button .front img,
+.flippable-button .back img {
+    width: 70px;
+    height: 70px;
+}
 
+/* Additional styles */
+.flipped .front {
+    transform: rotateY(180deg);
+}
+
+.flipped .back {
+    transform: rotateY(0deg);
+}

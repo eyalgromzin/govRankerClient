@@ -20,9 +20,6 @@ const KnessetComp:React.FC<DisplayMembers> =({dataArray})=>{
             dataArray.map((box, index) => (
                 <ClickableCircularImage  imageUrl={box.url}  onClick={handleImageClick}
                                          text1={box.name}
-
-
-
                 />
 
         ))}

@@ -1,19 +1,24 @@
-import React, {useState} from 'react';
-import  '../components/ClickableCircliMinisters.css'
+import React, { useState } from 'react';
+import '../components/ClickableCircliMinisters.css'; // Import the CSS file
+
+
 // @ts-ignore
-const ClickableCircularMinisters = ({ imageUrl,onClick, text1 }) => {
+const ClickableCircularMinisters = ({ text, imageSrc,onClick }) => {
+    const [isFlipped, setIsFlipped] = useState(false);
 
+    const handleClick = () => {
+        setIsFlipped(!isFlipped);
+    };
 
-    const handleImageClick=()=>{
-
-   }
     return (
-        <div className="clickable-circular-image-m" onFocus={handleImageClick}>
-
-            <img src={imageUrl}/>
-            <p style={{marginTop: '5px'}}>{text1}</p>
-
-        </div>
+        <button className={`flippable-button ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}>
+            <div className="front">
+                <img src={imageSrc} alt="Icon" />
+            </div>
+            <div className="back">
+                <span>{text}</span>
+            </div>
+        </button>
     );
 };
 
