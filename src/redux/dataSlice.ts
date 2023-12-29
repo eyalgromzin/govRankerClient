@@ -15,6 +15,8 @@ export interface DataState {
   selectedParty: Party | undefined;
   selectedGovernment: Government | undefined;
   recentlyAddedArticles: Article[];
+  isLoggedIn: boolean;
+  jwtToken: string;
 }
 
 const initialState: DataState = {
@@ -31,6 +33,8 @@ const initialState: DataState = {
   selectedPartyMember: undefined,
   recentlyAddedArticles: [],
   partyMemberAndGovernment: [],
+  isLoggedIn: false,
+  jwtToken: '',
 };
 
 export const dataSlice = createSlice({
@@ -106,7 +110,12 @@ export const dataSlice = createSlice({
     },
     setRecentlyAddedArticles: (state: DataState, action: PayloadAction<Article[]>) => {
       state.recentlyAddedArticles = (action.payload);
+    },  
+    setIsLoggedIn: (state: DataState, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = (action.payload);
     },
+
+
   }
 });
 
@@ -118,7 +127,7 @@ export const {
   removeParty, removePartyMember, addArticle,
   setSelectedGovernment, setSelectedParty, setSelectedPartyMember,
   removeArticle, setRecentlyAddedArticles, setPartyMemberAndGovernment,
-  setCurrentArticles,
+  setCurrentArticles, setIsLoggedIn,
 } = dataSlice.actions;
 
 

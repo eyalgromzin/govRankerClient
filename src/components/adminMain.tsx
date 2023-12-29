@@ -9,6 +9,7 @@ import ArticleCreation from "./createEditArticle";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
 import { useSelector } from "react-redux";
+import LoginForm from "./loginForm";
 
 type GovernmentsProps = {};
 
@@ -18,6 +19,8 @@ interface Option {
 }
 
 export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const selectedPartyMember = useSelector(
         (state: RootState) => state.data1.selectedPartyMember
     );
@@ -37,23 +40,27 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
         });
     };
 
-    return (
-        <div>
-            <EntityChooser isShowEditButtons={true} />
-            {selectedPartyMember && selectedParty && selectedGovernment && (
-                <ArticleCreation notify={notify} article={undefined} />
-            )}
-            <ArticlesList isEditable={true} />
-            <Toaster
-                toastOptions={{
-                    className: "",
-                    style: {
-                        padding: "16px",
-                        color: "white",
-                        backgroundColor: "green",
-                    },
-                }}
-            />
-        </div>
-    );
+    if (isLoggedIn) {
+        return (
+            <div>
+                <EntityChooser isShowEditButtons={true} />
+                {selectedPartyMember && selectedParty && selectedGovernment && (
+                    <ArticleCreation notify={notify} article={undefined} />
+                )}
+                <ArticlesList isEditable={true} />
+                <Toaster
+                    toastOptions={{
+                        className: "",
+                        style: {
+                            padding: "16px",
+                            color: "white",
+                            backgroundColor: "green",
+                        },
+                    }}
+                />
+            </div>
+        );
+    }else{
+        return <LoginForm  />
+    }
 };

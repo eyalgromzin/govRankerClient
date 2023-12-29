@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import Dummy from "./components/dummy";
 
 import Parliament from "./components/Parliament";
+import LoginPage from "./components/loginPage";
 
 
 export default function App() {
@@ -33,12 +34,12 @@ export default function App() {
 
     useEffect(() => {
         getAllGovernments(dispatch);
-        getAllParties(dispatch);
-        getAllPartyMembers(dispatch);
-        getAllPartyToGovernment(dispatch);
-        getAllPartyMembersToParty(dispatch);
-        getRecentlyAddedArticles(dispatch, 10);
-        getAllPartyMembersToGovernment(dispatch)
+        // getAllParties(dispatch);
+        // getAllPartyMembers(dispatch);
+        // getAllPartyToGovernment(dispatch);
+        // getAllPartyMembersToParty(dispatch);
+        // getRecentlyAddedArticles(dispatch, 10);
+        // getAllPartyMembersToGovernment(dispatch)
     }, []);
 
     const onButtonClick = () => {
@@ -50,7 +51,7 @@ export default function App() {
             className="App"
             style={{ direction: "rtl", width: "1020px", margin: "0 auto" }}
         >
-            <button onClick={() => onButtonClick()} > open liberman  </button>
+            {/* <button onClick={() => onButtonClick()} > open liberman  </button> */}
             <br />
             <br />
             
@@ -58,6 +59,7 @@ export default function App() {
             {/* liberman: http://127.0.0.1:4000/entity/171e925c-0bfe-4319-9db3-94f417ae60a2/f35bd031-c7ec-49e6-af0f-bfd18265a8bc/f07c9ac4-9831-4d6e-891d-ad2263d33d24 */}
             <Routes>
                 <Route path="/" element={<Parliament />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="/admin" element={<AdminMain />} />
                 <Route path="/Parliament" element={ <Parliament /> } />
                 <Route path="/entity/:governmentUUID" element={<Main />} />
