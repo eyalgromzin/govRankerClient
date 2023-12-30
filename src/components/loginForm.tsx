@@ -76,7 +76,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ }) => {
         Submit
       </Button>
 
-      <Button variant="contained" color="primary" onClick={() => onTestToken()} >
+      <Button variant="contained" color="primary" style={{marginRight: '10px'}} onClick={() => onTestToken()} >
         test token
       </Button>
       </div>

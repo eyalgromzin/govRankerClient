@@ -153,10 +153,12 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             (govI) => govI.entity_uuid == selectedValue
         )[0];
 
-        if(location.pathname.endsWith('admin')){
+        if(location.pathname.includes('admin') && selectedGovernment){
             navigate(`/admin/entity/${selectedGovernment.entity_uuid}`);
+        }else if(location.pathname.includes('admin') && !selectedGovernment){
+            navigate(`/admin/`);
         }else{
-            navigate(`/admin/entity/${selectedGovernment.entity_uuid}`);
+            navigate(`/entity/${selectedGovernment.entity_uuid}`);
         }
 
         if (selectedGovernment) {
