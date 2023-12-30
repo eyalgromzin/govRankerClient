@@ -11,7 +11,7 @@ export const getGovernmentParties = (govUUID: string, PartyAndGovernments: Party
     })
 
     const resParties: Party[] = partiesUUIDs.map(partyUUID => {
-        return allParties.filter(partyI => partyI.uuid == partyUUID)[0]
+        return allParties.filter(partyI => partyI.entity_uuid == partyUUID)[0]
     })
 
     return resParties
@@ -31,7 +31,7 @@ export const getPartyMembers = (partyUUID: string, partyMembersAndParty: PartyMe
     })
 
     const resPartyMembers = partyMemberUUIDs.map(partyMemberUUID => {
-        return allPartyMembers.filter(partyMemberI => partyMemberI.uuid == partyMemberUUID)[0]
+        return allPartyMembers.filter(partyMemberI => partyMemberI.entity_uuid == partyMemberUUID)[0]
     })
 
     return resPartyMembers

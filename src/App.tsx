@@ -34,12 +34,12 @@ export default function App() {
 
     useEffect(() => {
         getAllGovernments(dispatch);
-        // getAllParties(dispatch);
-        // getAllPartyMembers(dispatch);
-        // getAllPartyToGovernment(dispatch);
-        // getAllPartyMembersToParty(dispatch);
-        // getRecentlyAddedArticles(dispatch, 10);
-        // getAllPartyMembersToGovernment(dispatch)
+        getAllParties(dispatch);
+        getAllPartyMembers(dispatch);
+        getAllPartyToGovernment(dispatch);
+        getAllPartyMembersToParty(dispatch);
+        getRecentlyAddedArticles(dispatch, 10);
+        getAllPartyMembersToGovernment(dispatch)
     }, []);
 
     const onButtonClick = () => {
@@ -65,6 +65,9 @@ export default function App() {
                 <Route path="/entity/:governmentUUID" element={<Main />} />
                 <Route path="/entity/:governmentUUID/:partyUUID" element={<Main />} />
                 <Route path="/entity/:governmentUUID/:partyUUID/:partyMemberUUID" element={<Main />} />
+                <Route path="/admin/entity/:governmentUUID" element={<AdminMain />} />
+                <Route path="/admin/entity/:governmentUUID/:partyUUID" element={<AdminMain />} />
+                <Route path="/admin/entity/:governmentUUID/:partyUUID/:partyMemberUUID" element={<AdminMain />} />
             </Routes>
         </div>
     );

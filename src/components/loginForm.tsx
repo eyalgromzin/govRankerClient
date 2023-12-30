@@ -5,6 +5,9 @@ import Button from '@mui/material/Button';
 import { login, testToken, testTokenGet } from '../apis/loginApi';
 import { useDispatch } from 'react-redux';
 import { redirect } from "react-router-dom";
+import {
+  setIsLoggedIn
+} from "../redux/dataSlice";
 
 interface LoginFormProps {
 //   onSubmit: (username: string, password: string) => void;
@@ -15,6 +18,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ }) => {
   const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch();
   
+
+
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
@@ -30,6 +35,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ }) => {
     if(loginRes.data.success){
       console.log('logged in successfully, jwt token: ', loginRes.data.token)
       document.cookie = `token=${loginRes.data.token}`;
+      dispatch(setIsLoggedIn(true))
     }
   }
 

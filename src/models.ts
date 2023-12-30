@@ -1,19 +1,19 @@
 export interface Government {
-    uuid: string,
+    entity_uuid: string,
     name: string,
     description: string,
     imageUrl: string, 
 }
 
 export interface Party {
-    uuid: string,
+    entity_uuid: string,
     name: string,
     description: string,
     imageUrl: string, 
 }
 
 export interface PartyMember {
-    uuid: string,
+    entity_uuid: string,
     name: string,
     description: string,
     imageUrl: string, 
@@ -32,7 +32,7 @@ export interface PartyMemberToParty {
 }
 
 export interface Article {
-    uuid: string,
+    entity_uuid: string,
     title: string,
     url: string,
     date: string, 

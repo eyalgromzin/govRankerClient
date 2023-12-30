@@ -19,7 +19,9 @@ interface Option {
 }
 
 export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const isLoggedIn = useSelector(
+        (state: RootState) => state.data1.isLoggedIn
+    );
 
     const selectedPartyMember = useSelector(
         (state: RootState) => state.data1.selectedPartyMember

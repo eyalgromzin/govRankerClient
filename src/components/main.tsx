@@ -51,13 +51,13 @@ export const Main: React.FC<HomeProps> = ({}) => {
     const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
 
     const selectedGovernment = allGovernments.find(
-        (governmentI) => governmentI.uuid == governmentUUID
+        (governmentI) => governmentI.entity_uuid == governmentUUID
     );
 
-    const selectedParty = allParties.find((partyI) => partyI.uuid == partyUUID);
+    const selectedParty = allParties.find((partyI) => partyI.entity_uuid == partyUUID);
 
     const selectedPartyMember = allPartyMembers.find(
-        (partyMemberI) => partyMemberI.uuid == partyMemberUUID
+        (partyMemberI) => partyMemberI.entity_uuid == partyMemberUUID
     );
 
     if (selectedGovernment) selectedEntity = selectedGovernment;
@@ -66,7 +66,7 @@ export const Main: React.FC<HomeProps> = ({}) => {
 
     if(selectedParty && !isGettingArticles.current){
         console.log('getting articles')
-        getAndShowPartyArticles(dispatch, selectedParty.uuid, () => {});    
+        getAndShowPartyArticles(dispatch, selectedParty.entity_uuid, () => {});    
         isGettingArticles.current = true
     }
 

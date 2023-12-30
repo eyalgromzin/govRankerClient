@@ -84,7 +84,7 @@ export const createArticle = async (
 
         await createEntityToArticleInDB(
             partyMemberUUID,
-            addedArticle.uuid,
+            addedArticle.entity_uuid,
             EntityType.partyMember,
             dispatch
         );
@@ -92,7 +92,7 @@ export const createArticle = async (
         console.log(
             "added entity to article ",
             partyMemberUUID,
-            addedArticle.uuid
+            addedArticle.entity_uuid
         );
     } catch (error) {
         return {

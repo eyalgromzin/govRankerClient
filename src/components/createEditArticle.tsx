@@ -36,7 +36,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     const handleCreateClick = async () => {
         if (article) {
             await updateArticle(
-                article.uuid,
+                article.entity_uuid,
                 dispatch,
                 url,
                 date,
@@ -57,7 +57,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
                     imageUrl,
                     rating,
                     title,
-                    selectedPartyMember?.uuid
+                    selectedPartyMember?.entity_uuid
                 );
 
                 notify("created article");

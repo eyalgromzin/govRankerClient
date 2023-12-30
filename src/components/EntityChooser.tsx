@@ -29,6 +29,7 @@ import {
 } from "../apis/articleAPi";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 type ChooserProps = {
     isShowEditButtons: boolean;
@@ -48,8 +49,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // const isGettingArticles = useRef(false);
-    // const isGotArticles = useRef<boolean>(false);
+    const location = useLocation();
 
     const allGovernments = useSelector(
         (state: RootState) => state.data1.governments
@@ -68,19 +68,19 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
 
     const selectedGovernment = allGovernments.find(
-        (governmentI) => governmentI.uuid == governmentUUID
+        (governmentI) => governmentI.entity_uuid == governmentUUID
     );
 
-    const selectedParty = allParties.find((partyI) => partyI.uuid == partyUUID);
+    const selectedParty = allParties.find((partyI) => partyI.entity_uuid == partyUUID);
 
     const selectedPartyMember = allPartyMembers.find(
-        (partyMemberI) => partyMemberI.uuid == partyMemberUUID
+        (partyMemberI) => partyMemberI.entity_uuid == partyMemberUUID
     );
 
     useEffect(() => {
         if (selectedGovernment) {
             const govParties = getGovernmentParties(
-                selectedGovernment?.uuid,
+                selectedGovernment?.entity_uuid,
                 partyAndGovernment,
                 allParties
             );
@@ -88,7 +88,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             govParties.forEach((partyI) => {
                 if (partyI) {
                     newPartyOptions.push({
-                        value: partyI.uuid,
+                        value: partyI.entity_uuid,
                         label: partyI.name,
                     });
                 }
@@ -101,7 +101,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     useEffect(() => {
         if (selectedParty) {
             const partyMembers = getPartyMembers(
-                selectedParty?.uuid,
+                selectedParty?.entity_uuid,
                 partyMemberAndParty,
                 allPartyMembers
             );
@@ -109,7 +109,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             partyMembers.forEach((partyMemberI) => {
                 if (partyMemberI) {
                     newPartyOptions.push({
-                        value: partyMemberI.uuid,
+                        value: partyMemberI.entity_uuid,
                         label: partyMemberI.name,
                     });
                 }
@@ -126,12 +126,12 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     const isDeleteGovernmentButtonEnabled =
         partyAndGovernment.filter(
             (partyAndGovernmentI) =>
-                partyAndGovernmentI.governmentUUID == selectedGovernment?.uuid
+                partyAndGovernmentI.governmentUUID == selectedGovernment?.entity_uuid
         ).length == 0;
     const isDeletePartyButtonEnabled =
         partyMemberAndParty.filter(
             (partyMemberAndPartyI) =>
-                partyMemberAndPartyI.partyUUID == selectedParty?.uuid
+                partyMemberAndPartyI.partyUUID == selectedParty?.entity_uuid
         ).length == 0;
     const isDeletePartyMemberButtonEnabled = true;
 
@@ -140,7 +140,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         allGovernments &&
             allGovernments.forEach((itemI) => {
                 initialGovOptions.push({
-                    value: itemI.uuid,
+                    value: itemI.entity_uuid,
                     label: itemI.name,
                 });
             });
@@ -150,41 +150,46 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     const onGovernmentChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
         const selectedGovernment = allGovernments.filter(
-            (govI) => govI.uuid == selectedValue
+            (govI) => govI.entity_uuid == selectedValue
         )[0];
 
-        navigate(`/entity/${selectedGovernment.uuid}`);
+        if(location.pathname.endsWith('admin')){
+            navigate(`/admin/entity/${selectedGovernment.entity_uuid}`);
+        }else{
+            navigate(`/admin/entity/${selectedGovernment.entity_uuid}`);
+        }
 
         if (selectedGovernment) {
             getAndShowGovernmentArticles(
                 dispatch,
-                selectedGovernment.uuid,
+                selectedGovernment.entity_uuid,
                 () => {}
             );
         }
+        
     };
 
     const onPartyChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
         const selectedParty = allParties.filter(
-            (partyI) => partyI.uuid == selectedValue
+            (partyI) => partyI.entity_uuid == selectedValue
         )[0];
 
-        navigate(`/entity/${selectedGovernment?.uuid}/${selectedParty.uuid}`);
+        navigate(`/entity/${selectedGovernment?.entity_uuid}/${selectedParty.entity_uuid}`);
 
         if (selectedParty) {
-            getAndShowPartyArticles(dispatch, selectedParty.uuid, () => {});
+            getAndShowPartyArticles(dispatch, selectedParty.entity_uuid, () => {});
         }
     };
 
     const onPartyMemberChange = (event: SelectChangeEvent) => {
         const selectedValue = event.target.value;
         const selectedPartyMember = allPartyMembers.filter(
-            (partyMemberI) => partyMemberI.uuid == selectedValue
+            (partyMemberI) => partyMemberI.entity_uuid == selectedValue
         )[0];
 
         navigate(
-            `/entity/${selectedGovernment?.uuid}/${selectedParty?.uuid}/${selectedPartyMember?.uuid}`
+            `/entity/${selectedGovernment?.entity_uuid}/${selectedParty?.entity_uuid}/${selectedPartyMember?.entity_uuid}`
         );
     };
 
@@ -222,12 +227,12 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             id="demo-simple-select"
                             value={
                                 selectedGovernment
-                                    ? selectedGovernment?.uuid
+                                    ? selectedGovernment?.entity_uuid
                                     : ""
                             }
                             label="ממשלה"
                             placeholder="ממשלה"
-                            onChange={onGovernmentChange}
+                            onChange={(e) => onGovernmentChange(e)}
                         >
                             <MenuItem key="clear" value={""}>
                                 &nbsp;
@@ -251,7 +256,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                     {isShowEditButtons && (
                         <DeleteButton
                             isEnabled={isDeleteGovernmentButtonEnabled}
-                            entityUUID={selectedGovernment?.uuid}
+                            entityUUID={selectedGovernment?.entity_uuid}
                             entityType={EntityType.government}
                             onSuccess={() => onGovernmentDeleteSuccess()}
                         />
@@ -265,7 +270,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedParty ? selectedParty?.uuid : ""}
+                            value={selectedParty ? selectedParty?.entity_uuid : ""}
                             label="מפלגה"
                             onChange={onPartyChange}
                         >
@@ -285,13 +290,13 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.party}
-                            parentUUID={selectedGovernment?.uuid}
+                            parentUUID={selectedGovernment?.entity_uuid}
                         />
                     )}
                     {isShowEditButtons && (
                         <DeleteButton
                             isEnabled={isDeletePartyButtonEnabled}
-                            entityUUID={selectedParty?.uuid}
+                            entityUUID={selectedParty?.entity_uuid}
                             entityType={EntityType.party}
                             onSuccess={() => onPartyDeleteSuccess()}
                         />
@@ -305,7 +310,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedPartyMember? selectedPartyMember?.uuid : ''}
+                            value={selectedPartyMember? selectedPartyMember?.entity_uuid : ''}
                             label="חבר כנסת"
                             onChange={onPartyMemberChange}
                         >
@@ -325,13 +330,13 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                     {isShowEditButtons && (
                         <AddButton
                             entityType={EntityType.partyMember}
-                            parentUUID={selectedParty?.uuid}
+                            parentUUID={selectedParty?.entity_uuid}
                         />
                     )}
                     {isShowEditButtons && (
                         <DeleteButton
                             isEnabled={isDeletePartyMemberButtonEnabled}
-                            entityUUID={selectedPartyMember?.uuid}
+                            entityUUID={selectedPartyMember?.entity_uuid}
                             entityType={EntityType.partyMember}
                             onSuccess={() => onPartyMemberDeleteSuccess()}
                         />

@@ -40,7 +40,7 @@ export const createPartyMember = async (
         data.uuid = addedPartyMember.res.newPartyMemberUUID
     
         const partyMemberToAdd:PartyMember = {
-            uuid: addedPartyMember.res.newPartyMemberUUID,
+            entity_uuid: addedPartyMember.res.newPartyMemberUUID,
             name: addedPartyMember.res.name,
             description: addedPartyMember.res.description,
             imageUrl: addedPartyMember.res.imageUrl

@@ -70,7 +70,7 @@ const MinistersGridComp = () => {
 
 
             {myMinisters.map((card) => (
-                <ClickableCircularMinisters  imageUrl={card.url}  onClick={handleButtonClick}
+                <ClickableCircularMinisters key={card.id}  imageUrl={card.url}  onClick={handleButtonClick}
                                          text1={card.description}
 
 

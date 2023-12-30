@@ -88,22 +88,22 @@ export const dataSlice = createSlice({
     },
     removeGovernment: (state: DataState, action: PayloadAction<any>) => {
       state.governments = state.governments.filter(governmentI => {
-        return governmentI.uuid != action.payload.governmentUUID
+        return governmentI.entity_uuid != action.payload.governmentUUID
       });
     },
     removeParty: (state: DataState, action: PayloadAction<any>) => {
       state.parties = state.parties.filter(partyI => {
-        return partyI.uuid != action.payload.partyUUID
+        return partyI.entity_uuid != action.payload.partyUUID
       });
     },
     removePartyMember: (state: DataState, action: PayloadAction<any>) => {
       state.partyMembers = state.partyMembers.filter(partyMemberI => {
-        return partyMemberI.uuid != action.payload.partyMemberUUID
+        return partyMemberI.entity_uuid != action.payload.partyMemberUUID
       });
     },
     removeArticle: (state: DataState, action: PayloadAction<any>) => {
       state.allArticles = state.allArticles.filter(articleI => {
-        return articleI.uuid != action.payload
+        return articleI.entity_uuid != action.payload
       });
       let s = 4
       s += 1

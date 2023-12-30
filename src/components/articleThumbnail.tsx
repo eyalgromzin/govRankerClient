@@ -29,7 +29,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ article, isEditable }) => {
 
     const previewItem = (
         <a href={article?.url} style={{ cursor: "pointer", margin: "0 auto" }}>
-            <div key={article?.uuid} style={divStyles} className="thumbnail">
+            <div key={article?.entity_uuid} style={divStyles} className="thumbnail">
                 <div>
                     <img
                         src={article?.imageUrl}
@@ -83,7 +83,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({ article, isEditable }) => {
                         title={"delete"}
                         message={"delete article?"}
                         onConfirm={function (): void {
-                            handleDeleteArticle(article.uuid);
+                            handleDeleteArticle(article.entity_uuid);
                         }}
                         onCancel={function (): void {
                             setIsConfirmDialogOpen(false);
