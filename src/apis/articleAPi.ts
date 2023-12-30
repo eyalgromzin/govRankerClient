@@ -50,6 +50,9 @@ export const getAndShowPartyMemberArticles = (
     fetch(`http://127.0.0.1:3000/article/getPartyMemberArticles?partyMemberUUID=${partyMemberUUID}`)
         .then((res) => res.json())
         .then((res) => {
+            if(!res.success){
+                console.error('failed to get partyMemberArticles')
+            }
             dispatch(setCurrentArticles(res.data));
             onGotArticles(res.data)
         });
@@ -84,7 +87,7 @@ export const createArticle = async (
 
         await createEntityToArticleInDB(
             partyMemberUUID,
-            addedArticle.uuid,
+            addedArticle.entity_uuid,
             EntityType.partyMember,
             dispatch
         );
@@ -92,7 +95,7 @@ export const createArticle = async (
         console.log(
             "added entity to article ",
             partyMemberUUID,
-            addedArticle.uuid
+            addedArticle.entity_uuid
         );
     } catch (error) {
         return {

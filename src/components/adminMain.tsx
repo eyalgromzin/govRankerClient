@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import React, { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
 import { getGovernmentParties, getPartyMembers } from "../utils";
@@ -9,6 +9,9 @@ import ArticleCreation from "./createEditArticle";
 import toast, { Toaster } from "react-hot-toast";
 import ArticlesList from "./articlesList";
 import { useSelector } from "react-redux";
+import LoginForm from "./loginForm";
+import Summary from "./imageAndTextSummary";
+import { useParams } from "react-router-dom";
 
 type GovernmentsProps = {};
 
@@ -18,16 +21,29 @@ interface Option {
 }
 
 export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
-    const selectedPartyMember = useSelector(
-        (state: RootState) => state.data1.selectedPartyMember
+    const isLoggedIn = useSelector(
+        (state: RootState) => state.data1.isLoggedIn
+    );
+    const allPartyMembers = useSelector(
+        (state: RootState) => state.data1.partyMembers
+    );
+    const allGovernments = useSelector(
+        (state: RootState) => state.data1.governments
+    );
+    const allParties = useSelector((state: RootState) => state.data1.parties);
+
+    const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
+
+    const selectedPartyMember = allPartyMembers.find(
+        (partyMemberI) => partyMemberI.entity_uuid == partyMemberUUID
+    );
+    
+    const selectedGovernment = allGovernments.find(
+        (governmentI) => governmentI.entity_uuid == governmentUUID
     );
 
-    const selectedParty = useSelector(
-        (state: RootState) => state.data1.selectedParty
-    );
-
-    const selectedGovernment = useSelector(
-        (state: RootState) => state.data1.selectedGovernment
+    const selectedParty = allParties.find(
+        (partyI) => partyI.entity_uuid == partyUUID
     );
 
     const notify = (str: string) => {
@@ -37,23 +53,37 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
         });
     };
 
-    return (
-        <div>
-            <EntityChooser isShowEditButtons={true} />
-            {selectedPartyMember && selectedParty && selectedGovernment && (
-                <ArticleCreation notify={notify} article={undefined} />
-            )}
-            <ArticlesList isEditable={true} />
-            <Toaster
-                toastOptions={{
-                    className: "",
-                    style: {
-                        padding: "16px",
-                        color: "white",
-                        backgroundColor: "green",
-                    },
-                }}
-            />
-        </div>
-    );
+    if (isLoggedIn) {
+        return (
+            <div>
+                <EntityChooser isShowEditButtons={true} />
+                {selectedPartyMember && selectedParty && selectedGovernment && (
+                    <ArticleCreation notify={notify} article={undefined} />
+                )}
+                {selectedPartyMember && (
+                    <React.Fragment>
+                        <Summary
+                            name={selectedPartyMember?.name}
+                            imageUrl={selectedPartyMember?.image_url}
+                            description={selectedPartyMember?.description}
+                        />
+                        <ArticlesList isEditable={true} />
+                        
+                    </React.Fragment>
+                )}
+                <Toaster
+                    toastOptions={{
+                        className: "",
+                        style: {
+                            padding: "16px",
+                            color: "white",
+                            backgroundColor: "green",
+                        },
+                    }}
+                />
+            </div>
+        );
+    } else {
+        return <LoginForm />;
+    }
 };

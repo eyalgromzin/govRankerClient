@@ -15,6 +15,8 @@ export interface DataState {
   selectedParty: Party | undefined;
   selectedGovernment: Government | undefined;
   recentlyAddedArticles: Article[];
+  isLoggedIn: boolean;
+  jwtToken: string;
 }
 
 const initialState: DataState = {
@@ -31,6 +33,8 @@ const initialState: DataState = {
   selectedPartyMember: undefined,
   recentlyAddedArticles: [],
   partyMemberAndGovernment: [],
+  isLoggedIn: false,
+  jwtToken: '',
 };
 
 export const dataSlice = createSlice({
@@ -52,7 +56,7 @@ export const dataSlice = createSlice({
     setCurrentArticles: (state: DataState, action: PayloadAction<Article[]>) => {
       state.currentArticles = action.payload;
     },
-    setPartyToGovernment: (state: DataState, action: PayloadAction<{partyUUID: string, governmentUUID:string}[]>) => {
+    setPartyToGovernment: (state: DataState, action: PayloadAction<{party_uuid: string, government_uuid:string}[]>) => {
       state.partyAndGovernment = action.payload;
     },
     setPartyMemberAndParty: (state: DataState, action: PayloadAction<PartyMemberAndParty[]>) => {
@@ -84,29 +88,35 @@ export const dataSlice = createSlice({
     },
     removeGovernment: (state: DataState, action: PayloadAction<any>) => {
       state.governments = state.governments.filter(governmentI => {
-        return governmentI.uuid != action.payload.governmentUUID
+        return governmentI.entity_uuid != action.payload.governmentUUID
       });
     },
     removeParty: (state: DataState, action: PayloadAction<any>) => {
       state.parties = state.parties.filter(partyI => {
-        return partyI.uuid != action.payload.partyUUID
+        return partyI.entity_uuid != action.payload.partyUUID
       });
     },
     removePartyMember: (state: DataState, action: PayloadAction<any>) => {
       state.partyMembers = state.partyMembers.filter(partyMemberI => {
-        return partyMemberI.uuid != action.payload.partyMemberUUID
+        return partyMemberI.entity_uuid != action.payload.partyMemberUUID
       });
+      let sasd = 4
     },
     removeArticle: (state: DataState, action: PayloadAction<any>) => {
       state.allArticles = state.allArticles.filter(articleI => {
-        return articleI.uuid != action.payload
+        return articleI.entity_uuid != action.payload
       });
       let s = 4
       s += 1
     },
     setRecentlyAddedArticles: (state: DataState, action: PayloadAction<Article[]>) => {
       state.recentlyAddedArticles = (action.payload);
+    },  
+    setIsLoggedIn: (state: DataState, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = (action.payload);
     },
+
+
   }
 });
 
@@ -118,7 +128,7 @@ export const {
   removeParty, removePartyMember, addArticle,
   setSelectedGovernment, setSelectedParty, setSelectedPartyMember,
   removeArticle, setRecentlyAddedArticles, setPartyMemberAndGovernment,
-  setCurrentArticles,
+  setCurrentArticles, setIsLoggedIn,
 } = dataSlice.actions;
 
 

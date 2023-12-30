@@ -1,68 +1,68 @@
 export interface Government {
-    uuid: string,
+    entity_uuid: string,
     name: string,
     description: string,
-    imageUrl: string, 
+    image_url: string, 
 }
 
 export interface Party {
-    uuid: string,
+    entity_uuid: string,
     name: string,
     description: string,
-    imageUrl: string, 
+    image_url: string, 
 }
 
 export interface PartyMember {
-    uuid: string,
+    entity_uuid: string,
     name: string,
     description: string,
-    imageUrl: string, 
+    image_url: string, 
 }
 
 export interface PartyToGovernment {
     id: number,
-    partyUUID: string,
-    governmentUUID: string,
+    party_uuid: string,
+    government_uuid: string,
 }
 
 export interface PartyMemberToParty {
     id: number,
-    partyMemberUUID: string,
-    partyUUID: string,
+    party_member_uuid: string,
+    party_uuid: string,
 }
 
 export interface Article {
-    uuid: string,
+    entity_uuid: string,
     title: string,
     url: string,
     date: string, 
     description: string,
-    imageUrl: string, 
+    image_url: string, 
     rating: number,
-    creationDate: string,
+    creation_date: string,
 }
 
 export interface PartyAndGovernment {
-    partyUUID: string,
-    governmentUUID: string,
+    party_uuid: string,
+    government_uuid: string,
 }
 
 export interface PartyMemberAndParty {
     id: number,
-    partyMemberUUID: string,
-    partyUUID: string,
+    party_member_uuid: string,
+    party_uuid: string,
 }
 
 export interface PartyMemberAndGovernment {
     id: number,
-    partyMemberUUID: string,
-    governmentUUID: string,
+    party_member_uuid: string,
+    government_uuid: string,
 }
 
 export interface EntityAndArticle {
     id: number,
-    entityUUID: string,
-    articleUUID: string,
+    entity_uuid: string,
+    article_uuid: string,
 }
 
 export enum EntityType {

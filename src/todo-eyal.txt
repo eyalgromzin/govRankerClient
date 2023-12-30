@@ -1,6 +1,4 @@
 datetime will be stored as '20050505' always as UTC + 0
 
-- make parliament get data from db 
-- add to db table of position - 'חבר כנסת', 'שר'...
-- on click , open the appropriate url of the person.
-- fix url for people to show articles also from url 
+- login to admin
+- make all admin updates to use jwt

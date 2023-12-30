@@ -45,7 +45,7 @@ const ArticlesList: FC<ArticlesProps> = ({ isEditable }) => {
                             </div>
                             {articlesDictionary[dateI].map(
                                 (articleI: Article) => (
-                                    <div key={articleI.uuid}>
+                                    <div key={articleI.entity_uuid}>
                                         <ArticleThumbnail
                                             article={articleI}
                                             isEditable={isEditable}
