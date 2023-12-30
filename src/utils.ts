@@ -5,8 +5,8 @@ export const getGovernmentParties = (govUUID: string, PartyAndGovernments: Party
     const partiesUUIDs: string[] = []
 
     PartyAndGovernments.forEach(PartyAndGovernmentI => {
-        if(PartyAndGovernmentI.governmentUUID == govUUID){
-            partiesUUIDs.push(PartyAndGovernmentI.partyUUID)
+        if(PartyAndGovernmentI.government_uuid == govUUID){
+            partiesUUIDs.push(PartyAndGovernmentI.party_uuid)
         }
     })
 
@@ -25,8 +25,8 @@ export const getPartyMembers = (partyUUID: string, partyMembersAndParty: PartyMe
 
     const partyMemberUUIDs: string[] = []
     partyMembersAndParty.forEach(partyMemberAndPartyI => {
-        if(partyMemberAndPartyI.partyUUID == partyUUID){
-            partyMemberUUIDs.push(partyMemberAndPartyI.partyMemberUUID)
+        if(partyMemberAndPartyI.party_uuid == partyUUID){
+            partyMemberUUIDs.push(partyMemberAndPartyI.party_member_uuid)
         }
     })
 

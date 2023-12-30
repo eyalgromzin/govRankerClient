@@ -50,6 +50,9 @@ export const getAndShowPartyMemberArticles = (
     fetch(`http://127.0.0.1:3000/article/getPartyMemberArticles?partyMemberUUID=${partyMemberUUID}`)
         .then((res) => res.json())
         .then((res) => {
+            if(!res.success){
+                console.error('failed to get partyMemberArticles')
+            }
             dispatch(setCurrentArticles(res.data));
             onGotArticles(res.data)
         });

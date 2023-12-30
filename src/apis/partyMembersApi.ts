@@ -43,7 +43,7 @@ export const createPartyMember = async (
             entity_uuid: addedPartyMember.res.newPartyMemberUUID,
             name: addedPartyMember.res.name,
             description: addedPartyMember.res.description,
-            imageUrl: addedPartyMember.res.imageUrl
+            image_url: addedPartyMember.res.imageUrl
         } 
         dispatch(addPartyMember(partyMemberToAdd));
     

@@ -102,7 +102,7 @@ export const Main: React.FC<HomeProps> = ({}) => {
                 {(partyUUID || partyUUID || governmentUUID) && (
                     <Summary
                         name={selectedEntity?.name}
-                        imageUrl={selectedEntity?.imageUrl}
+                        imageUrl={selectedEntity?.image_url}
                         description={selectedEntity?.description}
                     />
                 )}

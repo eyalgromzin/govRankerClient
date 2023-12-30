@@ -26,16 +26,14 @@ import {
 import {
     getAndShowGovernmentArticles,
     getAndShowPartyArticles,
+    getAndShowPartyMemberArticles,
 } from "../apis/articleAPi";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 type ChooserProps = {
     isShowEditButtons: boolean;
-    // selectedGovernment: Government | undefined;
-    // selectedParty: Party | undefined;
-    // selectedPartyMember: PartyMember | undefined;
 };
 
 interface Option {
@@ -71,7 +69,9 @@ export const EntityChooser: React.FC<ChooserProps> = ({
         (governmentI) => governmentI.entity_uuid == governmentUUID
     );
 
-    const selectedParty = allParties.find((partyI) => partyI.entity_uuid == partyUUID);
+    const selectedParty = allParties.find(
+        (partyI) => partyI.entity_uuid == partyUUID
+    );
 
     const selectedPartyMember = allPartyMembers.find(
         (partyMemberI) => partyMemberI.entity_uuid == partyMemberUUID
@@ -96,7 +96,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
 
             setPartyOptions(newPartyOptions);
         }
-    }, [selectedGovernment]);
+    }, [selectedGovernment, allParties]);
 
     useEffect(() => {
         if (selectedParty) {
@@ -117,7 +117,7 @@ export const EntityChooser: React.FC<ChooserProps> = ({
 
             setPartyMemberOptions(newPartyOptions);
         }
-    }, [selectedParty]);
+    }, [selectedParty, allPartyMembers]);
 
     const [governmentOptions, setGovernmentOptions] = useState<Option[]>([]);
     const [partyOptions, setPartyOptions] = useState<Option[]>([]);
@@ -126,12 +126,13 @@ export const EntityChooser: React.FC<ChooserProps> = ({
     const isDeleteGovernmentButtonEnabled =
         partyAndGovernment.filter(
             (partyAndGovernmentI) =>
-                partyAndGovernmentI.governmentUUID == selectedGovernment?.entity_uuid
+                partyAndGovernmentI.government_uuid ==
+                selectedGovernment?.entity_uuid
         ).length == 0;
     const isDeletePartyButtonEnabled =
         partyMemberAndParty.filter(
             (partyMemberAndPartyI) =>
-                partyMemberAndPartyI.partyUUID == selectedParty?.entity_uuid
+                partyMemberAndPartyI.party_uuid == selectedParty?.entity_uuid
         ).length == 0;
     const isDeletePartyMemberButtonEnabled = true;
 
@@ -153,11 +154,11 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             (govI) => govI.entity_uuid == selectedValue
         )[0];
 
-        if(location.pathname.includes('admin') && selectedGovernment){
+        if (location.pathname.includes("admin") && selectedGovernment) {
             navigate(`/admin/entity/${selectedGovernment.entity_uuid}`);
-        }else if(location.pathname.includes('admin') && !selectedGovernment){
+        } else if (location.pathname.includes("admin") && !selectedGovernment) {
             navigate(`/admin/`);
-        }else{
+        } else {
             navigate(`/entity/${selectedGovernment.entity_uuid}`);
         }
 
@@ -168,7 +169,6 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                 () => {}
             );
         }
-        
     };
 
     const onPartyChange = (event: SelectChangeEvent) => {
@@ -177,10 +177,42 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             (partyI) => partyI.entity_uuid == selectedValue
         )[0];
 
-        navigate(`/entity/${selectedGovernment?.entity_uuid}/${selectedParty.entity_uuid}`);
+        // if(location.pathname.includes('admin') && selectedGovernment){
+        //     navigate(`/admin/entity/${selectedGovernment.entity_uuid}`);
+        // }else if(location.pathname.includes('admin') && !selectedGovernment){
+        //     navigate(`/admin/`);
+        // }else{
+        //     navigate(`/entity/${selectedGovernment.entity_uuid}`);
+        // }
+
+        if (location.pathname.includes("admin") && selectedParty) {
+            navigate(
+                `/admin/entity/${selectedGovernment?.entity_uuid}/${selectedParty.entity_uuid}`
+            );
+        } else if (location.pathname.includes("admin") && !selectedParty) {
+            navigate(`/admin/entity/${selectedGovernment?.entity_uuid}`);
+        } else if (
+            !location.pathname.includes("admin") &&
+            selectedGovernment &&
+            selectedParty
+        ) {
+            navigate(
+                `/entity/${selectedGovernment?.entity_uuid}/${selectedParty.entity_uuid}`
+            );
+        } else if (
+            !location.pathname.includes("admin") &&
+            selectedGovernment &&
+            !selectedParty
+        ) {
+            navigate(`/entity/${selectedGovernment?.entity_uuid}`);
+        }
 
         if (selectedParty) {
-            getAndShowPartyArticles(dispatch, selectedParty.entity_uuid, () => {});
+            getAndShowPartyArticles(
+                dispatch,
+                selectedParty.entity_uuid,
+                () => {}
+            );
         }
     };
 
@@ -190,9 +222,31 @@ export const EntityChooser: React.FC<ChooserProps> = ({
             (partyMemberI) => partyMemberI.entity_uuid == selectedValue
         )[0];
 
-        navigate(
-            `/entity/${selectedGovernment?.entity_uuid}/${selectedParty?.entity_uuid}/${selectedPartyMember?.entity_uuid}`
-        );
+        if (
+            location.pathname.includes("admin") &&
+            selectedParty &&
+            selectedParty &&
+            selectedPartyMember
+        ) {
+            navigate(
+                `/admin/entity/${selectedGovernment?.entity_uuid}/${selectedParty?.entity_uuid}/${selectedPartyMember?.entity_uuid}`
+            );
+        }else if (location.pathname.includes("admin") &&
+        selectedParty &&
+        selectedParty &&
+        !selectedPartyMember){
+            navigate(
+                `/admin/entity/${selectedGovernment?.entity_uuid}/${selectedParty?.entity_uuid}`
+            );
+        }
+
+        if(selectedPartyMember){
+            getAndShowPartyMemberArticles(
+                dispatch,
+                selectedPartyMember.entity_uuid,
+                () => {}
+            );
+        }
     };
 
     const dropDownAndButtonsStyle: React.CSSProperties = {
@@ -272,7 +326,9 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedParty ? selectedParty?.entity_uuid : ""}
+                            value={
+                                selectedParty ? selectedParty?.entity_uuid : ""
+                            }
                             label="מפלגה"
                             onChange={onPartyChange}
                         >
@@ -312,7 +368,11 @@ export const EntityChooser: React.FC<ChooserProps> = ({
                             variant="standard"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={selectedPartyMember? selectedPartyMember?.entity_uuid : ''}
+                            value={
+                                selectedPartyMember
+                                    ? selectedPartyMember?.entity_uuid
+                                    : ""
+                            }
                             label="חבר כנסת"
                             onChange={onPartyMemberChange}
                         >

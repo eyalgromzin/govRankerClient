@@ -14,7 +14,7 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     const [url, setUrl] = useState(article?.url || "");
     const [date, setDate] = useState(article?.date || "");
     const [description, setDescription] = useState(article?.description || "");
-    const [imageUrl, setImageUrl] = useState(article?.imageUrl || "");
+    const [imageUrl, setImageUrl] = useState(article?.image_url || "");
     const [rating, setRating] = useState<number>(article?.rating || 0);
     const [title, setTitle] = useState(article?.title || "");
 
