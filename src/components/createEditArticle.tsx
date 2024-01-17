@@ -3,6 +3,7 @@ import { createArticle, updateArticle } from "../apis/articleAPi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Article } from "../models";
+import { useParams } from "react-router-dom";
 
 interface MyComponentProps {
     notify: Function;
@@ -18,16 +19,38 @@ const CreateArticle: React.FC<MyComponentProps> = ({ notify, article }) => {
     const [rating, setRating] = useState<number>(article?.rating || 0);
     const [title, setTitle] = useState(article?.title || "");
 
-    const selectedPartyMember = useSelector(
-        (state: RootState) => state.data1.selectedPartyMember
+    // const selectedPartyMember = useSelector(
+    //     (state: RootState) => state.data1.selectedPartyMember
+    // );
+
+    // const selectedParty = useSelector(
+    //     (state: RootState) => state.data1.selectedParty
+    // );
+
+    // const selectedGovernment = useSelector(
+    //     (state: RootState) => state.data1.selectedGovernment
+    // );
+
+    const allPartyMembers = useSelector(
+        (state: RootState) => state.data1.partyMembers
+    );
+    const allGovernments = useSelector(
+        (state: RootState) => state.data1.governments
+    );
+    const allParties = useSelector((state: RootState) => state.data1.parties);
+
+    const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
+
+    const selectedPartyMember = allPartyMembers.find(
+        (partyMemberI) => partyMemberI.entity_uuid == partyMemberUUID
+    );
+    
+    const selectedGovernment = allGovernments.find(
+        (governmentI) => governmentI.entity_uuid == governmentUUID
     );
 
-    const selectedParty = useSelector(
-        (state: RootState) => state.data1.selectedParty
-    );
-
-    const selectedGovernment = useSelector(
-        (state: RootState) => state.data1.selectedGovernment
+    const selectedParty = allParties.find(
+        (partyI) => partyI.entity_uuid == partyUUID
     );
 
     const dispatch = useDispatch();

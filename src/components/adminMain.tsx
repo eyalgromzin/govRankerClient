@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import LoginForm from "./loginForm";
 import Summary from "./imageAndTextSummary";
 import { useParams } from "react-router-dom";
+import CrawlerButton from "./runCrawler";
 
 type GovernmentsProps = {};
 
@@ -56,6 +57,7 @@ export const AdminMain: React.FC<GovernmentsProps> = ({}) => {
     if (isLoggedIn) {
         return (
             <div>
+                <CrawlerButton />
                 <EntityChooser isShowEditButtons={true} />
                 {selectedPartyMember && selectedParty && selectedGovernment && (
                     <ArticleCreation notify={notify} article={undefined} />

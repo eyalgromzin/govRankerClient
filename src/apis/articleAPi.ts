@@ -183,6 +183,25 @@ async function updateArticleInDb(
     return resData.res;
 }
 
+export const crawlYnet = async () => {
+    const customHeaders = {
+        "Content-Type": "application/json",
+    };
+    const res = await fetch(`http://127.0.0.1:3000/article/crawlYnet`, {
+        method: "POST",
+        headers: customHeaders,
+        body: JSON.stringify({
+            website: 'https://www.ynet.co.il/home/0,7340,L-8,00.html',
+            maxDepth: 4,
+        }),
+    });
+
+    const resData = await res.json();
+    console.log(resData.res)
+
+    return resData.res;
+}
+
 async function addArticleToDb(
     data: {
         url: string;
