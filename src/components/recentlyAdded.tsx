@@ -16,7 +16,7 @@ const RecentlyAdded: FunctionComponent<articlesProps> = ({ articles }) => {
             <div style={{fontSize: '25px'}}>הוסף לאחרונה:</div>
             <div style={{textAlign: 'start'}}>
                 {articles.map((articleI: Article) => (
-                    <div key={articleI.uuid}>{articleI.title}</div>
+                    <div key={articleI.entity_uuid}>{articleI.title}</div>
                 ))}
             </div>
         </div>

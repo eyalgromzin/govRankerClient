@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import {setGovernments, setPartyMemberAndGovernment, setPartyMemberAndParty, setPartyToGovernment} from '../redux/dataSlice'
+import {setPartyMemberAndGovernment, setPartyMemberAndParty, setPartyToGovernment} from '../redux/dataSlice'
 
 export const getAllPartyToGovernment = (dispatch: Function) => {
     fetch('http://127.0.0.1:3000/common/getAllPartyToGovernment').then(

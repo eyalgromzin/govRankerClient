@@ -1,4 +1,4 @@
-import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import { Fragment, FunctionComponent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Select, { SingleValue } from "react-select";
@@ -21,14 +21,18 @@ import {
 import { getAllPartyMembers } from "../apis/partyMembersApi";
 import { Flare } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { getAndShowPartyArticles } from "../apis/articleAPi";
 
 type HomeProps = {};
 
 export const Main: React.FC<HomeProps> = ({}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isGettingArticles = useRef(false)
 
     let selectedEntity: PartyMember | undefined = undefined;
+
+    
 
     const RecentlyAddedArticles = useSelector(
         (state: RootState) => state.data1.recentlyAddedArticles
@@ -47,18 +51,24 @@ export const Main: React.FC<HomeProps> = ({}) => {
     const { governmentUUID, partyUUID, partyMemberUUID } = useParams(); //url params
 
     const selectedGovernment = allGovernments.find(
-        (governmentI) => governmentI.uuid == governmentUUID
+        (governmentI) => governmentI.entity_uuid == governmentUUID
     );
 
-    const selectedParty = allParties.find((partyI) => partyI.uuid == partyUUID);
+    const selectedParty = allParties.find((partyI) => partyI.entity_uuid == partyUUID);
 
     const selectedPartyMember = allPartyMembers.find(
-        (partyMemberI) => partyMemberI.uuid == partyMemberUUID
+        (partyMemberI) => partyMemberI.entity_uuid == partyMemberUUID
     );
 
     if (selectedGovernment) selectedEntity = selectedGovernment;
     if (selectedParty) selectedEntity = selectedParty;
     if (selectedPartyMember) selectedEntity = selectedPartyMember;
+
+    if(selectedParty && !isGettingArticles.current){
+        console.log('getting articles')
+        getAndShowPartyArticles(dispatch, selectedParty.entity_uuid, () => {});    
+        isGettingArticles.current = true
+    }
 
     return (
         <div style={{ position: "relative" }}>
@@ -92,7 +102,7 @@ export const Main: React.FC<HomeProps> = ({}) => {
                 {(partyUUID || partyUUID || governmentUUID) && (
                     <Summary
                         name={selectedEntity?.name}
-                        imageUrl={selectedEntity?.imageUrl}
+                        imageUrl={selectedEntity?.image_url}
                         description={selectedEntity?.description}
                     />
                 )}

@@ -18,7 +18,7 @@ const KnessetComp:React.FC<DisplayMembers> =({dataArray})=>{
     return    <div className="knesset-flex">
         {
             dataArray.map((box, index) => (
-                <ClickableCircularImage  imageUrl={box.url}  onClick={handleImageClick}
+                <ClickableCircularImage key={box.url} imageUrl={box.url}  onClick={handleImageClick}
                                          text1={box.name}
 
 
