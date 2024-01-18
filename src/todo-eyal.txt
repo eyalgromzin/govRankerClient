@@ -4,3 +4,10 @@ datetime will be stored as '20050505' always as UTC + 0
 - add to db table of position - 'חבר כנסת', 'שר'...
 - on click , open the appropriate url of the person.
 - fix url for people to show articles also from url 
+- make seo 
+- add jwt for admin 
+- buy domain memshala.co.il
+- add like + unlike on each article - check how yner did it 
+- add gmail button that will open mail 
+- filter - good / bad , times , w/o video   
+- create polls - 1 per day/week / ...
